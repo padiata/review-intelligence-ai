@@ -1,0 +1,67 @@
+.ri-table-container{
+
+overflow:auto;
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+background:white;
+
+box-shadow:var(--shadow-sm);
+
+}
+
+.ri-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+.ri-table th{
+
+padding:16px;
+
+text-align:left;
+
+background:#F9FAFB;
+
+font-size:13px;
+
+font-weight:700;
+
+color:#374151;
+
+border-bottom:1px solid var(--border);
+
+}
+
+.ri-table td{
+
+padding:16px;
+
+border-bottom:1px solid var(--border);
+
+vertical-align:middle;
+
+}
+
+.ri-table tbody tr{
+
+transition:.2s;
+
+}
+
+.ri-table tbody tr:hover{
+
+background:#F8FAFC;
+
+}
+
+.ri-table tbody tr:last-child td{
+
+border-bottom:none;
+
+}

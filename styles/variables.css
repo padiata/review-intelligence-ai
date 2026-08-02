@@ -1,0 +1,64 @@
+:root{
+
+/* Marca */
+
+--primary:#0F766E;
+--primary-dark:#115E59;
+--primary-light:#CCFBF1;
+
+/* Estados */
+
+--success:#16A34A;
+--warning:#D97706;
+--danger:#DC2626;
+--info:#2563EB;
+
+/* Fondos */
+
+--background:#F7F8FA;
+--surface:#FFFFFF;
+--surface-2:#F3F4F6;
+
+/* Texto */
+
+--text:#111827;
+--text-light:#6B7280;
+
+/* Bordes */
+
+--border:#E5E7EB;
+
+/* Radios */
+
+--radius-xs:8px;
+--radius-sm:12px;
+--radius-md:16px;
+--radius-lg:20px;
+
+/* Sombras */
+
+--shadow-sm:0 1px 3px rgba(0,0,0,.05);
+
+--shadow-md:0 8px 18px rgba(0,0,0,.07);
+
+--shadow-lg:0 14px 40px rgba(0,0,0,.10);
+
+/* Espaciado */
+
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-5:24px;
+--space-6:32px;
+--space-7:48px;
+
+/* Tipografía */
+
+--font-size-xs:12px;
+--font-size-sm:14px;
+--font-size-md:16px;
+--font-size-lg:20px;
+--font-size-xl:28px;
+
+}

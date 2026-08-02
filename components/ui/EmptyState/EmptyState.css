@@ -1,0 +1,48 @@
+.ri-empty-state {
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-5);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  text-align: center;
+}
+
+.ri-empty-state-compact {
+  min-height: 180px;
+  padding: var(--space-5);
+}
+
+.ri-empty-state-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ri-empty-state h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--font-size-lg);
+}
+
+.ri-empty-state p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.ri-empty-state-action {
+  margin-top: var(--space-2);
+}

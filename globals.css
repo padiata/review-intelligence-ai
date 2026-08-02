@@ -1,0 +1,168 @@
+.app-navigation {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 26px 20px;
+  display: flex;
+  flex-direction: column;
+  background: #111827;
+  color: #ffffff;
+}
+
+.app-navigation-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-navigation-brand > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-navigation-brand span {
+  margin-top: 2px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.app-navigation-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 800;
+}
+
+.app-navigation-menu {
+  display: grid;
+  gap: 7px;
+  margin-top: 34px;
+}
+
+.app-navigation-section {
+  margin: 20px 10px 5px;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.app-navigation-link {
+  padding: 11px 12px;
+  border-radius: 10px;
+  color: #d1d5db;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.app-navigation-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.app-navigation-link.active {
+  background: #ffffff;
+  color: #111827;
+  font-weight: 700;
+}
+
+.app-navigation-account {
+  margin-top: auto;
+  display: grid;
+  gap: 5px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.app-navigation-account span {
+  color: #f9fafb;
+  font-size: 14px;
+}
+
+.app-navigation-account strong,
+.app-navigation-account small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.app-navigation-account p {
+  margin: 6px 0;
+  color: #fca5a5;
+  font-size: 12px;
+}
+
+.app-navigation-account button {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.app-shell-layout{
+
+    display:grid;
+
+    grid-template-columns:280px 1fr;
+
+    min-height:100vh;
+
+    background:#f5f7fa;
+
+}
+
+.app-shell-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.app-shell-header{
+
+    height:74px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 34px;
+
+    border-bottom:1px solid #e5e7eb;
+
+    background:white;
+
+}
+
+.app-shell-header h1{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.app-shell-body{
+
+    flex:1;
+
+    padding:30px;
+
+    overflow:auto;
+
+}
