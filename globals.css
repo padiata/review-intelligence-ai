@@ -166,3 +166,138 @@
     overflow:auto;
 
 }
+
+.review-card-error {
+  margin: 10px 0 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.review-card-title {
+  margin: 18px 0 6px;
+}
+
+
+.analysis-loading {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.analysis-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.analysis-summary {
+  margin: 0;
+  line-height: 1.55;
+}
+
+
+.response-editor-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.response-editor-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+
+.review-inbox-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.review-inbox-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px;
+
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 14px;
+
+  background: #ffffff;
+  color: inherit;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.review-inbox-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.review-inbox-content {
+  min-width: 0;
+}
+
+.review-inbox-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.review-inbox-title {
+  margin: 8px 0 4px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.review-inbox-text {
+  margin: 0;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.review-inbox-rating {
+  min-width: 120px;
+  text-align: right;
+}
+
+.review-inbox-error {
+  margin-top: 16px;
+  color: #b42318;
+}
+
+.review-inbox-empty {
+  margin-top: 20px;
+  padding: 24px;
+
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+
+  color: var(--text-light);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .review-inbox-item {
+    flex-direction: column;
+  }
+
+  .review-inbox-rating {
+    min-width: 0;
+    text-align: left;
+  }
+}

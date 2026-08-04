@@ -1,15 +1,14 @@
 "use client";
 
-
-
-
 import "./AppSidebar.css";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+
 import { createClient } from "@/lib/supabase/client";
 
-type UserRole =
+export type UserRole =
   | "super_admin"
   | "hotel_admin"
   | "manager"
@@ -23,7 +22,7 @@ type AppSidebarProps = {
 
 const roleLabels: Record<UserRole, string> = {
   super_admin: "Super administrador",
-  hotel_admin: "Administrador de hotel",
+  hotel_admin: "Administrador",
   manager: "Manager",
   operator: "Operador",
 };
@@ -35,10 +34,17 @@ export default function AppSidebar({
 }: AppSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const supabase = useMemo(() => createClient(), []);
 
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [logoutError, setLogoutError] = useState("");
+  const supabase = useMemo(
+    () => createClient(),
+    []
+  );
+
+  const [isLoggingOut, setIsLoggingOut] =
+    useState(false);
+
+  const [logoutError, setLogoutError] =
+    useState("");
 
   const canSeeReports =
     role === "super_admin" ||
@@ -50,17 +56,24 @@ export default function AppSidebar({
     role === "hotel_admin";
 
   function isActive(path: string) {
-    return pathname === path || pathname.startsWith(`${path}/`);
+    return (
+      pathname === path ||
+      pathname.startsWith(`${path}/`)
+    );
   }
 
   async function handleLogout() {
     setIsLoggingOut(true);
     setLogoutError("");
 
-    const { error } = await supabase.auth.signOut();
+    const { error } =
+      await supabase.auth.signOut();
 
     if (error) {
-      setLogoutError(error.message);
+      setLogoutError(
+        `No se pudo cerrar la sesión: ${error.message}`
+      );
+
       setIsLoggingOut(false);
       return;
     }
@@ -77,7 +90,10 @@ export default function AppSidebar({
         </div>
 
         <div>
-          <strong>Review Intelligence</strong>
+          <strong>
+            Review Intelligence
+          </strong>
+
           <span>Lab</span>
         </div>
       </div>
@@ -143,17 +159,6 @@ export default function AppSidebar({
             </Link>
 
             <Link
-              href="/admin/entities"
-              className={
-                isActive("/admin/entities")
-                  ? "app-navigation-link active"
-                  : "app-navigation-link"
-              }
-            >
-              Entidades
-            </Link>
-
-            <Link
               href="/admin/settings"
               className={
                 isActive("/admin/settings")
@@ -170,25 +175,34 @@ export default function AppSidebar({
       <div className="app-navigation-account">
         <span>{fullName}</span>
 
-        <strong>{roleLabels[role]}</strong>
+        <strong>
+          {roleLabels[role]}
+        </strong>
 
         <small>
-          {entityName ?? "Acceso global"}
+          {entityName ??
+            "Hotel configurado"}
         </small>
 
         {logoutError && (
-          <p role="alert">
+          <p
+            role="alert"
+            className="logout-error"
+          >
             {logoutError}
           </p>
         )}
 
         <button
           type="button"
-          onClick={() => void handleLogout()}
+          className="logout-button"
+          onClick={() =>
+            void handleLogout()
+          }
           disabled={isLoggingOut}
         >
           {isLoggingOut
-            ? "Cerrando..."
+            ? "Cerrando sesión..."
             : "Cerrar sesión"}
         </button>
       </div>
