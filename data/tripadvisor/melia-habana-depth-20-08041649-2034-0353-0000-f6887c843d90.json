@@ -1,0 +1,1083 @@
+{
+  "taskId": "08041649-2034-0353-0000-f6887c843d90",
+  "taskPost": {
+    "version": "0.1.20260731",
+    "status_code": 20000,
+    "status_message": "Ok.",
+    "time": "0.1200 sec.",
+    "cost": 0.00225,
+    "tasks_count": 1,
+    "tasks_error": 0,
+    "tasks": [
+      {
+        "id": "08041649-2034-0353-0000-f6887c843d90",
+        "status_code": 20100,
+        "status_message": "Task Created.",
+        "time": "0.0037 sec.",
+        "cost": 0.00225,
+        "result_count": 0,
+        "path": [
+          "v3",
+          "business_data",
+          "tripadvisor",
+          "reviews",
+          "task_post"
+        ],
+        "data": {
+          "api": "business_data",
+          "function": "reviews",
+          "se": "tripadvisor",
+          "url_path": "/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+          "language_name": "English",
+          "depth": 20,
+          "sort_by": "most_recent",
+          "device": "desktop",
+          "os": "windows"
+        },
+        "result": null
+      }
+    ]
+  },
+  "taskGet": {
+    "version": "0.1.20260731",
+    "status_code": 20000,
+    "status_message": "Ok.",
+    "time": "0.0170 sec.",
+    "cost": 0,
+    "tasks_count": 1,
+    "tasks_error": 0,
+    "tasks": [
+      {
+        "id": "08041649-2034-0353-0000-f6887c843d90",
+        "status_code": 20000,
+        "status_message": "Ok.",
+        "time": "0.0109 sec.",
+        "cost": 0,
+        "result_count": 1,
+        "path": [
+          "v3",
+          "business_data",
+          "tripadvisor",
+          "reviews",
+          "task_get",
+          "08041649-2034-0353-0000-f6887c843d90"
+        ],
+        "data": {
+          "api": "business_data",
+          "function": "reviews",
+          "se": "tripadvisor",
+          "url_path": "/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+          "language_name": "English",
+          "depth": 20,
+          "sort_by": "most_recent",
+          "device": "desktop",
+          "os": "windows"
+        },
+        "result": [
+          {
+            "url_path": "Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+            "type": "tripadvisor_reviews",
+            "se_domain": "tripadvisor.com",
+            "check_url": "https://www.tripadvisor.com/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+            "datetime": "2026-08-04 16:49:19 +00:00",
+            "title": "Habana",
+            "location": "Avenida 3ra, 11300, Havana, CU",
+            "reviews_count": 4951,
+            "rating": {
+              "rating_type": "Max5",
+              "value": 4.3,
+              "votes_count": 4951,
+              "rating_max": 5
+            },
+            "rating_distribution": {
+              "1": 135,
+              "2": 146,
+              "3": 485,
+              "4": 1555,
+              "5": 2630
+            },
+            "items_count": 20,
+            "items": [
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 1,
+                "rank_absolute": 1,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1070334967-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 1,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-07-31 00:00:00 +00:00",
+                "timestamp": "2026-07-27 00:00:00 +00:00",
+                "review_id": "1070334967",
+                "title": "Hotel without air conditioning, food in bad condition, terrible solutions... in short.... A horror movie",
+                "review_text": "The hotel is a disaster, the air conditioning doesn't work even in the rooms, the food is horrible (lack of refrigeration, little variety, cold coffee and warm juices, not to mention that there is no air conditioning and that the restaurant is also full of flies, a disaster) in addition to the fact that they cannot agree on how to tell lies, since the night before I reported that the air conditioning was not working, in the morning I get up and go to the public relations department to complain after having contacted my agency, everyone at the hotel knew that the air conditioning was not working, and while sitting there they called from my agency to the front desk to ask if it was true that they had climate control problems to which the receptionist stated that the climate control was working perfectly, then I receive the message from the travel agency telling me this and while sitting there I confront them and they tell me that the receptionist did not have that information, which she clearly did have since she made a key for me the day before to see another room that had the same problem, it is a disaster as a hotel and honestly they should coordinate better to tell lies, but mainly they should stop playing with the guests' departures, it is preferable that they tell the guest that they have broken equipment or whatever and that they should go to another hotel, rather than having them wait like a fool there and laughing at them..... Just to highlight something, Carlos who brings room service is very kind, as is the maintenance guy, and the cleaning ladies who assisted me were more than pleasant, it is the only good thing I take away from that hotel, I hope they know how to value the staff they have more, instead of having them working in subhuman conditions….. one last thing to highlight, they brought me a fan at the last minute so it would blow air on me ….. a shame that they cut the electricity every 5 min …. I find the solution pathetic….",
+                "language": "en",
+                "original_language": "es",
+                "review_images": [
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/ff/78/a8/caption.jpg"
+                  },
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/ff/78/a9/caption.jpg"
+                  }
+                ],
+                "user_profile": {
+                  "name": "Raydel C",
+                  "url": "https://www.tripadvisor.com/Profile/raydelc2025",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e4/59/default-avatar-2020-49.jpg",
+                  "location": null,
+                  "reviews_count": 4
+                },
+                "responses": null,
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 2,
+                "rank_absolute": 2,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1069394976-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 4,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-07-31 00:00:00 +00:00",
+                "timestamp": "2026-07-21 00:00:00 +00:00",
+                "review_id": "1069394976",
+                "title": "Automatic energy backup system and the best place with Wi-Fi connection I have ever been to.",
+                "review_text": "I spent two nights from Saturday to Monday (7/18-20), and the truth is I found it very good. I was able to enjoy all the included benefits of the Meliá Rewards loyalty program, with early check-in and late check-out, and the welcome drink. If you are looking for an ideal place to rest, this is the one, as it has a very good energy backup system, it is automatic. I went with my children who loved it, they have lagoons with very beautiful fish that entertain the children. As a benefit of the place where it is located and which for me was decisive in booking it, is that it has the National Aquarium with the Festival Pa' Cuba just a few blocks away, and you can walk there. To my joy I found my English professor Orlando from the university, who was very cordial and always very concerned about the well-being of the guests. The room was clean, the TV channels could be seen well and the signal did not drop, they restock you with towels and whatever you need. The Wi-Fi connection is great. I managed to reach up to 42 Mbps connection, something never seen in any of the hotels I have been to or anywhere in Cuba. This has been the place with the best Wi-Fi connection speed. I give it 4 stars because the pool really needs renovation, and I hope that the renovation being done on the top floors soon reaches the pool as well.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "yphinojosa",
+                  "url": "https://www.tripadvisor.com/Profile/yphinojosa",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/17/11/01/yphinojosa.jpg",
+                  "location": "Pinar del Rio, Cuba",
+                  "reviews_count": 16
+                },
+                "responses": null,
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 3,
+                "rank_absolute": 3,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1064611929-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-06-30 00:00:00 +00:00",
+                "timestamp": "2026-06-17 00:00:00 +00:00",
+                "review_id": "1064611929",
+                "title": "An exceptional hotel worthy of a visit and a stay.",
+                "review_text": "This is a hotel worth visiting and spending a pleasant stay at; the facilities are impeccable, the restaurants offer five-star service, the maids leave the rooms sparkling, and all the staff provide attentive service at the reception. The treatment is incredible; they make you feel like family all the time. Amparo at the reception was very attentive, always aware of all our needs, and with a smile, she was always ready to ensure we had a great stay. I would definitely return to this hotel; thank you for the five-star service.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Armando",
+                  "url": "https://www.tripadvisor.com/Profile/Trek33393204122",
+                  "image_url": null,
+                  "location": "Miami, Florida",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia. Nos complace saber que disfrutó de nuestras instalaciones, de la calidad del servicio y de la atención esmerada de nuestro equipo.\n\nAgradecemos especialmente su reconocimiento a Amparo en recepción. Será un placer compartir sus palabras con ella. Saludos.",
+                    "language": "es",
+                    "response_id": "1065616295",
+                    "timestamp": "2026-06-24 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 4,
+                "rank_absolute": 4,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1063861885-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-06-30 00:00:00 +00:00",
+                "timestamp": "2026-06-11 00:00:00 +00:00",
+                "review_id": "1063861885",
+                "title": "The Level - excellent experience.",
+                "review_text": "Excellent experience at The Level in the Melia Habana Hotel. Very professional and warm treatment at the same time. Quality service.\nI also enjoyed the original dishes at the La Bella Cubana restaurant, the massage services, and the relaxed atmosphere of the pool.\nI will repeat soon!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": [
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/85/29/15/caption.jpg"
+                  }
+                ],
+                "user_profile": {
+                  "name": "valdes gonzalez t",
+                  "url": "https://www.tripadvisor.com/Profile/valdesgonzalezt",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ef/73/default-avatar-2020-13.jpg",
+                  "location": null,
+                  "reviews_count": 2
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia. Nos complace saber que disfrutó de nuestro servicio The Level y de la atención de nuestro equipo.\n\nSerá un placer recibirle nuevamente muy pronto. Saludos.",
+                    "language": "es",
+                    "response_id": "1064563887",
+                    "timestamp": "2026-06-16 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 5,
+                "rank_absolute": 5,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1063702354-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-06-30 00:00:00 +00:00",
+                "timestamp": "2026-06-10 00:00:00 +00:00",
+                "review_id": "1063702354",
+                "title": "Unforgettable La Bella Cubana with its Chef!!!",
+                "review_text": "La Bella Cubana, exceptional staff in their service. I want to highlight the masterful art of Chef Jorge Ortiz, as I have been repeating this for my birthday for several years and each time he leaves us with an extraordinary experience. Congratulations!!!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Nelson Osmar I",
+                  "url": "https://www.tripadvisor.com/Profile/nelsonosmari",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/06/default-avatar-2020-18.jpg",
+                  "location": null,
+                  "reviews_count": 3
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su preferencia y por acompañarnos en una fecha tan especial. Nos alegra saber que cada visita a La Bella Cubana, y en especial el arte culinario del chef Jorge Ortiz, continúan dejándole una experiencia extraordinaria.\n\nReciba nuestras felicitaciones y agradecimiento. Saludos.",
+                    "language": "es",
+                    "response_id": "1063769490",
+                    "timestamp": "2026-06-10 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 6,
+                "rank_absolute": 6,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1063689540-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-06-30 00:00:00 +00:00",
+                "timestamp": "2026-06-10 00:00:00 +00:00",
+                "review_id": "1063689540",
+                "title": "A night at La Bella Cubana",
+                "review_text": "We visited the restaurant La Bella Cubana, excellent service, especially the creations of Chef Jorge Ortiz; congratulations to him, he is the best.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": [
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/80/8c/bc/caption.jpg"
+                  }
+                ],
+                "user_profile": {
+                  "name": "Mercedes G",
+                  "url": "https://www.tripadvisor.com/Profile/mercedesgX4549YA",
+                  "image_url": null,
+                  "location": null,
+                  "reviews_count": 3
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su comentario. Nos complace saber que disfrutó de su visita a La Bella Cubana y, en especial, de las creaciones del chef Jorge Ortiz.\n\nCon gusto le haremos llegar su felicitación. Saludos.",
+                    "language": "es",
+                    "response_id": "1063769431",
+                    "timestamp": "2026-06-10 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 7,
+                "rank_absolute": 7,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1061674737-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-25 00:00:00 +00:00",
+                "review_id": "1061674737",
+                "title": "Incredible experience in Havana",
+                "review_text": "I stayed 2 nights in the hotel with a group of friends and was amazing the structure of the hotel. There is a boulevard with several restaurants, a cigar shop, a cafeteria, a garden that gives the impression that we are in a park. Beautiful.\nBesides the pool which is huge, clean, with a wet bar and overlooking the sea. \nThe hotel is further away from the historic center but is in a super quiet region and close to a street where there are several bars/restaurants.\nManager Negrin is always present to ensure everything is perfect and is a loved one.\nThe manha cafe is full and the attendants are kind.  \nThe apartments are spacious, clean, have coffee in capsule, sea view. Top!\nI'd definitely come back.",
+                "language": "en",
+                "original_language": "pt",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Guide63662459519",
+                  "url": "https://www.tripadvisor.com/Profile/Guide63662459519",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/2e/default-avatar-2020-67.jpg",
+                  "location": null,
+                  "reviews_count": 2
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muito obrigado pela sua avaliação! Ficamos felizesque tenha aproveitado a nossa piscina, os restaurants e a atenção da nossa equipe. Transmitiremos o seu logio ao nosso gerente Negrín. Esperamos recebê-lo nvamente em breve!",
+                    "language": "pt",
+                    "response_id": "1061776247",
+                    "timestamp": "2026-05-26 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 8,
+                "rank_absolute": 8,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1061643437-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-25 00:00:00 +00:00",
+                "review_id": "1061643437",
+                "title": "A great stay in Havana.",
+                "review_text": "We made a trip to Havana now in May 2026 and it was all perfect. The hotel is very complete, organized, has several restaurants and bars in its interior, making the tourist have everything very close. The attendants, the manager Negrin and his team accommodated us and treated us super well. We highly recommend this hotel for your stay in Havana!",
+                "language": "en",
+                "original_language": "pt",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Renata Sousa",
+                  "url": "https://www.tripadvisor.com/Profile/sousaresilva",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/74/default-avatar-2020-68.jpg",
+                  "location": null,
+                  "reviews_count": 13
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muito obrigado pela sua recomendação! Ficamos felies que a viagem tenha sido tudo perfeito. Transmitirmos o seu carinho ao gerente Negrín e toda a equipe.Esperamos vê-los novamente em breve!",
+                    "language": "pt",
+                    "response_id": "1061776465",
+                    "timestamp": "2026-05-26 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 9,
+                "rank_absolute": 9,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1061265002-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-22 00:00:00 +00:00",
+                "review_id": "1061265002",
+                "title": "Our gratitude goes to Mr. Adolfo",
+                "review_text": "Excellent service, exquisite menu, and a pleasant and clean environment",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Graziella de la... C",
+                  "url": "https://www.tripadvisor.com/Profile/grazielladelacaridac",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/79/default-avatar-2020-21.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por sus amables palabras. Nos alegr mucho que haya disfrutado de la atención, la gastroomía y el ambiente. Trasladaremos su reconocimiento l Sr. Adolfo. Esperamos verle pronto de nuevo.",
+                    "language": "es",
+                    "response_id": "1061660245",
+                    "timestamp": "2026-05-25 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 10,
+                "rank_absolute": 10,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1061237889-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-22 00:00:00 +00:00",
+                "review_id": "1061237889",
+                "title": "Good food",
+                "review_text": "The best place to eat in Cuba today, good quality in all its restaurants",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Enrrique G",
+                  "url": "https://www.tripadvisor.com/Profile/872enrriqueg",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f0/d5/default-avatar-2020-17.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "¡Muchas gracias por su visita y por sus palabras! os enorgullece que valore la calidad de nuestra ofera gastronómica. Le esperamos siempre que quiera disfutar de lo mejor.",
+                    "language": "es",
+                    "response_id": "1061660355",
+                    "timestamp": "2026-05-25 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 11,
+                "rank_absolute": 11,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1061142071-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 1,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-21 00:00:00 +00:00",
+                "review_id": "1061142071",
+                "title": ".",
+                "review_text": "Sorry, not friendly, old facilities; I would not return here, it is worse, please improve that in the future, thank you.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "lenier520",
+                  "url": "https://www.tripadvisor.com/Profile/lenier520",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ef/32/default-avatar-2020-12.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Lamentamos que su experiencia no haya sido la espeada. Sus comentarios sobre el trato del personal y e estado de las instalaciones son muy importantes par nosotros. Los trasladaremos a nuestro equipo para sguir mejorando. Gracias por tomarse el tiempo de comartir su opinión.",
+                    "language": "es",
+                    "response_id": "1061660511",
+                    "timestamp": "2026-05-25 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 12,
+                "rank_absolute": 12,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1060137706-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-31 00:00:00 +00:00",
+                "timestamp": "2026-05-14 00:00:00 +00:00",
+                "review_id": "1060137706",
+                "title": "The Privilege of Feeling at Home",
+                "review_text": "There is a very specific form of luxury that does not relate to the shine of materials, but to memory and consistency. Returning to the Meliá Habana year after year is to experience that relief of knowing that, upon crossing its doors, everything will be exactly where it should be.\nWhat defines a \"home\" away from home is the staff. It is not just the efficiency in check-in or the cleanliness of the service; it is the feeling that your presence is valued. In an environment where everything changes, finding that technical and human hospitality that welcomes you with the same level of professionalism year after year is a rare luxury. It is a place where you are not just a room number, but a returning resident.\nThe Meliá Habana does not try to be the trendiest or the most avant-garde hotel; I feel it prefers to be the most welcoming. It is the refuge for the professional seeking efficiency and for the traveler seeking peace. After so many years, it continues to demonstrate that true supremacy lies not in novelty, but in sustained excellence over time.\nIt is, without a doubt, the place where Havana becomes predictable in the best sense: that of absolute comfort.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "JRey2014",
+                  "url": "https://www.tripadvisor.com/Profile/JRey2014",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/c0/80/d3/jrey2014.jpg",
+                  "location": "La Coruna, Spain",
+                  "reviews_count": 225
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia en  Meliá Habana. Leer sus palabras nos llena de orgullo y, al mismo tiempo, nos recuerda el popósito más profundo de nuestro trabajo: hacer que cada huésped sienta que regresa a casa.\n\nHasta su próximo regreso, que esperamos sea muy pronto. Saludos.\n",
+                    "language": "es",
+                    "response_id": "1060981652",
+                    "timestamp": "2026-05-20 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "4"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 13,
+                "rank_absolute": 13,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1058360643-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-30 00:00:00 +00:00",
+                "review_id": "1058360643",
+                "title": "Spectacular",
+                "review_text": "The best of vat certainly. 5 STARS ++",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Raidel H",
+                  "url": "https://www.tripadvisor.com/Profile/713raidelh",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/b2/default-avatar-2020-69.jpg",
+                  "location": null,
+                  "reviews_count": 3
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su excelente valoración. Nos honra saber que nos considera entre lo mejor de Cuba.\n\nSerá un placer recibirle nuevamente. Saludos.\n",
+                    "language": "es",
+                    "response_id": "1058996569",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 14,
+                "rank_absolute": 14,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1058240456-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-29 00:00:00 +00:00",
+                "review_id": "1058240456",
+                "title": "Camagüeyana",
+                "review_text": "My experience at the Meliá Habana hotel is always spectacular. \nFirst of all I want to thank Noelvys from the reservations department. Rocio and Rossmary girls on the 4th floor The Level are very professional, helpful, with nice attitude, laughing, and very friendly.\nTatiana and all the staff in the breakfast area very special and always pleasing their guests.\nYaima from the coffee shop 24/7. \nThat's why I feel at home.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Sightsee284381",
+                  "url": "https://www.tripadvisor.com/Profile/Sightsee284381",
+                  "image_url": null,
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su comentario y por su fidelidad. Nos alegra saber que se siente como en casa y que valora tan positivamente la atención de todo nuestro equipo.\n\nSerá un placer seguir recibiéndole. Saludos.",
+                    "language": "es",
+                    "response_id": "1058996495",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 15,
+                "rank_absolute": 15,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1058099846-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-02-28 00:00:00 +00:00",
+                "timestamp": "2026-04-30 00:00:00 +00:00",
+                "review_id": "1058099846",
+                "title": "E",
+                "review_text": "Excellent customer service, skittish food and a good location 👌",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Yasmany G",
+                  "url": "https://www.tripadvisor.com/Profile/155yasmanyg",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f0/d5/default-avatar-2020-17.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su comentario. Nos complace saber que disfrutó del servicio, la gastronomía y nuestra ubicación.\n\nSerá un placer recibirle nuevamente. Saludos.",
+                    "language": "es",
+                    "response_id": "1058996416",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "4"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 16,
+                "rank_absolute": 16,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1058087556-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-29 00:00:00 +00:00",
+                "review_id": "1058087556",
+                "title": "Excellent service and excellent service!",
+                "review_text": "My stay at the Meliá Habana was simply exceptional. From the get-go, Noelvys, head of bookings, made sure everything was perfect for us. His attention to detail and friendliness were remarkable. In reception, Ross welcomed us with a smile and gave us a warm welcome, making us always feel at home. In addition, Rocio was a true angel, always willing to help us with any queries. Thank you to the whole team for making our visit an unforgettable experience. We definitely keep coming back and recommending!!!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Ariel B",
+                  "url": "https://www.tripadvisor.com/Profile/716arielb",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/0b/c0/cb/ariel-b.jpg",
+                  "location": "Havana, Cuba",
+                  "reviews_count": 64
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia y por su fidelidad. Nos honra saber que su estancia fue excepcional y que el servicio de Noelvys, Ross y Rocío contribuyó a hacerla inolvidable.\n\nAgradecemos sinceramente su recomendación y será un placer recibirle nuevamente. Saludos.",
+                    "language": "es",
+                    "response_id": "1058996274",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 17,
+                "rank_absolute": 17,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1057833106-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-27 00:00:00 +00:00",
+                "review_id": "1057833106",
+                "title": "Clean stays and very friendly service",
+                "review_text": "Nice experience. The room was very clean and well maintained and prepared for a comfortable stay. The staff was excellent from the start, always friendly and willing to help in everything needed. Without a doubt, a very good experience as a new customer, would repeat.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Maria C",
+                  "url": "https://www.tripadvisor.com/Profile/mariacO3428ZX",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f3/e4/default-avatar-2020-30.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia. Nos alegra saber que disfrutó de una estancia cómoda y que valoró la limpieza de la habitación y la atención de nuestro personal.\n\nSerá un placer recibirle nuevamente. Saludos.",
+                    "language": "es",
+                    "response_id": "1058996074",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 18,
+                "rank_absolute": 18,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1057749641-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-27 00:00:00 +00:00",
+                "review_id": "1057749641",
+                "title": "Immensely grateful with cigar bar. Rafa",
+                "review_text": "We have had a spectacular stay, with attention from all workers from breakfast to the level with Tatiana, Rocio Rosmery and the ladies in charge of cleaning. We are immensely grateful to everything",
+                "language": "en",
+                "original_language": "es",
+                "review_images": [
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/0c/4a/ed/caption.jpg"
+                  }
+                ],
+                "user_profile": {
+                  "name": "Ana Beatriz O",
+                  "url": "https://www.tripadvisor.com/Profile/anabeatrizo804",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/b2/default-avatar-2020-69.jpg",
+                  "location": null,
+                  "reviews_count": 2
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por compartir su experiencia. Nos complace saber que disfrutaron de una estancia espectacular y de la atención de nuestro equipo, especialmente en The Level y del personal de limpieza.\n\nAgradecemos mucho su reconocimiento a Tatiana, Rocío y Rosmery. Será un placer compartirlo con ellas. Saludos.",
+                    "language": "es",
+                    "response_id": "1058995489",
+                    "timestamp": "2026-05-04 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 19,
+                "rank_absolute": 19,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1055523468-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-03-31 00:00:00 +00:00",
+                "timestamp": "2026-04-06 00:00:00 +00:00",
+                "review_id": "1055523468",
+                "title": "Melia habana a family holiday",
+                "review_text": "I returned as I have for many years at Melia Habana. I stayed 15 days. I feel at home in this hotel. I deserve the attentions of the staff all I would like to remember Rosmary and Rocio of the level Yamila the nice and efficient Noelvis Marcela Tatiana Adriana Damari of the desayuno. In short, thank you. thank you for 'hospitality kindness smiles and affection that you show me not fake real all",
+                "language": "en",
+                "original_language": "it",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Maurizio G",
+                  "url": "https://www.tripadvisor.com/Profile/20mauriziog",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/2e/default-avatar-2020-67.jpg",
+                  "location": null,
+                  "reviews_count": 4
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su fidelidad y por acompañarnos una vez más. Nos honra saber que se siente como en casa en Meliá Habana y que valora la hospitalidad y el cariño genuino de nuestro equipo.\n\nEsperamos recibirla nuevamente. Saludos.",
+                    "language": "es",
+                    "response_id": "1056581323",
+                    "timestamp": "2026-04-14 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 20,
+                "rank_absolute": 20,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1055413566-Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-04-30 00:00:00 +00:00",
+                "timestamp": "2026-04-05 00:00:00 +00:00",
+                "review_id": "1055413566",
+                "title": "Where you eat best",
+                "review_text": "Very good breakfast, excellent service, very attentive chefs",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Yaimisent  B",
+                  "url": "https://www.tripadvisor.com/Profile/yaimisentb2026",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f0/9f/default-avatar-2020-16.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Frederik Andersen",
+                    "text": "Muchas gracias por su comentario. Nos alegra saber que disfrutó del desayuno y que recibió un servicio de excelencia por parte de nuestro equipo y chefs.\n\nReciba un cordial saludo.\n",
+                    "language": "es",
+                    "response_id": "1056581223",
+                    "timestamp": "2026-04-14 00:00:00 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

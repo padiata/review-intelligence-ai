@@ -66,8 +66,13 @@ export async function waitForTripadvisorReviewsTask(
       return taskGet;
     }
 
-    if (statusCode === 40602) {
-      console.log(
+    if (
+  statusCode === 40601 ||
+  statusCode === 40602
+)     
+      
+      {      
+        console.log(
         `Task ${taskId} still in queue. Attempt ${attempt}/${maxAttempts}.`
       );
 
