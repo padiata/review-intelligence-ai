@@ -459,3 +459,455 @@
   }
 
 }
+
+.report-print-button{
+    margin-top:14px;
+    padding:10px 16px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.report-print-button:hover{
+    background:#1d4ed8;
+}
+
+/* =======================================================
+   IMPRESIÓN DEL INFORME EJECUTIVO
+   ======================================================= */
+
+.report-print-cover{
+    display:none;
+}
+
+@media print{
+
+    @page{
+        size:A4 portrait;
+        margin:20mm 18mm 20mm 18mm;
+    }
+
+    html,
+    body{
+
+        margin:0 !important;
+        padding:0 !important;
+
+        background:white !important;
+        color:#111;
+
+        font-family:Georgia,"Times New Roman",serif;
+        font-size:11pt;
+
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+
+    /* ocultar toda la aplicación */
+
+    .reports-header,
+    .report-generator-card,
+    .report-print-button,
+    nav,
+    aside,
+    header:not(.executive-report-header),
+    footer{
+
+        display:none !important;
+    }
+
+    /* eliminar apariencia dashboard */
+
+    .reports-page{
+
+        display:block !important;
+
+        margin:0 !important;
+        padding:0 !important;
+
+        background:white !important;
+    }
+
+    .executive-report{
+
+        width:100% !important;
+
+        margin:0 !important;
+        padding:0 !important;
+
+        border:none !important;
+        border-radius:0 !important;
+
+        box-shadow:none !important;
+
+        background:white !important;
+    }
+
+    /* portada */
+
+    .report-print-cover{
+
+        display:flex;
+
+        flex-direction:column;
+
+        justify-content:center;
+
+        align-items:center;
+
+        min-height:240mm;
+
+        text-align:center;
+
+        page-break-after:always;
+    }
+
+    .report-print-cover p{
+
+        margin:0;
+
+        font-size:11pt;
+
+        letter-spacing:.25em;
+
+        font-family:Arial,sans-serif;
+
+        font-weight:700;
+    }
+
+    .report-print-cover h1{
+
+        margin:35px 0;
+
+        font-size:34pt;
+
+        font-weight:500;
+
+        color:#111;
+    }
+
+    .report-print-cover div{
+
+        font-size:14pt;
+
+        margin-bottom:18px;
+    }
+
+    .report-print-cover small{
+
+        font-size:10pt;
+
+        color:#666;
+    }
+
+    /* encabezado */
+
+    .executive-report-header{
+
+        padding:0 0 18px 0 !important;
+
+        margin-bottom:24px;
+
+        border-bottom:2px solid #999;
+
+        background:white !important;
+
+        page-break-after:avoid;
+    }
+
+    .executive-report-header h2{
+
+        font-size:26pt;
+
+        margin-bottom:14px;
+    }
+
+    .report-document-meta{
+
+        font-size:10pt;
+
+        color:#555;
+    }
+
+    .report-source-summary{
+
+        display:flex !important;
+
+        gap:40px;
+
+        background:white !important;
+
+        border:none !important;
+
+        margin-bottom:30px;
+    }
+
+    .report-source-summary>div{
+
+        padding:0 !important;
+    }
+
+    .report-source-summary strong{
+
+        font-size:16pt;
+    }
+        /* secciones del documento */
+
+    .report-section {
+        padding: 0 !important;
+        margin: 0 0 28px 0 !important;
+
+        border: none !important;
+        background: white !important;
+
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    .report-section-heading {
+        display: block !important;
+
+        margin: 0 0 12px 0 !important;
+    }
+
+    .report-eyebrow,
+    .report-count {
+        display: none !important;
+    }
+
+    .report-section-heading h2 {
+        margin: 0 0 12px 0 !important;
+        padding-bottom: 7px;
+
+        border-bottom: 1px solid #8a8a8a;
+
+        color: #111 !important;
+
+        font-family: Arial, sans-serif;
+        font-size: 15pt;
+        font-weight: 700;
+
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    /* resumen ejecutivo */
+
+    .report-executive-summary {
+        max-width: none !important;
+
+        color: #111 !important;
+
+        font-size: 11pt;
+        line-height: 1.6;
+
+        text-align: justify;
+    }
+
+    .report-executive-summary p {
+        margin: 0 0 12px 0 !important;
+
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* hallazgos relevantes */
+
+    .report-priorities-list {
+        display: block !important;
+    }
+
+    .report-priority-card {
+        margin: 0 0 20px 0 !important;
+        padding: 0 0 15px 0 !important;
+
+        border: none !important;
+        border-bottom: 1px solid #d0d0d0 !important;
+        border-radius: 0 !important;
+
+        background: white !important;
+        box-shadow: none !important;
+
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .report-priority-heading {
+        margin-bottom: 8px;
+    }
+
+    .report-priority-heading h3 {
+        margin: 0 0 8px 0 !important;
+
+        color: #111 !important;
+
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        font-weight: 700;
+
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .report-priority-badge {
+        display: inline-block !important;
+
+        margin: 0 0 6px 0 !important;
+        padding: 0 !important;
+
+        border: none !important;
+        border-radius: 0 !important;
+
+        background: transparent !important;
+        color: #555 !important;
+
+        font-family: Arial, sans-serif;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+    }
+
+    .report-block {
+        margin-top: 9px !important;
+    }
+
+    .report-block strong {
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: #222 !important;
+
+        font-family: Arial, sans-serif;
+        font-size: 9.5pt;
+    }
+
+    .report-block p {
+        margin: 0 !important;
+
+        color: #111 !important;
+
+        font-size: 10.5pt;
+        line-height: 1.5;
+
+        text-align: justify;
+    }
+
+    /* evidencias */
+
+    .report-evidence-list {
+        display: block !important;
+
+        margin-top: 8px !important;
+    }
+
+    .report-evidence-list blockquote {
+        margin: 0 0 8px 0 !important;
+        padding: 6px 0 6px 12px !important;
+
+        border: none !important;
+        border-left: 2px solid #777 !important;
+        border-radius: 0 !important;
+
+        background: transparent !important;
+        color: #333 !important;
+
+        font-size: 9.5pt;
+        font-style: italic;
+        line-height: 1.45;
+
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* aspectos positivos */
+
+    .report-highlights-grid {
+        display: block !important;
+    }
+
+    .report-highlight-card {
+        margin: 0 0 18px 0 !important;
+        padding: 0 0 14px 0 !important;
+
+        border: none !important;
+        border-bottom: 1px solid #d0d0d0 !important;
+        border-radius: 0 !important;
+
+        background: white !important;
+        box-shadow: none !important;
+
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .report-highlight-card h3 {
+        margin: 0 0 8px 0 !important;
+
+        color: #111 !important;
+
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        font-weight: 700;
+
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .report-highlight-card p {
+        margin: 0 0 9px 0 !important;
+
+        color: #111 !important;
+
+        font-size: 10.5pt;
+        line-height: 1.5;
+
+        text-align: justify;
+    }
+
+    /* nota metodológica */
+
+    .report-section:last-child {
+        margin-top: 32px !important;
+        padding-top: 14px !important;
+
+        border-top: 1px solid #999 !important;
+    }
+
+    .report-section:last-child .report-section-heading h2 {
+        font-size: 12pt;
+    }
+
+    .report-section:last-child .report-executive-summary {
+        color: #555 !important;
+
+        font-size: 9.5pt;
+        line-height: 1.45;
+    }
+
+    /* control de saltos */
+
+    h1,
+    h2,
+    h3,
+    strong {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    p,
+    blockquote {
+        orphans: 3;
+        widows: 3;
+    }
+
+    .report-priority-card,
+    .report-highlight-card,
+    .report-source-summary {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}

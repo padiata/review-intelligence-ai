@@ -48,11 +48,8 @@ export type OperationalPriority = {
   priority: string;
 
   summary: string;
-  impact: string;
 
   evidence: string[];
-
-  recommendedAction: string;
 };
 
 export type PositiveHighlight = {
@@ -81,9 +78,11 @@ export type ExecutiveReport = {
   positiveHighlights:
     PositiveHighlight[];
 
-  recommendations: string[];
+  methodologicalNote: string;
 
   findings: ReportFinding[];
+
+ 
 };
 
 export type GenerateReportRequest = {

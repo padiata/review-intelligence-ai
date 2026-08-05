@@ -24,14 +24,6 @@ export type PreparedReportData = {
   groupedOperationalPriorities: OperationalPriority[];
   positiveHighlights: PositiveHighlight[];
 
-  recommendationsContext: {
-    areaCode: string | null;
-    causeCode: string | null;
-    priority: string;
-    summaries: string[];
-    evidence: string[];
-  }[];
-
   findings: ReportFinding[];
 };
 
@@ -45,13 +37,19 @@ const priorityOrder: Record<string, number> = {
 function normalizePriority(
   value: string | null
 ) {
-  return value?.trim().toLowerCase() || "low";
+  return (
+    value?.trim().toLowerCase() ||
+    "low"
+  );
 }
 
 function normalizeSentiment(
   value: string | null
 ) {
-  return value?.trim().toLowerCase() || "";
+  return (
+    value?.trim().toLowerCase() ||
+    ""
+  );
 }
 
 function compareFindings(
@@ -60,41 +58,61 @@ function compareFindings(
 ) {
   const leftPriority =
     priorityOrder[
-      normalizePriority(left.priority)
+      normalizePriority(
+        left.priority
+      )
     ] ?? 99;
 
   const rightPriority =
     priorityOrder[
-      normalizePriority(right.priority)
+      normalizePriority(
+        right.priority
+      )
     ] ?? 99;
 
-  if (leftPriority !== rightPriority) {
-    return leftPriority - rightPriority;
+  if (
+    leftPriority !==
+    rightPriority
+  ) {
+    return (
+      leftPriority -
+      rightPriority
+    );
   }
 
   const leftDate =
     left.reviewDate
-      ? new Date(left.reviewDate).getTime()
+      ? new Date(
+          left.reviewDate
+        ).getTime()
       : 0;
 
   const rightDate =
     right.reviewDate
-      ? new Date(right.reviewDate).getTime()
+      ? new Date(
+          right.reviewDate
+        ).getTime()
       : 0;
 
   return rightDate - leftDate;
 }
 
 function uniqueStrings(
-  values: Array<string | null | undefined>,
+  values: Array<
+    string | null | undefined
+  >,
   limit?: number
 ) {
   const unique = Array.from(
     new Set(
       values
-        .map((value) => value?.trim())
+        .map((value) =>
+          value?.trim()
+        )
         .filter(
-          (value): value is string =>
+          (
+            value
+          ): value is string =>
             Boolean(value)
         )
     )
@@ -109,9 +127,15 @@ function groupKey(
   finding: ReportFinding
 ) {
   return [
-    finding.areaCode ?? "UNCLASSIFIED_AREA",
-    finding.causeCode ?? "UNCLASSIFIED_CAUSE",
-    normalizePriority(finding.priority),
+    finding.areaCode ??
+      "UNCLASSIFIED_AREA",
+
+    finding.causeCode ??
+      "UNCLASSIFIED_CAUSE",
+
+    normalizePriority(
+      finding.priority
+    ),
   ].join("::");
 }
 
@@ -124,22 +148,30 @@ function groupFindings(
   >();
 
   for (const finding of findings) {
-    const key = groupKey(finding);
+    const key =
+      groupKey(finding);
 
     const current =
       groups.get(key) ?? [];
 
     current.push(finding);
-    groups.set(key, current);
+
+    groups.set(
+      key,
+      current
+    );
   }
 
-  return Array.from(groups.values());
+  return Array.from(
+    groups.values()
+  );
 }
 
 function buildPriorityTitle(
   findings: ReportFinding[]
 ) {
-  const first = findings[0];
+  const first =
+    findings[0];
 
   if (!first) {
     return "Hallazgo operativo";
@@ -162,126 +194,120 @@ function buildPriorityTitle(
 function buildGroupedOperationalPriorities(
   findings: ReportFinding[]
 ): OperationalPriority[] {
-  const grouped = groupFindings(findings);
+  const grouped =
+    groupFindings(findings);
 
   return grouped
     .map((group) => {
-      const first = group[0];
+      const first =
+        group[0];
 
-      const evidence = uniqueStrings(
-        group.map(
-          (finding) =>
-            finding.evidenceText
-        ),
-        5
-      );
+      const evidence =
+        uniqueStrings(
+          group.map(
+            (finding) =>
+              finding.evidenceText
+          ),
+          5
+        );
 
-      const summaries = uniqueStrings(
-        group.map(
-          (finding) =>
-            finding.findingSummary
-        ),
-        5
-      );
+      const summaries =
+        uniqueStrings(
+          group.map(
+            (finding) =>
+              finding.findingSummary
+          ),
+          5
+        );
 
       return {
         title:
-          buildPriorityTitle(group),
+          buildPriorityTitle(
+            group
+          ),
 
         areaCode:
-          first?.areaCode ?? null,
+          first?.areaCode ??
+          null,
 
         causeCode:
-          first?.causeCode ?? null,
+          first?.causeCode ??
+          null,
 
         priority:
           normalizePriority(
-            first?.priority ?? null
+            first?.priority ??
+              null
           ),
 
         summary:
           summaries.join(" "),
 
-        impact: "",
-
         evidence,
-
-        recommendedAction: "",
       };
     })
-    .sort((left, right) => {
-      const leftOrder =
-        priorityOrder[
-          normalizePriority(left.priority)
-        ] ?? 99;
+    .sort(
+      (left, right) => {
+        const leftOrder =
+          priorityOrder[
+            normalizePriority(
+              left.priority
+            )
+          ] ?? 99;
 
-      const rightOrder =
-        priorityOrder[
-          normalizePriority(right.priority)
-        ] ?? 99;
+        const rightOrder =
+          priorityOrder[
+            normalizePriority(
+              right.priority
+            )
+          ] ?? 99;
 
-      return leftOrder - rightOrder;
-    });
+        return (
+          leftOrder -
+          rightOrder
+        );
+      }
+    );
 }
 
 function buildPositiveHighlights(
   findings: ReportFinding[]
 ): PositiveHighlight[] {
-  const grouped = groupFindings(findings);
+  const grouped =
+    groupFindings(findings);
 
-  return grouped.map((group) => {
-    const first = group[0];
+  return grouped.map(
+    (group) => {
+      const summaries =
+        uniqueStrings(
+          group.map(
+            (finding) =>
+              finding.findingSummary
+          ),
+          4
+        );
 
-    const summaries = uniqueStrings(
-      group.map(
-        (finding) =>
-          finding.findingSummary
-      ),
-      4
-    );
+      const evidence =
+        uniqueStrings(
+          group.map(
+            (finding) =>
+              finding.evidenceText
+          ),
+          4
+        );
 
-    const evidence = uniqueStrings(
-      group.map(
-        (finding) =>
-          finding.evidenceText
-      ),
-      4
-    );
+      return {
+        title:
+          buildPriorityTitle(
+            group
+          ),
 
-    return {
-      title:
-        buildPriorityTitle(group),
+        summary:
+          summaries.join(" "),
 
-      summary:
-        summaries.join(" "),
-
-      evidence,
-    };
-  });
-}
-
-function buildRecommendationsContext(
-  priorities: OperationalPriority[]
-) {
-  return priorities.map(
-    (priority) => ({
-      areaCode:
-        priority.areaCode,
-
-      causeCode:
-        priority.causeCode,
-
-      priority:
-        priority.priority,
-
-      summaries:
-        priority.summary
-          ? [priority.summary]
-          : [],
-
-      evidence:
-        priority.evidence,
-    })
+        evidence,
+      };
+    }
   );
 }
 
@@ -294,33 +320,49 @@ export function buildPreparedReportData(
 
   const negativeFindings =
     sortedFindings.filter(
-      (finding) =>
-        normalizeSentiment(
-          finding.sentiment
-        ) === "negative" ||
-        normalizeSentiment(
-          finding.sentiment
-        ) === "negativo"
+      (finding) => {
+        const sentiment =
+          normalizeSentiment(
+            finding.sentiment
+          );
+
+        return (
+          sentiment ===
+            "negative" ||
+          sentiment ===
+            "negativo"
+        );
+      }
     );
 
   const positiveFindings =
     sortedFindings.filter(
-      (finding) =>
-        normalizeSentiment(
-          finding.sentiment
-        ) === "positive" ||
-        normalizeSentiment(
-          finding.sentiment
-        ) === "positivo"
+      (finding) => {
+        const sentiment =
+          normalizeSentiment(
+            finding.sentiment
+          );
+
+        return (
+          sentiment ===
+            "positive" ||
+          sentiment ===
+            "positivo"
+        );
+      }
     );
 
   const highPriorityFindings =
-    sortedFindings.filter((finding) =>
-      ["critical", "high"].includes(
-        normalizePriority(
-          finding.priority
+    sortedFindings.filter(
+      (finding) =>
+        [
+          "critical",
+          "high",
+        ].includes(
+          normalizePriority(
+            finding.priority
+          )
         )
-      )
     );
 
   const mediumPriorityFindings =
@@ -349,11 +391,6 @@ export function buildPreparedReportData(
       positiveFindings
     );
 
-  const recommendationsContext =
-    buildRecommendationsContext(
-      groupedOperationalPriorities
-    );
-
   return {
     entity:
       dataset.entity,
@@ -379,8 +416,6 @@ export function buildPreparedReportData(
 
     groupedOperationalPriorities,
     positiveHighlights,
-
-    recommendationsContext,
 
     findings:
       sortedFindings,

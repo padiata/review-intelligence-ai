@@ -7,16 +7,17 @@ import type {
   GenerateReportResponse,
   OperationalPriority,
   PositiveHighlight,
-  ReportFinding,
 } from "@/lib/reports/report.types";
 
 import "./ReportsPage.css";
 
 function formatInputDate(date: Date) {
   const year = date.getFullYear();
+
   const month = String(
     date.getMonth() + 1
   ).padStart(2, "0");
+
   const day = String(
     date.getDate()
   ).padStart(2, "0");
@@ -28,13 +29,17 @@ function getDefaultPeriod() {
   const endDate = new Date();
 
   const startDate = new Date();
+
   startDate.setDate(
     startDate.getDate() - 29
   );
 
   return {
-    startDate: formatInputDate(startDate),
-    endDate: formatInputDate(endDate),
+    startDate:
+      formatInputDate(startDate),
+
+    endDate:
+      formatInputDate(endDate),
   };
 }
 
@@ -47,7 +52,11 @@ function formatDisplayDate(
 
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
     return value;
   }
 
@@ -70,7 +79,11 @@ function formatDateTime(
 
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
     return value;
   }
 
@@ -90,7 +103,9 @@ function priorityLabel(
   priority: string
 ) {
   switch (
-    priority.trim().toLowerCase()
+    priority
+      .trim()
+      .toLowerCase()
   ) {
     case "critical":
       return "Crítica";
@@ -113,7 +128,9 @@ function priorityClass(
   priority: string
 ) {
   switch (
-    priority.trim().toLowerCase()
+    priority
+      .trim()
+      .toLowerCase()
   ) {
     case "critical":
       return "critical";
@@ -143,33 +160,32 @@ function ReportPriorityCard({
               priority.priority
             )}`}
           >
-            Prioridad{" "}
+            Relevancia{" "}
             {priorityLabel(
               priority.priority
             )}
           </span>
 
-          <h3>{priority.title}</h3>
+          <h3>
+            {priority.title}
+          </h3>
         </div>
       </div>
 
       {priority.summary && (
         <div className="report-block">
-          <strong>Situación detectada</strong>
-          <p>{priority.summary}</p>
-        </div>
-      )}
-
-      {priority.impact && (
-        <div className="report-block">
           <strong>
-            Impacto operativo
+            Observación detectada
           </strong>
-          <p>{priority.impact}</p>
+
+          <p>
+            {priority.summary}
+          </p>
         </div>
       )}
 
-      {priority.evidence.length > 0 && (
+      {priority.evidence.length >
+        0 && (
         <div className="report-block">
           <strong>
             Evidencias representativas
@@ -177,7 +193,10 @@ function ReportPriorityCard({
 
           <div className="report-evidence-list">
             {priority.evidence.map(
-              (evidence, index) => (
+              (
+                evidence,
+                index
+              ) => (
                 <blockquote
                   key={`${priority.title}-${index}`}
                 >
@@ -186,15 +205,6 @@ function ReportPriorityCard({
               )
             )}
           </div>
-        </div>
-      )}
-
-      {priority.recommendedAction && (
-        <div className="report-action">
-          <strong>Acción sugerida</strong>
-          <p>
-            {priority.recommendedAction}
-          </p>
         </div>
       )}
     </article>
@@ -208,14 +218,22 @@ function PositiveHighlightCard({
 }) {
   return (
     <article className="report-highlight-card">
-      <h3>{highlight.title}</h3>
+      <h3>
+        {highlight.title}
+      </h3>
 
-      <p>{highlight.summary}</p>
+      <p>
+        {highlight.summary}
+      </p>
 
-      {highlight.evidence.length > 0 && (
+      {highlight.evidence.length >
+        0 && (
         <div className="report-evidence-list">
           {highlight.evidence.map(
-            (evidence, index) => (
+            (
+              evidence,
+              index
+            ) => (
               <blockquote
                 key={`${highlight.title}-${index}`}
               >
@@ -229,119 +247,6 @@ function PositiveHighlightCard({
   );
 }
 
-function FindingsAnnex({
-  findings,
-}: {
-  findings: ReportFinding[];
-}) {
-  const [expanded, setExpanded] =
-    useState(false);
-
-  if (findings.length === 0) {
-    return null;
-  }
-
-  const visibleFindings = expanded
-    ? findings
-    : findings.slice(0, 10);
-
-  return (
-    <section className="report-section">
-      <div className="report-section-heading">
-        <div>
-          <p className="report-eyebrow">
-            Trazabilidad
-          </p>
-
-          <h2>
-            Anexo de hallazgos
-          </h2>
-        </div>
-
-        <span className="report-count">
-          {findings.length} hallazgos
-        </span>
-      </div>
-
-      <div className="report-findings-list">
-        {visibleFindings.map(
-          (finding) => (
-            <article
-              key={finding.id}
-              className="report-finding"
-            >
-              <div className="report-finding-heading">
-                <div>
-                  <strong>
-                    {finding.areaCode ??
-                      "Área no clasificada"}
-                  </strong>
-
-                  {finding.causeCode && (
-                    <span>
-                      {finding.causeCode}
-                    </span>
-                  )}
-                </div>
-
-                {finding.priority && (
-                  <span
-                    className={`report-priority-badge ${priorityClass(
-                      finding.priority
-                    )}`}
-                  >
-                    {priorityLabel(
-                      finding.priority
-                    )}
-                  </span>
-                )}
-              </div>
-
-              <p>
-                {finding.findingSummary}
-              </p>
-
-              {finding.evidenceText && (
-                <blockquote>
-                  “{finding.evidenceText}”
-                </blockquote>
-              )}
-
-              <footer>
-                <span>
-                  Review #{finding.reviewId}
-                </span>
-
-                <span>
-                  {formatDisplayDate(
-                    finding.reviewDate
-                  )}
-                </span>
-              </footer>
-            </article>
-          )
-        )}
-      </div>
-
-      {findings.length > 10 && (
-        <button
-          type="button"
-          className="report-secondary-button"
-          onClick={() =>
-            setExpanded(
-              (current) => !current
-            )
-          }
-        >
-          {expanded
-            ? "Mostrar menos"
-            : `Mostrar los ${findings.length} hallazgos`}
-        </button>
-      )}
-    </section>
-  );
-}
-
 export default function ReportsPage() {
   const defaultPeriod =
     useMemo(
@@ -349,17 +254,24 @@ export default function ReportsPage() {
       []
     );
 
-  const [startDate, setStartDate] =
-    useState(
-      defaultPeriod.startDate
-    );
+  const [
+    startDate,
+    setStartDate,
+  ] = useState(
+    defaultPeriod.startDate
+  );
 
-  const [endDate, setEndDate] =
-    useState(
-      defaultPeriod.endDate
-    );
+  const [
+    endDate,
+    setEndDate,
+  ] = useState(
+    defaultPeriod.endDate
+  );
 
-  const [report, setReport] =
+  const [
+    report,
+    setReport,
+  ] =
     useState<ExecutiveReport | null>(
       null
     );
@@ -367,18 +279,26 @@ export default function ReportsPage() {
   const [
     reportHistoryId,
     setReportHistoryId,
-  ] = useState<number | null>(null);
+  ] =
+    useState<number | null>(
+      null
+    );
 
-  const [isGenerating, setIsGenerating] =
-    useState(false);
+  const [
+    isGenerating,
+    setIsGenerating,
+  ] = useState(false);
 
-  const [errorMessage, setErrorMessage] =
-    useState("");
+  const [
+    errorMessage,
+    setErrorMessage,
+  ] = useState("");
 
   function selectLastSevenDays() {
     const end = new Date();
 
     const start = new Date();
+
     start.setDate(
       start.getDate() - 6
     );
@@ -386,15 +306,23 @@ export default function ReportsPage() {
     setStartDate(
       formatInputDate(start)
     );
-    setEndDate(formatInputDate(end));
+
+    setEndDate(
+      formatInputDate(end)
+    );
   }
 
   function selectLastThirtyDays() {
     const period =
       getDefaultPeriod();
 
-    setStartDate(period.startDate);
-    setEndDate(period.endDate);
+    setStartDate(
+      period.startDate
+    );
+
+    setEndDate(
+      period.endDate
+    );
   }
 
   function selectPreviousMonth() {
@@ -415,7 +343,10 @@ export default function ReportsPage() {
     setStartDate(
       formatInputDate(start)
     );
-    setEndDate(formatInputDate(end));
+
+    setEndDate(
+      formatInputDate(end)
+    );
   }
 
   async function generateReport() {
@@ -423,10 +354,14 @@ export default function ReportsPage() {
     setReport(null);
     setReportHistoryId(null);
 
-    if (!startDate || !endDate) {
+    if (
+      !startDate ||
+      !endDate
+    ) {
       setErrorMessage(
         "Debe seleccionar la fecha inicial y la fecha final."
       );
+
       return;
     }
 
@@ -437,26 +372,32 @@ export default function ReportsPage() {
       setErrorMessage(
         "La fecha inicial no puede ser posterior a la fecha final."
       );
+
       return;
     }
 
     setIsGenerating(true);
 
     try {
-      const response = await fetch(
-        "/api/reports/generate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            startDate,
-            endDate,
-          }),
-        }
-      );
+      const response =
+        await fetch(
+          "/api/reports/generate",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body:
+              JSON.stringify({
+                entityId: 1,
+                startDate,
+                endDate,
+              }),
+          }
+        );
 
       const data =
         (await response.json()) as GenerateReportResponse & {
@@ -473,9 +414,13 @@ export default function ReportsPage() {
         );
       }
 
-      setReport(data.report);
+      setReport(
+        data.report
+      );
+
       setReportHistoryId(
-        data.reportHistoryId ?? null
+        data.reportHistoryId ??
+          null
       );
     } catch (error) {
       setErrorMessage(
@@ -487,8 +432,7 @@ export default function ReportsPage() {
       setIsGenerating(false);
     }
   }
-
-  return (
+    return (
     <div className="reports-page">
       <header className="reports-header">
         <div>
@@ -529,6 +473,7 @@ export default function ReportsPage() {
           <button
             type="button"
             onClick={selectLastSevenDays}
+            disabled={isGenerating}
           >
             Últimos 7 días
           </button>
@@ -536,6 +481,7 @@ export default function ReportsPage() {
           <button
             type="button"
             onClick={selectLastThirtyDays}
+            disabled={isGenerating}
           >
             Últimos 30 días
           </button>
@@ -543,6 +489,7 @@ export default function ReportsPage() {
           <button
             type="button"
             onClick={selectPreviousMonth}
+            disabled={isGenerating}
           >
             Mes anterior
           </button>
@@ -656,40 +603,55 @@ export default function ReportsPage() {
               </p>
             </div>
 
-            <div className="report-document-meta">
-              <span>
-                Generado:{" "}
-                {formatDateTime(
-                  report.generatedAt
-                )}
-              </span>
+       <div className="report-document-meta">
 
-              <span>
-                Sincronizado hasta:{" "}
-                {formatDateTime(
-                  report.synchronizedUntil
-                )}
-              </span>
+  <span>
+    Generado:{" "}
+    {formatDateTime(
+      report.generatedAt
+    )}
+  </span>
 
-              {reportHistoryId && (
-                <span>
-                  Informe #
-                  {reportHistoryId}
-                </span>
-              )}
-            </div>
+  <span>
+    Sincronizado hasta:{" "}
+    {formatDateTime(
+      report.synchronizedUntil
+    )}
+  </span>
+
+  {reportHistoryId && (
+    <span>
+      Informe #{reportHistoryId}
+    </span>
+  )}
+
+  <button
+    type="button"
+    className="report-print-button"
+    onClick={() => window.print()}
+  >
+    🖨 Imprimir informe
+  </button>
+
+</div>
           </header>
 
           <div className="report-source-summary">
             <div>
-              <span>Opiniones utilizadas</span>
+              <span>
+                Opiniones utilizadas
+              </span>
+
               <strong>
                 {report.reviewCount}
               </strong>
             </div>
 
             <div>
-              <span>Hallazgos utilizados</span>
+              <span>
+                Hallazgos utilizados
+              </span>
+
               <strong>
                 {report.findingCount}
               </strong>
@@ -714,7 +676,10 @@ export default function ReportsPage() {
                 .split(/\n{2,}/)
                 .filter(Boolean)
                 .map(
-                  (paragraph, index) => (
+                  (
+                    paragraph,
+                    index
+                  ) => (
                     <p key={index}>
                       {paragraph}
                     </p>
@@ -727,11 +692,11 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  Atención requerida
+                  Hallazgos identificados
                 </p>
 
                 <h2>
-                  Prioridades operativas
+                  Hallazgos relevantes
                 </h2>
               </div>
 
@@ -741,7 +706,7 @@ export default function ReportsPage() {
                     .operationalPriorities
                     .length
                 }{" "}
-                prioridades
+                hallazgos
               </span>
             </div>
 
@@ -749,7 +714,10 @@ export default function ReportsPage() {
               .length > 0 ? (
               <div className="report-priorities-list">
                 {report.operationalPriorities.map(
-                  (priority, index) => (
+                  (
+                    priority,
+                    index
+                  ) => (
                     <ReportPriorityCard
                       key={`${priority.title}-${index}`}
                       priority={priority}
@@ -759,8 +727,8 @@ export default function ReportsPage() {
               </div>
             ) : (
               <p className="report-empty">
-                No se detectaron prioridades
-                operativas relevantes.
+                No se identificaron hallazgos
+                relevantes para este período.
               </p>
             )}
           </section>
@@ -782,7 +750,10 @@ export default function ReportsPage() {
               .length > 0 ? (
               <div className="report-highlights-grid">
                 {report.positiveHighlights.map(
-                  (highlight, index) => (
+                  (
+                    highlight,
+                    index
+                  ) => (
                     <PositiveHighlightCard
                       key={`${highlight.title}-${index}`}
                       highlight={highlight}
@@ -803,48 +774,21 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  Próximos pasos
+                  Nota metodológica
                 </p>
 
                 <h2>
-                  Recomendaciones
+                  Alcance del informe
                 </h2>
               </div>
             </div>
 
-            {report.recommendations.length >
-            0 ? (
-              <ol className="report-recommendations">
-                {report.recommendations.map(
-                  (
-                    recommendation,
-                    index
-                  ) => (
-                    <li
-                      key={`${recommendation}-${index}`}
-                    >
-                      <span>
-                        {index + 1}
-                      </span>
-
-                      <p>
-                        {recommendation}
-                      </p>
-                    </li>
-                  )
-                )}
-              </ol>
-            ) : (
-              <p className="report-empty">
-                No se generaron recomendaciones
-                para este período.
+            <div className="report-executive-summary">
+              <p>
+                {report.methodologicalNote}
               </p>
-            )}
+            </div>
           </section>
-
-          <FindingsAnnex
-            findings={report.findings}
-          />
         </article>
       )}
     </div>

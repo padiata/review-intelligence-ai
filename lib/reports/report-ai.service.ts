@@ -25,9 +25,7 @@ type AIReportOutput = {
     causeCode: string | null;
     priority: string;
     summary: string;
-    impact: string;
     evidence: string[];
-    recommendedAction: string;
   }>;
 
   positiveHighlights: Array<{
@@ -36,7 +34,7 @@ type AIReportOutput = {
     evidence: string[];
   }>;
 
-  recommendations: string[];
+  methodologicalNote: string;
 };
 
 function compactPreparedData(
@@ -44,35 +42,61 @@ function compactPreparedData(
 ) {
   return {
     entity: prepared.entity,
+
     period: prepared.period,
 
-    reviewCount: prepared.reviewCount,
-    findingCount: prepared.findingCount,
+    reviewCount:
+      prepared.reviewCount,
+
+    findingCount:
+      prepared.findingCount,
 
     operationalPriorities:
       prepared.groupedOperationalPriorities.map(
         (priority) => ({
-          title: priority.title,
-          areaCode: priority.areaCode,
-          causeCode: priority.causeCode,
-          priority: priority.priority,
-          summary: priority.summary,
-          evidence: priority.evidence.slice(
-            0,
-            4
-          ),
+          title:
+            priority.title,
+
+          areaCode:
+            priority.areaCode,
+
+          causeCode:
+            priority.causeCode,
+
+          priority:
+            priority.priority,
+
+          summary:
+            priority.summary,
+
+          evidence:
+            priority.evidence.slice(
+              0,
+              4
+            ),
+
+          evidenceCount:
+            priority.evidence.length,
         })
       ),
 
     positiveHighlights:
       prepared.positiveHighlights.map(
         (highlight) => ({
-          title: highlight.title,
-          summary: highlight.summary,
-          evidence: highlight.evidence.slice(
-            0,
-            3
-          ),
+          title:
+            highlight.title,
+
+          summary:
+            highlight.summary,
+
+          evidence:
+            highlight.evidence.slice(
+              0,
+              3
+            ),
+
+          evidenceCount:
+            highlight.evidence.length,
         })
       ),
   };
@@ -84,7 +108,7 @@ function normalizeOperationalPriorities(
   return values.map((item) => ({
     title:
       item.title?.trim() ||
-      "Prioridad operativa",
+      "Hallazgo relevante",
 
     areaCode:
       item.areaCode ?? null,
@@ -97,13 +121,13 @@ function normalizeOperationalPriorities(
       "medium",
 
     summary:
-      item.summary?.trim() || "",
-
-    impact:
-      item.impact?.trim() || "",
+      item.summary?.trim() ||
+      "",
 
     evidence:
-      Array.isArray(item.evidence)
+      Array.isArray(
+        item.evidence
+      )
         ? item.evidence
             .map((value) =>
               String(value).trim()
@@ -111,10 +135,6 @@ function normalizeOperationalPriorities(
             .filter(Boolean)
             .slice(0, 5)
         : [],
-
-    recommendedAction:
-      item.recommendedAction?.trim() ||
-      "",
   }));
 }
 
@@ -127,10 +147,13 @@ function normalizePositiveHighlights(
       "Aspecto positivo",
 
     summary:
-      item.summary?.trim() || "",
+      item.summary?.trim() ||
+      "",
 
     evidence:
-      Array.isArray(item.evidence)
+      Array.isArray(
+        item.evidence
+      )
         ? item.evidence
             .map((value) =>
               String(value).trim()
@@ -144,76 +167,129 @@ function normalizePositiveHighlights(
 export async function generateExecutiveReport(
   prepared: PreparedReportData
 ): Promise<ExecutiveReport> {
-  if (!process.env.OPENAI_API_KEY) {
+  if (
+    !process.env.OPENAI_API_KEY
+  ) {
     throw new Error(
       "La variable OPENAI_API_KEY no está configurada."
     );
   }
 
-  if (prepared.findingCount === 0) {
+  if (
+    prepared.findingCount === 0
+  ) {
     throw new Error(
       "No existen findings para generar el informe."
     );
   }
 
   const compactData =
-    compactPreparedData(prepared);
+    compactPreparedData(
+      prepared
+    );
 
   const result =
     await openai.responses.create({
       model: "gpt-4",
 
       instructions: `
-Eres un consultor senior especializado en operaciones hoteleras y reputación.
+Eres un analista especializado en reputación y operaciones hoteleras.
 
-Debes redactar un informe ejecutivo no estadístico basado exclusivamente en findings estructurados.
+Debes redactar un informe ejecutivo no estadístico basado exclusivamente en los findings estructurados recibidos.
 
 OBJETIVO
 
-Transformar los findings operativos en un documento claro, breve, accionable y útil para la dirección de un hotel.
+Transformar los findings en un documento breve, claro y prudente que ayude a la dirección del hotel a comprender lo observado durante el período.
+
+Tu función es describir, contextualizar y organizar la información.
+
+No debes sustituir el criterio profesional de los directivos ni indicarles qué decisiones deben tomar.
 
 REGLAS OBLIGATORIAS
 
-- Escribe el informe en español.
-- No inventes hechos, causas, incidencias, acciones realizadas ni compensaciones.
-- No agregues recomendaciones que no estén razonablemente vinculadas a los findings recibidos.
-- No uses porcentajes salvo que aparezcan explícitamente en los datos de entrada.
+- Escribe todo el informe en español.
+- Utiliza exclusivamente la información recibida.
+- No inventes hechos, causas, incidencias, explicaciones, acciones realizadas ni compensaciones.
+- No formules recomendaciones ni acciones sugeridas.
+- No indiques qué debería hacer la dirección.
+- No realices diagnósticos técnicos.
+- No atribuyas causas que no estén expresamente respaldadas por los findings.
+- No uses porcentajes salvo que estén expresamente incluidos en los datos.
 - No conviertas el informe en un dashboard estadístico.
-- No menciones códigos internos en los títulos redactados para el usuario.
-- Los códigos areaCode y causeCode deben conservarse únicamente en sus campos correspondientes.
-- No repitas la misma evidencia en varias prioridades, salvo que sea imprescindible.
-- No exageres la gravedad de los findings.
-- Distingue claramente problemas operativos y aspectos positivos.
-- Las recomendaciones deben ser concretas, prudentes y ejecutables.
+- No menciones códigos internos en los títulos visibles para el usuario.
+- Conserva areaCode y causeCode únicamente en sus campos JSON.
+- No exageres la gravedad de los hallazgos.
+- No repitas innecesariamente la misma evidencia.
 - Devuelve exclusivamente JSON válido.
 - No incluyas texto antes ni después del JSON.
 
-ESTRUCTURA ESPERADA
+NIVEL DE CERTEZA
+
+- Ajusta siempre el lenguaje a la cantidad y fuerza de la evidencia disponible.
+- No presentes un finding aislado como una condición general del hotel.
+- Si un tema aparece en una sola opinión, descríbelo como una incidencia puntual, una observación individual o una señal aislada.
+- Si aparece en varias opiniones independientes, puede describirse como una señal que merece seguimiento.
+- Solo utiliza términos como "patrón recurrente", "tendencia" o "situación generalizada" cuando la evidencia recibida lo respalde claramente.
+- Cuando la base documental sea limitada, indícalo expresamente en el resumen ejecutivo.
+- Prefiere expresiones prudentes como:
+  "se reportó",
+  "se observó",
+  "la opinión analizada señala",
+  "la evidencia disponible sugiere",
+  "podría indicar",
+  "merece seguimiento".
+- Evita expresiones categóricas como:
+  "el hotel presenta",
+  "existe un problema general",
+  "los huéspedes consideran",
+  "la situación demuestra",
+  salvo que exista evidencia suficiente y claramente repetida.
+- Distingue entre incidencias puntuales, señales emergentes, patrones recurrentes y aspectos positivos.
+
+CONTENIDO DEL INFORME
+
+El informe debe contener únicamente:
+
+1. Un resumen ejecutivo.
+2. Hallazgos relevantes.
+3. Aspectos positivos.
+4. Una nota metodológica.
+
+No incluyas:
+
+- recomendaciones;
+- acciones sugeridas;
+- impacto operativo estimado;
+- instrucciones para la dirección;
+- anexos;
+- listas completas de findings.
+
+ESTRUCTURA JSON ESPERADA
 
 {
-  "executiveSummary": "Resumen ejecutivo de 2 a 4 párrafos.",
+  "executiveSummary": "Resumen ejecutivo prudente de 2 a 4 párrafos. Debe explicar el alcance del período y señalar las limitaciones de la evidencia cuando corresponda.",
   "operationalPriorities": [
     {
-      "title": "Título legible",
-      "areaCode": "código o null",
-      "causeCode": "código o null",
+      "title": "Título claro y legible para el usuario",
+      "areaCode": "código interno o null",
+      "causeCode": "código interno o null",
       "priority": "critical | high | medium | low",
-      "summary": "Descripción clara del problema.",
-      "impact": "Impacto operativo o en la experiencia del huésped.",
-      "evidence": ["evidencia real"],
-      "recommendedAction": "Acción sugerida."
+      "summary": "Descripción prudente, clara y proporcional a la evidencia disponible.",
+      "evidence": [
+        "Evidencia real recibida en los datos"
+      ]
     }
   ],
   "positiveHighlights": [
     {
-      "title": "Fortaleza destacada",
-      "summary": "Explicación breve.",
-      "evidence": ["evidencia real"]
+      "title": "Fortaleza o aspecto positivo identificado",
+      "summary": "Descripción breve y prudente.",
+      "evidence": [
+        "Evidencia real recibida en los datos"
+      ]
     }
   ],
-  "recommendations": [
-    "Recomendación concreta"
-  ]
+  "methodologicalNote": "Nota breve indicando que el informe sintetiza las opiniones del período, que los hallazgos deben interpretarse según la cantidad de evidencia disponible y que su valoración final corresponde a la dirección del establecimiento."
 }
       `.trim(),
 
@@ -222,7 +298,7 @@ HOTEL
 
 ${prepared.entity.name}
 
-PERÍODO
+PERÍODO DE LAS OPINIONES
 
 Desde:
 ${prepared.period.startDate}
@@ -232,11 +308,17 @@ ${prepared.period.endDate}
 
 BASE DOCUMENTAL
 
-Reviews utilizadas:
+Número de reviews utilizadas:
 ${prepared.reviewCount}
 
-Findings utilizados:
+Número de findings utilizados:
 ${prepared.findingCount}
+
+IMPORTANTE
+
+La cantidad de reviews y findings determina el nivel de certeza permitido.
+
+Si la base documental es reducida, debes declararlo expresamente y evitar conclusiones generales sobre el hotel.
 
 DATOS PREPARADOS
 
@@ -261,8 +343,15 @@ ${JSON.stringify(
 
   try {
     parsed =
-      JSON.parse(outputText) as AIReportOutput;
+      JSON.parse(
+        outputText
+      ) as AIReportOutput;
   } catch {
+    console.error(
+      "Contenido inválido devuelto por OpenAI:",
+      outputText
+    );
+
     throw new Error(
       "OpenAI devolvió un informe con formato JSON inválido."
     );
@@ -276,9 +365,7 @@ ${JSON.stringify(
     !Array.isArray(
       parsed.positiveHighlights
     ) ||
-    !Array.isArray(
-      parsed.recommendations
-    )
+    !parsed.methodologicalNote
   ) {
     throw new Error(
       "OpenAI devolvió una estructura de informe incompleta."
@@ -320,14 +407,11 @@ ${JSON.stringify(
         parsed.positiveHighlights
       ),
 
-    recommendations:
-      parsed.recommendations
-        .map((value) =>
-          String(value).trim()
-        )
-        .filter(Boolean)
-        .slice(0, 10),
+    methodologicalNote:
+      parsed.methodologicalNote.trim(),
 
+    // Se conservan para trazabilidad y para report_history.
+    // No es necesario mostrarlos en la interfaz.
     findings:
       prepared.findings,
   };
