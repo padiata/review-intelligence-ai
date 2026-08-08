@@ -3,10 +3,19 @@
 import "./AppSidebar.css";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import {
+  useMemo,
+  useState,
+} from "react";
 
-import { createClient } from "@/lib/supabase/client";
+import {
+  usePathname,
+  useRouter,
+} from "next/navigation";
+
+import {
+  createClient,
+} from "@/lib/supabase/client";
 
 export type UserRole =
   | "super_admin"
@@ -20,11 +29,21 @@ type AppSidebarProps = {
   entityName?: string | null;
 };
 
-const roleLabels: Record<UserRole, string> = {
-  super_admin: "Super administrador",
-  hotel_admin: "Administrador",
-  manager: "Manager",
-  operator: "Operador",
+const roleLabels: Record<
+  UserRole,
+  string
+> = {
+  super_admin:
+    "Super administrador",
+
+  hotel_admin:
+    "Administrador de hotel",
+
+  manager:
+    "Manager",
+
+  operator:
+    "Operador",
 };
 
 export default function AppSidebar({
@@ -32,19 +51,27 @@ export default function AppSidebar({
   role,
   entityName,
 }: AppSidebarProps) {
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname =
+    usePathname();
 
-  const supabase = useMemo(
-    () => createClient(),
-    []
-  );
+  const router =
+    useRouter();
 
-  const [isLoggingOut, setIsLoggingOut] =
-    useState(false);
+  const supabase =
+    useMemo(
+      () => createClient(),
+      []
+    );
 
-  const [logoutError, setLogoutError] =
-    useState("");
+  const [
+    isLoggingOut,
+    setIsLoggingOut,
+  ] = useState(false);
+
+  const [
+    logoutError,
+    setLogoutError,
+  ] = useState("");
 
   const canSeeReports =
     role === "super_admin" ||
@@ -55,10 +82,18 @@ export default function AppSidebar({
     role === "super_admin" ||
     role === "hotel_admin";
 
-  function isActive(path: string) {
+  function isActive(
+    path: string
+  ) {
+    if (path === "/") {
+      return pathname === "/";
+    }
+
     return (
       pathname === path ||
-      pathname.startsWith(`${path}/`)
+      pathname.startsWith(
+        `${path}/`
+      )
     );
   }
 
@@ -71,10 +106,11 @@ export default function AppSidebar({
 
     if (error) {
       setLogoutError(
-        `No se pudo cerrar la sesión: ${error.message}`
+        error.message
       );
 
       setIsLoggingOut(false);
+
       return;
     }
 
@@ -94,7 +130,9 @@ export default function AppSidebar({
             Review Intelligence
           </strong>
 
-          <span>Lab</span>
+          <span>
+            Lab
+          </span>
         </div>
       </div>
 
@@ -102,9 +140,16 @@ export default function AppSidebar({
         className="app-navigation-menu"
         aria-label="Navegación principal"
       >
-        <p className="app-navigation-section">
-          Operación
-        </p>
+        <Link
+          href="/"
+          className={
+            isActive("/")
+              ? "app-navigation-link active"
+              : "app-navigation-link"
+          }
+        >
+          Inicio
+        </Link>
 
         <Link
           href="/capture"
@@ -150,7 +195,9 @@ export default function AppSidebar({
             <Link
               href="/admin/users"
               className={
-                isActive("/admin/users")
+                isActive(
+                  "/admin/users"
+                )
                   ? "app-navigation-link active"
                   : "app-navigation-link"
               }
@@ -159,21 +206,25 @@ export default function AppSidebar({
             </Link>
 
             <Link
-              href="/admin/settings"
+              href="/admin/entities"
               className={
-                isActive("/admin/settings")
+                isActive(
+                  "/admin/entities"
+                )
                   ? "app-navigation-link active"
                   : "app-navigation-link"
               }
             >
-              Configuración
+              Entidades
             </Link>
           </>
         )}
       </nav>
 
       <div className="app-navigation-account">
-        <span>{fullName}</span>
+        <span>
+          {fullName}
+        </span>
 
         <strong>
           {roleLabels[role]}
@@ -181,28 +232,26 @@ export default function AppSidebar({
 
         <small>
           {entityName ??
-            "Hotel configurado"}
+            "Acceso global"}
         </small>
 
         {logoutError && (
-          <p
-            role="alert"
-            className="logout-error"
-          >
+          <p role="alert">
             {logoutError}
           </p>
         )}
 
         <button
           type="button"
-          className="logout-button"
           onClick={() =>
             void handleLogout()
           }
-          disabled={isLoggingOut}
+          disabled={
+            isLoggingOut
+          }
         >
           {isLoggingOut
-            ? "Cerrando sesión..."
+            ? "Cerrando..."
             : "Cerrar sesión"}
         </button>
       </div>
