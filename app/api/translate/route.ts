@@ -1,112 +1,70 @@
-import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const allowedLanguages: Record<string, string> = {
-  es: "español",
-  en: "inglés",
-  fr: "francés",
-  de: "alemán",
-  it: "italiano",
-  pt: "portugués",
-  ru: "ruso",
-  zh: "chino simplificado",
-  vi: "vietnamita",
-};
+import {
+  getAIProvider,
+} from "@/lib/ai";
 
 type TranslateRequest = {
   text?: string;
   language?: string;
 };
 
-
-
-
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json(
-        {
-          error:
-            "La variable OPENAI_API_KEY no está configurada.",
-        },
-        { status: 500 }
-      );
-    }
+    const body =
+      (await request.json()) as
+        TranslateRequest;
 
-    const body = (await request.json()) as TranslateRequest;
+    const text =
+      body.text?.trim();
 
-    const text = body.text?.trim();
-    const targetLanguage = body.language;
-    
+    const targetLanguage =
+      body.language;
 
     if (!text) {
       return NextResponse.json(
         {
-          error: "El texto que desea traducir está vacío.",
+          error:
+            "El texto que desea traducir está vacío.",
         },
-        { status: 400 }
-      );
-    }
-
-    if (
-      !targetLanguage ||
-      !allowedLanguages[targetLanguage]
-    ) {
-      return NextResponse.json(
         {
-          error: "El idioma seleccionado no es válido.",
-        },
-        { status: 400 }
+          status: 400,
+        }
       );
     }
 
-    const languageName =
-      allowedLanguages[targetLanguage];
-
-    const result = await openai.responses.create({
-      model: "gpt-4.1-mini",
-
-      instructions: `
-Eres un traductor profesional especializado en respuestas
-institucionales para huéspedes de hoteles.
-
-Traduce el texto al ${languageName}.
-
-Reglas:
-- Conserva exactamente el significado.
-- Mantén el tono profesional y cordial.
-- Conserva los párrafos y los saltos de línea.
-- No agregues explicaciones.
-- No escribas etiquetas como "Traducción".
-- Devuelve únicamente el texto traducido.
-      `.trim(),
-
-      input: text,
-    });
-
-    const translatedText =
-      result.output_text?.trim();
-
-    if (!translatedText) {
+    if (!targetLanguage) {
       return NextResponse.json(
         {
           error:
-            "El servicio no devolvió una traducción.",
+            "El idioma seleccionado no es válido.",
         },
-        { status: 500 }
+        {
+          status: 400,
+        }
       );
     }
 
-    return NextResponse.json({
-      translatedText,
-      targetLanguage,
-    });
+    const ai =
+      getAIProvider();
+
+    const result =
+      await ai.translateText({
+        text,
+        language:
+          targetLanguage,
+      });
+
+    return NextResponse.json(
+      result
+    );
   } catch (error) {
-    console.error("Error traduciendo respuesta:", error);
+    console.error(
+      "Error traduciendo respuesta:",
+      error
+    );
 
     const message =
       error instanceof Error
@@ -115,9 +73,12 @@ Reglas:
 
     return NextResponse.json(
       {
-        error: `No se pudo traducir la respuesta: ${message}`,
+        error:
+          `No se pudo traducir la respuesta: ${message}`,
       },
-      { status: 500 }
+      {
+        status: 500,
+      }
     );
   }
 }
