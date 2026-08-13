@@ -15,12 +15,17 @@ import {
 } from "@/hooks/useReviewWorkspace";
 
 export default function ReviewDetailPage() {
-  const params = useParams<{ id: string }>();
-  const reviewId = Number(params.id);
+  const params = useParams<{
+    id: string;
+  }>();
 
-  const workspace = useReviewWorkspace({
-    reviewId,
-  });
+  const reviewId =
+    Number(params.id);
+
+  const workspace =
+    useReviewWorkspace({
+      reviewId,
+    });
 
   if (
     !workspace.loadingReview &&
@@ -32,7 +37,9 @@ export default function ReviewDetailPage() {
           ← Volver a Reviews
         </Link>
 
-        <h2>Review no disponible</h2>
+        <h2>
+          Review no disponible
+        </h2>
 
         <p role="alert">
           {workspace.reviewError ||
@@ -56,17 +63,24 @@ export default function ReviewDetailPage() {
 
       <div className="content-grid">
         <section className="main-column">
+
           <ReviewCard
-            review={workspace.review}
+            review={
+              workspace.review
+            }
             sources={
               workspace.selectedSource
-                ? [workspace.selectedSource]
+                ? [
+                    workspace.selectedSource,
+                  ]
                 : workspace.sources
             }
             selectedSourceId={
               workspace.selectedSourceId
             }
-            status={workspace.status}
+            status={
+              workspace.status
+            }
             loadingSources={
               workspace.loadingSources
             }
@@ -88,7 +102,9 @@ export default function ReviewDetailPage() {
           />
 
           <ContextCard
-            context={workspace.context}
+            context={
+              workspace.context
+            }
             voiceActive={
               workspace.voiceActive
             }
@@ -101,86 +117,133 @@ export default function ReviewDetailPage() {
           />
 
           <ResponseEditor
-            tone={workspace.tone}
+            tone={
+              workspace.tone
+            }
+
             translationLanguage={
               workspace.translationLanguage
             }
+
             translationLanguages={
               translationLanguages
             }
-            response={workspace.response}
+
+            response={
+              workspace.response
+            }
+
             isTranslated={
               workspace.isTranslated
             }
+
             isTranslating={
               workspace.isTranslating
             }
+
             isGeneratingResponse={
               workspace.isGeneratingResponse
             }
+
             isSavingDraft={
               workspace.isSavingDraft
             }
+
+            isApproving={
+              workspace.isApproving
+            }
+
+            canApprove={
+              workspace.canApprove
+            }
+
             loadingReview={
               workspace.loadingReview
             }
+
             reviewId={
               workspace.review.id
             }
+
             sourceReviewUrl={
               workspace.review
                 .source_review_url
             }
+
             generationError={
               workspace.generationError
             }
+
             translationError={
               workspace.translationError
             }
-            saved={workspace.saved}
+
+            saved={
+              workspace.saved
+            }
+
             sourceName={
               workspace.selectedSource
                 ?.source_name
             }
+
             onToneChange={
               workspace.changeTone
             }
+
             onTranslationLanguageChange={
               workspace.changeTranslationLanguage
             }
+
             onResponseChange={
               workspace.changeResponse
             }
+
             onGenerateResponse={() =>
               void workspace.generateResponse()
             }
+
             onTranslateResponse={() =>
               void workspace.translateResponse()
             }
+
             onRestoreOriginal={
               workspace.restoreOriginalResponse
             }
+
             onCopyAndOpenSource={() =>
               void workspace.copyAndOpenSourceReview()
             }
+
             onSaveDraft={() =>
               void workspace.saveDraft()
             }
+
+            onApprove={() =>
+              void workspace.approveResponse()
+            }
           />
+
         </section>
 
         <aside className="right-column">
           <AnalysisPanel
-            analysis={workspace.analysis}
+            analysis={
+              workspace.analysis
+            }
+
             selectedSource={
               workspace.selectedSource
             }
+
             loadingSources={
               workspace.loadingSources
             }
+
             isAnalyzing={
               workspace.isAnalyzing
             }
+
             analysisError={
               workspace.analysisError
             }

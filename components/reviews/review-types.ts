@@ -57,6 +57,7 @@ export type ImportedReview = {
   owner_response_author: string | null;
   raw_payload: Record<string, unknown> | null;
   analysis_status: string;
+  review_status: string;
   sentiment?: string | null;
   priority?: string | null;
   detected_areas?: string[] | null;

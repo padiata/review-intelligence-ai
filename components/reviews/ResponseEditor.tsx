@@ -6,75 +6,138 @@ import type {
 
 type Props = {
   tone: Tone;
-  translationLanguage: TranslationLanguage;
-  translationLanguages: TranslationLanguageOption[];
+
+  translationLanguage:
+    TranslationLanguage;
+
+  translationLanguages:
+    TranslationLanguageOption[];
 
   response: string;
 
   isTranslated: boolean;
   isTranslating: boolean;
+
   isGeneratingResponse: boolean;
+
   isSavingDraft: boolean;
+
+  isApproving: boolean;
+
+  canApprove: boolean;
+
   loadingReview: boolean;
 
   reviewId: number | null;
-  sourceReviewUrl: string | null;
+
+  sourceReviewUrl:
+    string | null;
 
   generationError?: string;
+
   translationError?: string;
+
   saved: boolean;
+
   sourceName?: string;
 
-  onToneChange: (tone: Tone) => void;
+  onToneChange:
+    (tone: Tone) => void;
 
-  onTranslationLanguageChange: (
-    language: TranslationLanguage
-  ) => void;
+  onTranslationLanguageChange:
+    (
+      language:
+        TranslationLanguage
+    ) => void;
 
-  onResponseChange: (value: string) => void;
+  onResponseChange:
+    (value: string) => void;
 
-  onGenerateResponse: () => void;
-  onTranslateResponse: () => void;
-  onRestoreOriginal: () => void;
-  onCopyAndOpenSource: () => void;
-  onSaveDraft: () => void;
+  onGenerateResponse:
+    () => void;
+
+  onTranslateResponse:
+    () => void;
+
+  onRestoreOriginal:
+    () => void;
+
+  onCopyAndOpenSource:
+    () => void;
+
+  onSaveDraft:
+    () => void;
+
+  onApprove:
+    () => void;
 };
 
 export default function ResponseEditor({
   tone,
+
   translationLanguage,
+
   translationLanguages,
+
   response,
+
   isTranslated,
+
   isTranslating,
+
   isGeneratingResponse,
+
   isSavingDraft,
+
+  isApproving,
+
+  canApprove,
+
   loadingReview,
+
   reviewId,
+
   sourceReviewUrl,
+
   generationError,
+
   translationError,
+
   saved,
+
   sourceName,
+
   onToneChange,
+
   onTranslationLanguageChange,
+
   onResponseChange,
+
   onGenerateResponse,
+
   onTranslateResponse,
+
   onRestoreOriginal,
+
   onCopyAndOpenSource,
+
   onSaveDraft,
+
+  onApprove,
 }: Props) {
   const disabled =
     isTranslating ||
     isGeneratingResponse ||
     isSavingDraft ||
+    isApproving ||
     loadingReview ||
     !reviewId;
 
   return (
     <article className="panel response-card">
+
       <div className="section-heading response-heading">
+
         <div>
           <p className="eyebrow">
             Borrador generado
@@ -86,9 +149,11 @@ export default function ResponseEditor({
         </div>
 
         <div className="response-editor-options">
+
           <select
             aria-label="Tono de la respuesta"
             value={tone}
+            disabled={disabled}
             onChange={(event) =>
               onToneChange(
                 event.target.value as Tone
@@ -110,26 +175,37 @@ export default function ResponseEditor({
 
           <select
             aria-label="Idioma de traducción"
-            value={translationLanguage}
-            disabled={isTranslating}
+            value={
+              translationLanguage
+            }
+            disabled={
+              disabled ||
+              isTranslating
+            }
             onChange={(event) =>
               onTranslationLanguageChange(
-                event.target
-                  .value as TranslationLanguage
+                event.target.value as TranslationLanguage
               )
             }
           >
             {translationLanguages.map(
               (language) => (
                 <option
-                  key={language.code}
-                  value={language.code}
+                  key={
+                    language.code
+                  }
+                  value={
+                    language.code
+                  }
                 >
-                  {language.name}
+                  {
+                    language.name
+                  }
                 </option>
               )
             )}
           </select>
+
         </div>
       </div>
 
@@ -137,17 +213,26 @@ export default function ResponseEditor({
         className="response-editor"
         value={response}
         placeholder="Pulse Generar respuesta para crear un borrador con IA."
+        disabled={
+          loadingReview ||
+          isApproving
+        }
         onChange={(event) =>
-          onResponseChange(event.target.value)
+          onResponseChange(
+            event.target.value
+          )
         }
         rows={11}
       />
 
       <div className="response-actions">
+
         <button
           type="button"
           className="secondary-button"
-          onClick={onGenerateResponse}
+          onClick={
+            onGenerateResponse
+          }
           disabled={disabled}
         >
           {isGeneratingResponse
@@ -160,7 +245,9 @@ export default function ResponseEditor({
         <button
           type="button"
           className="secondary-button"
-          onClick={onTranslateResponse}
+          onClick={
+            onTranslateResponse
+          }
           disabled={
             disabled ||
             !response.trim()
@@ -175,8 +262,12 @@ export default function ResponseEditor({
           <button
             type="button"
             className="secondary-button"
-            onClick={onRestoreOriginal}
-            disabled={isTranslating}
+            onClick={
+              onRestoreOriginal
+            }
+            disabled={
+              disabled
+            }
           >
             Restaurar original
           </button>
@@ -185,7 +276,9 @@ export default function ResponseEditor({
         <button
           type="button"
           className="secondary-button"
-          onClick={onCopyAndOpenSource}
+          onClick={
+            onCopyAndOpenSource
+          }
           disabled={
             disabled ||
             !response.trim() ||
@@ -197,8 +290,10 @@ export default function ResponseEditor({
 
         <button
           type="button"
-          className="primary-button"
-          onClick={onSaveDraft}
+          className="secondary-button"
+          onClick={
+            onSaveDraft
+          }
           disabled={
             disabled ||
             !response.trim()
@@ -208,6 +303,29 @@ export default function ResponseEditor({
             ? "Guardando..."
             : "Guardar borrador"}
         </button>
+
+        <button
+          type="button"
+          className="primary-button"
+          onClick={
+            onApprove
+          }
+          disabled={
+            disabled ||
+            !response.trim() ||
+            !canApprove
+          }
+          title={
+            !canApprove
+              ? "Su rol no tiene permisos para aprobar respuestas."
+              : undefined
+          }
+        >
+          {isApproving
+            ? "Aprobando..."
+            : "Aprobar respuesta"}
+        </button>
+
       </div>
 
       {generationError && (
@@ -238,6 +356,7 @@ export default function ResponseEditor({
             }.`
           : ""}
       </div>
+
     </article>
   );
 }
