@@ -1,3 +1,19 @@
+import type {
+  ExecutiveReport,
+} from "@/lib/reports/report.types";
+
+import type {
+  PreparedReportData,
+} from "@/lib/reports/report-builder.service";
+
+import type {
+  PendingImportedReview,
+} from "@/lib/reviews/review-processor.repository";
+
+import type {
+  ReviewUnderstandingAnalysis,
+} from "@/lib/reviews/types/review-understanding.types";
+
 export type AnalyzeReviewInput = {
   id: number;
   guest: string;
@@ -40,6 +56,22 @@ export type TranslateTextResult = {
   targetLanguage: string;
 };
 
+export type GenerateExecutiveReportInput =
+  PreparedReportData;
+
+export type GenerateExecutiveReportResult =
+  ExecutiveReport;
+
+export type AnalyzeReviewUnderstandingInput = {
+  review: PendingImportedReview;
+  taxonomyContext: string;
+};
+
+export type AnalyzeReviewUnderstandingResult = {
+  analysis: ReviewUnderstandingAnalysis;
+  rawOutput: unknown;
+  model: string;
+};
 
 export interface AIProvider {
   analyzeReview(
@@ -53,4 +85,12 @@ export interface AIProvider {
   translateText(
     input: TranslateTextInput
   ): Promise<TranslateTextResult>;
+
+  generateExecutiveReport(
+    input: GenerateExecutiveReportInput
+  ): Promise<GenerateExecutiveReportResult>;
+
+  analyzeReviewUnderstanding(
+    input: AnalyzeReviewUnderstandingInput
+  ): Promise<AnalyzeReviewUnderstandingResult>;
 }
