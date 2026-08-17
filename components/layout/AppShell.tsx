@@ -1,6 +1,9 @@
 "use client";
+
 import "./AppShell.css";
+
 import { ReactNode } from "react";
+
 import AppSidebar from "@/components/navigation/AppSidebar";
 
 export type UserRole =
@@ -21,7 +24,6 @@ type Props = {
 };
 
 export default function AppShell({
-  title,
   children,
   user,
 }: Props) {
@@ -35,7 +37,9 @@ export default function AppShell({
 
       <main className="app-shell-content">
         <header className="app-shell-header">
-          <h1>{title}</h1>
+          <h1 className="app-shell-tagline">
+            Plataforma de análisis inteligente de reseñas hoteleras...
+          </h1>
         </header>
 
         <section className="app-shell-body">

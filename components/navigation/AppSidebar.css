@@ -18,28 +18,52 @@
 .app-navigation-brand > div:last-child {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .app-navigation-brand strong {
-  font-size: 15px;
   color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .app-navigation-brand span {
-  margin-top: 2px;
+  margin-top: 4px;
+
   color: #9ca3af;
-  font-size: 12px;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
 }
 
 .app-navigation-mark {
   width: 42px;
   height: 42px;
+
   display: grid;
   place-items: center;
+
+  flex-shrink: 0;
+
   border-radius: 12px;
-  background: #ffffff;
-  color: #111827;
-  font-weight: 800;
+
+  overflow: hidden;
+
+  background: transparent;
+}
+
+.app-navigation-mark img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
 }
 
 .app-navigation-menu {
@@ -50,7 +74,9 @@
 
 .app-navigation-section {
   margin: 18px 10px 5px;
+
   color: #6b7280;
+
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -58,18 +84,52 @@
 }
 
 .app-navigation-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
   padding: 11px 12px;
+
   border-radius: 10px;
+
   color: #d1d5db;
+
   text-decoration: none;
+
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 
+.app-navigation-link-icon {
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #9ca3af;
+
+  transition:
+    color 0.2s ease;
+}
+
 .app-navigation-link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  color: #ffffff;
+}
+
+.app-navigation-link:hover
+  .app-navigation-link-icon {
   color: #ffffff;
 }
 
@@ -79,12 +139,26 @@
   font-weight: 700;
 }
 
+.app-navigation-link.active
+  .app-navigation-link-icon {
+  color: #2563eb;
+}
+
 .app-navigation-account {
   margin-top: auto;
+
   display: grid;
   gap: 5px;
+
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-top: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
 }
 
 .app-navigation-account span {
@@ -100,23 +174,43 @@
 
 .app-navigation-account p {
   margin: 6px 0;
+
   color: #fca5a5;
+
   font-size: 12px;
 }
 
 .app-navigation-account button {
   margin-top: 12px;
+
   padding: 10px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  border: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.16
+    );
+
   border-radius: 10px;
+
   background: transparent;
+
   color: #ffffff;
+
   font: inherit;
+
   cursor: pointer;
 }
 
 .app-navigation-account button:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
 }
 
 .app-navigation-account button:disabled {

@@ -3,6 +3,7 @@
 import "./AppSidebar.css";
 
 import Link from "next/link";
+
 import {
   useMemo,
   useState,
@@ -29,6 +30,14 @@ type AppSidebarProps = {
   entityName?: string | null;
 };
 
+type IconName =
+  | "home"
+  | "capture"
+  | "reviews"
+  | "reports"
+  | "users"
+  | "entities";
+
 const roleLabels: Record<
   UserRole,
   string
@@ -45,6 +54,126 @@ const roleLabels: Record<
   operator:
     "Operador",
 };
+
+function MenuIcon({
+  name,
+}: {
+  name: IconName;
+}) {
+  const commonProps = {
+    width: 18,
+    height: 18,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap:
+      "round" as const,
+    strokeLinejoin:
+      "round" as const,
+    "aria-hidden": true,
+  };
+
+  switch (name) {
+    case "home":
+      return (
+        <svg {...commonProps}>
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5 9.5V21h14V9.5" />
+          <path d="M9 21v-7h6v7" />
+        </svg>
+      );
+
+    case "capture":
+      return (
+        <svg {...commonProps}>
+          <path d="M12 3v12" />
+          <path d="m7 10 5 5 5-5" />
+          <path d="M5 21h14" />
+        </svg>
+      );
+
+    case "reviews":
+      return (
+        <svg {...commonProps}>
+          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z" />
+          <path d="M8 9h8" />
+          <path d="M8 13h5" />
+        </svg>
+      );
+
+    case "reports":
+      return (
+        <svg {...commonProps}>
+          <path d="M4 20V10" />
+          <path d="M10 20V4" />
+          <path d="M16 20v-7" />
+          <path d="M22 20H2" />
+        </svg>
+      );
+
+    case "users":
+      return (
+        <svg {...commonProps}>
+          <circle
+            cx="9"
+            cy="8"
+            r="3"
+          />
+          <path d="M3 20c0-4 2.5-6 6-6s6 2 6 6" />
+          <path d="M16 5.5a3 3 0 0 1 0 5" />
+          <path d="M18 14c2 .7 3 2.5 3 5" />
+        </svg>
+      );
+
+    case "entities":
+      return (
+        <svg {...commonProps}>
+          <path d="M4 21V5h10v16" />
+          <path d="M14 9h6v12" />
+          <path d="M8 9h2" />
+          <path d="M8 13h2" />
+          <path d="M8 17h2" />
+          <path d="M17 13h1" />
+          <path d="M17 17h1" />
+          <path d="M2 21h20" />
+        </svg>
+      );
+  }
+}
+
+function NavigationLink({
+  href,
+  label,
+  icon,
+  active,
+}: {
+  href: string;
+  label: string;
+  icon: IconName;
+  active: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        active
+          ? "app-navigation-link active"
+          : "app-navigation-link"
+      }
+    >
+      <span className="app-navigation-link-icon">
+        <MenuIcon
+          name={icon}
+        />
+      </span>
+
+      <span>
+        {label}
+      </span>
+    </Link>
+  );
+}
 
 export default function AppSidebar({
   fullName,
@@ -122,16 +251,19 @@ export default function AppSidebar({
     <aside className="app-navigation">
       <div className="app-navigation-brand">
         <div className="app-navigation-mark">
-          RI
-        </div>
+        <img
+           src="/padiata-mark.png"
+             alt="Padiata"
+             />
+          </div>
 
         <div>
           <strong>
-            Review Intelligence
+            Padiata
           </strong>
 
           <span>
-            Lab
+            Review Intelligence Lab
           </span>
         </div>
       </div>
@@ -140,50 +272,48 @@ export default function AppSidebar({
         className="app-navigation-menu"
         aria-label="Navegación principal"
       >
-        <Link
+        <NavigationLink
           href="/"
-          className={
+          label="Inicio"
+          icon="home"
+          active={
             isActive("/")
-              ? "app-navigation-link active"
-              : "app-navigation-link"
           }
-        >
-          Inicio
-        </Link>
+        />
 
-        <Link
+        <NavigationLink
           href="/capture"
-          className={
-            isActive("/capture")
-              ? "app-navigation-link active"
-              : "app-navigation-link"
+          label="Captura"
+          icon="capture"
+          active={
+            isActive(
+              "/capture"
+            )
           }
-        >
-          Captura
-        </Link>
+        />
 
-        <Link
+        <NavigationLink
           href="/reviews"
-          className={
-            isActive("/reviews")
-              ? "app-navigation-link active"
-              : "app-navigation-link"
+          label="Reviews"
+          icon="reviews"
+          active={
+            isActive(
+              "/reviews"
+            )
           }
-        >
-          Reviews
-        </Link>
+        />
 
         {canSeeReports && (
-          <Link
+          <NavigationLink
             href="/reports"
-            className={
-              isActive("/reports")
-                ? "app-navigation-link active"
-                : "app-navigation-link"
+            label="Informes"
+            icon="reports"
+            active={
+              isActive(
+                "/reports"
+              )
             }
-          >
-            Informes
-          </Link>
+          />
         )}
 
         {canSeeAdmin && (
@@ -192,31 +322,27 @@ export default function AppSidebar({
               Administración
             </p>
 
-            <Link
+            <NavigationLink
               href="/admin/users"
-              className={
+              label="Usuarios"
+              icon="users"
+              active={
                 isActive(
                   "/admin/users"
                 )
-                  ? "app-navigation-link active"
-                  : "app-navigation-link"
               }
-            >
-              Usuarios
-            </Link>
+            />
 
-            <Link
+            <NavigationLink
               href="/admin/entities"
-              className={
+              label="Entidades"
+              icon="entities"
+              active={
                 isActive(
                   "/admin/entities"
                 )
-                  ? "app-navigation-link active"
-                  : "app-navigation-link"
               }
-            >
-              Entidades
-            </Link>
+            />
           </>
         )}
       </nav>

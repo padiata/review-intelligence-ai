@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 import {
   runReviewCapturePipeline,
@@ -14,7 +15,8 @@ const ENTITY_TABLE = "entity_config";
 const ENTITY_ID_COLUMN = "id";
 const ENTITY_NAME_COLUMN = "entity_name";
 const ENTITY_DOMAIN_COLUMN = "domain_id";
-const TRIPADVISOR_URL_COLUMN = "tripadvisor_url_path";
+const TRIPADVISOR_URL_COLUMN =
+  "tripadvisor_url_path";
 const ENTITY_ACTIVE_COLUMN = "active";
 
 const CAPTURE_INITIAL_DEPTH_COLUMN =
@@ -32,10 +34,6 @@ const UNDERSTANDING_BATCH_SIZE_COLUMN =
 const UNDERSTANDING_MAX_REVIEWS_COLUMN =
   "understanding_max_reviews_per_run";
 
-type CaptureRequestBody = {
-  entityId: number;
-};
-
 type EntityConfigRow = {
   id: number;
   entity_name: string | null;
@@ -48,64 +46,156 @@ type EntityConfigRow = {
   capture_max_depth: number | null;
 
   understanding_batch_size: number | null;
-  understanding_max_reviews_per_run: number | null;
+  understanding_max_reviews_per_run:
+    | number
+    | null;
 };
 
-export async function POST(
-  request: Request
-) {
-  try {
-    const body =
-      (await request.json()) as CaptureRequestBody;
+type UserProfileRow = {
+  entity_id: number | null;
+  active: boolean;
+};
 
-    const entityId =
-      Number(body.entityId);
+export async function POST() {
+  try {
+    /*
+     * 1. Obtener la sesión autenticada.
+     */
+    const supabase =
+      await createClient();
+
+    const {
+      data: authData,
+      error: authError,
+    } =
+      await supabase.auth.getUser();
 
     if (
-      !Number.isInteger(entityId) ||
+      authError ||
+      !authData.user
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "No existe una sesión autenticada válida.",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
+
+    /*
+     * 2. Obtener la entidad asignada
+     *    al usuario autenticado.
+     */
+    const {
+      data: profileData,
+      error: profileError,
+    } =
+      await supabaseAdmin
+        .from("user_profiles")
+        .select(
+          "entity_id, active"
+        )
+        .eq(
+          "id",
+          authData.user.id
+        )
+        .single();
+
+    if (
+      profileError ||
+      !profileData
+    ) {
+      console.error(
+        "USER PROFILE LOOKUP ERROR:",
+        profileError
+      );
+
+      return NextResponse.json(
+        {
+          error:
+            "No se encontró el perfil del usuario autenticado.",
+        },
+        {
+          status: 403,
+        }
+      );
+    }
+
+    const profile =
+      profileData as UserProfileRow;
+
+    if (!profile.active) {
+      return NextResponse.json(
+        {
+          error:
+            "El usuario se encuentra inactivo.",
+        },
+        {
+          status: 403,
+        }
+      );
+    }
+
+    const entityId =
+      Number(
+        profile.entity_id
+      );
+
+    if (
+      !Number.isInteger(
+        entityId
+      ) ||
       entityId <= 0
     ) {
       return NextResponse.json(
         {
           error:
-            "Debe seleccionar una entidad válida.",
+            "El usuario no tiene una entidad válida asignada.",
         },
         {
-          status: 400,
+          status: 403,
         }
       );
     }
 
+    /*
+     * 3. Obtener la configuración
+     *    de la entidad del usuario.
+     */
     const {
       data,
       error: entityError,
-    } = await supabaseAdmin
-      .from(ENTITY_TABLE)
-      .select(
-        [
+    } =
+      await supabaseAdmin
+        .from(ENTITY_TABLE)
+        .select(
+          [
+            ENTITY_ID_COLUMN,
+            ENTITY_NAME_COLUMN,
+            ENTITY_DOMAIN_COLUMN,
+            TRIPADVISOR_URL_COLUMN,
+            ENTITY_ACTIVE_COLUMN,
+
+            CAPTURE_INITIAL_DEPTH_COLUMN,
+            CAPTURE_DEPTH_STEP_COLUMN,
+            CAPTURE_MAX_DEPTH_COLUMN,
+
+            UNDERSTANDING_BATCH_SIZE_COLUMN,
+            UNDERSTANDING_MAX_REVIEWS_COLUMN,
+          ].join(",")
+        )
+        .eq(
           ENTITY_ID_COLUMN,
-          ENTITY_NAME_COLUMN,
-          ENTITY_DOMAIN_COLUMN,
-          TRIPADVISOR_URL_COLUMN,
+          entityId
+        )
+        .eq(
           ENTITY_ACTIVE_COLUMN,
-
-          CAPTURE_INITIAL_DEPTH_COLUMN,
-          CAPTURE_DEPTH_STEP_COLUMN,
-          CAPTURE_MAX_DEPTH_COLUMN,
-
-          UNDERSTANDING_BATCH_SIZE_COLUMN,
-          UNDERSTANDING_MAX_REVIEWS_COLUMN,
-        ].join(",")
-      )
-      .eq(
-        ENTITY_ID_COLUMN,
-        entityId
-      )
-      .eq(
-        ENTITY_ACTIVE_COLUMN,
-        true
-      )
-      .single();
+          true
+        )
+        .single();
 
     if (
       entityError ||
@@ -119,7 +209,7 @@ export async function POST(
       return NextResponse.json(
         {
           error:
-            "No se encontró la entidad seleccionada o se encuentra inactiva.",
+            "No se encontró la entidad asignada al usuario o se encuentra inactiva.",
         },
         {
           status: 404,
@@ -132,11 +222,14 @@ export async function POST(
 
     const entity = {
       id:
-        Number(entityRow.id),
+        Number(
+          entityRow.id
+        ),
 
       name:
         String(
-          entityRow.entity_name ?? ""
+          entityRow.entity_name ??
+            ""
         ).trim(),
 
       domainId:
@@ -146,28 +239,34 @@ export async function POST(
 
       tripadvisorUrlPath:
         String(
-          entityRow.tripadvisor_url_path ?? ""
+          entityRow
+            .tripadvisor_url_path ??
+            ""
         ).trim(),
     };
 
     const initialDepth =
       Number(
-        entityRow.capture_initial_depth
+        entityRow
+          .capture_initial_depth
       );
 
     const depthStep =
       Number(
-        entityRow.capture_depth_step
+        entityRow
+          .capture_depth_step
       );
 
     const maxDepth =
       Number(
-        entityRow.capture_max_depth
+        entityRow
+          .capture_max_depth
       );
 
     const understandingBatchSize =
       Number(
-        entityRow.understanding_batch_size
+        entityRow
+          .understanding_batch_size
       );
 
     const maxReviewsToAnalyze =
@@ -176,9 +275,10 @@ export async function POST(
           .understanding_max_reviews_per_run
       );
 
-    if (
-      !entity.name
-    ) {
+    /*
+     * 4. Validar configuración.
+     */
+    if (!entity.name) {
       return NextResponse.json(
         {
           error:
@@ -222,7 +322,9 @@ export async function POST(
     }
 
     if (
-      !Number.isInteger(initialDepth) ||
+      !Number.isInteger(
+        initialDepth
+      ) ||
       initialDepth <= 0
     ) {
       return NextResponse.json(
@@ -237,7 +339,9 @@ export async function POST(
     }
 
     if (
-      !Number.isInteger(depthStep) ||
+      !Number.isInteger(
+        depthStep
+      ) ||
       depthStep <= 0
     ) {
       return NextResponse.json(
@@ -252,7 +356,9 @@ export async function POST(
     }
 
     if (
-      !Number.isInteger(maxDepth) ||
+      !Number.isInteger(
+        maxDepth
+      ) ||
       maxDepth < initialDepth
     ) {
       return NextResponse.json(
@@ -300,6 +406,12 @@ export async function POST(
       );
     }
 
+    /*
+     * 5. Ejecutar pipeline.
+     *
+     * A partir de aquí la entidad ya
+     * proviene del usuario autenticado.
+     */
     const result =
       await runReviewCapturePipeline({
         entity,

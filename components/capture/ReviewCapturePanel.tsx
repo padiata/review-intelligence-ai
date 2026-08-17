@@ -1,15 +1,8 @@
 "use client";
 
 import {
-  useEffect,
   useState,
 } from "react";
-
-type EntityOption = {
-  id: number;
-  name: string;
-  tripadvisorUrlPath: string;
-};
 
 type CaptureRound = {
   taskId: string;
@@ -43,42 +36,21 @@ type CaptureResult = {
 
   rounds: CaptureRound[];
 
-understanding: {
-  pendingAtStart: number;
+  understanding: {
+    pendingAtStart: number;
 
-  processedCount: number;
-  analyzedCount: number;
-  failedCount: number;
+    processedCount: number;
+    analyzedCount: number;
+    failedCount: number;
 
-  findingsCreated: number;
+    findingsCreated: number;
 
-  batchesProcessed: number;
-  pendingAtEnd: number;
-};
-
+    batchesProcessed: number;
+    pendingAtEnd: number;
+  };
 };
 
 export default function ReviewCapturePanel() {
-  const [
-    entities,
-    setEntities,
-  ] = useState<EntityOption[]>([]);
-
-  const [
-    entityId,
-    setEntityId,
-  ] = useState("");
-
-  const [
-    initialDepth,
-    setInitialDepth,
-  ] = useState(100);
-
-  const [
-    loadingEntities,
-    setLoadingEntities,
-  ] = useState(true);
-
   const [
     running,
     setRunning,
@@ -98,90 +70,7 @@ export default function ReviewCapturePanel() {
     null
   );
 
-  useEffect(() => {
-    async function loadEntities() {
-      try {
-        setLoadingEntities(true);
-        setErrorMessage(null);
-
-        const response =
-          await fetch(
-            "/api/admin/entities/tripadvisor",
-            {
-              cache: "no-store",
-            }
-          );
-
-        const payload =
-          await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            payload.error ??
-              "No se pudieron cargar las entidades."
-          );
-        }
-
-        const loadedEntities =
-          payload.entities ?? [];
-
-        setEntities(
-          loadedEntities
-        );
-
-        if (
-          loadedEntities.length > 0
-        ) {
-          setEntityId(
-            String(
-              loadedEntities[0].id
-            )
-          );
-        }
-      } catch (error) {
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : "Error cargando las entidades."
-        );
-      } finally {
-        setLoadingEntities(false);
-      }
-    }
-
-    loadEntities();
-  }, []);
-
   async function runPipeline() {
-    const parsedEntityId =
-      Number(entityId);
-
-    if (
-      !Number.isInteger(
-        parsedEntityId
-      ) ||
-      parsedEntityId <= 0
-    ) {
-      setErrorMessage(
-        "Debe seleccionar una entidad."
-      );
-
-      return;
-    }
-
-    if (
-      !Number.isInteger(
-        initialDepth
-      ) ||
-      initialDepth <= 0
-    ) {
-      setErrorMessage(
-        "El depth inicial debe ser mayor que cero."
-      );
-
-      return;
-    }
-
     try {
       setRunning(true);
       setErrorMessage(null);
@@ -192,28 +81,6 @@ export default function ReviewCapturePanel() {
           "/api/admin/review-capture/tripadvisor",
           {
             method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-
-            body: JSON.stringify({
-              entityId:
-                parsedEntityId,
-
-              initialDepth,
-
-              /*
-               * El incremento utiliza
-               * el mismo valor que
-               * el depth inicial.
-               */
-              depthStep:
-                initialDepth,
-
-              maxDepth: 1000,
-            }),
           }
         );
 
@@ -241,13 +108,6 @@ export default function ReviewCapturePanel() {
     }
   }
 
-  const selectedEntity =
-    entities.find(
-      (entity) =>
-        String(entity.id) ===
-        entityId
-    );
-
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -257,104 +117,15 @@ export default function ReviewCapturePanel() {
           </h2>
 
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-            Seleccione la entidad e indique el
-            depth inicial. El proceso descargará,
-            normalizará e importará las reseñas,
-            aumentando automáticamente el depth
-            mientras encuentre nuevos registros.
+            Descargue, normalice, importe y analice
+            automáticamente las reseñas asociadas
+            a la entidad del usuario autenticado.
           </p>
         </div>
 
-        <div className="mt-7 grid gap-5 md:grid-cols-2">
-          <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-slate-700">
-              Entidad
-            </span>
-
-            <select
-              disabled={
-                loadingEntities ||
-                running
-              }
-              value={entityId}
-              onChange={(event) =>
-                setEntityId(
-                  event.target.value
-                )
-              }
-              className={inputClass}
-            >
-              {loadingEntities && (
-                <option value="">
-                  Cargando entidades...
-                </option>
-              )}
-
-              {!loadingEntities &&
-                entities.length === 0 && (
-                  <option value="">
-                    No hay entidades configuradas
-                  </option>
-                )}
-
-              {entities.map(
-                (entity) => (
-                  <option
-                    key={entity.id}
-                    value={entity.id}
-                  >
-                    {entity.name}
-                  </option>
-                )
-              )}
-            </select>
-          </label>
-
-          <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-slate-700">
-              Depth inicial
-            </span>
-
-            <input
-              disabled={running}
-              type="number"
-              min={1}
-              step={1}
-              value={initialDepth}
-              onChange={(event) =>
-                setInitialDepth(
-                  Number(
-                    event.target.value
-                  )
-                )
-              }
-              className={inputClass}
-            />
-          </label>
-        </div>
-
-        {selectedEntity && (
-          <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              URL configurada
-            </p>
-
-            <p className="mt-2 break-all text-sm text-slate-700">
-              {
-                selectedEntity.tripadvisorUrlPath
-              }
-            </p>
-          </div>
-        )}
-
         <button
           type="button"
-          disabled={
-            running ||
-            loadingEntities ||
-            !entityId ||
-            entities.length === 0
-          }
+          disabled={running}
           onClick={runPipeline}
           className="mt-7 inline-flex min-w-52 items-center justify-center rounded-xl bg-blue-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
@@ -382,7 +153,7 @@ export default function ReviewCapturePanel() {
           <p className="mt-2 text-sm text-blue-700">
             Este proceso puede tardar varios minutos
             porque DataForSEO crea y procesa una tarea
-            por cada incremento del depth.
+            por cada incremento de profundidad.
           </p>
         </div>
       )}
@@ -395,7 +166,9 @@ export default function ReviewCapturePanel() {
     </div>
   );
 }
-///////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+
 function CaptureResultPanel({
   result,
 }: {
@@ -529,7 +302,8 @@ function CaptureResultPanel({
           </h3>
 
           <p className="mt-1 text-sm leading-6 text-slate-500">
-            Resultado del análisis automático de las reseñas pendientes.
+            Resultado del análisis automático
+            de las reseñas pendientes.
           </p>
         </div>
 
@@ -596,11 +370,14 @@ function CaptureResultPanel({
         <div
           className={[
             "mt-6 rounded-xl border p-4 text-sm",
+
             result.understanding
                 .failedCount === 0 &&
               result.understanding
                 .pendingAtEnd === 0
+
               ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+
               : "border-amber-200 bg-amber-50 text-amber-900",
           ].join(" ")}
         >
@@ -609,7 +386,8 @@ function CaptureResultPanel({
           result.understanding
               .pendingAtEnd === 0 ? (
             <p>
-              ✓ Todas las reseñas pendientes fueron analizadas correctamente.
+              ✓ Todas las reseñas pendientes
+              fueron analizadas correctamente.
             </p>
           ) : (
             <div className="space-y-1">
@@ -648,6 +426,8 @@ function CaptureResultPanel({
   );
 }
 
+/////////////////////////////////////////////////
+
 function Metric({
   label,
   value,
@@ -668,20 +448,19 @@ function Metric({
   );
 }
 
+/////////////////////////////////////////////////
+
 function getStopReasonLabel(
   reason: CaptureResult["stopReason"]
 ) {
   switch (reason) {
     case "SOURCE_EXHAUSTED":
-      return "DataForSEO devolvió menos reseñas que el depth solicitado.";
+      return "DataForSEO devolvió menos reseñas que la profundidad solicitada.";
 
     case "NO_NEW_REVIEWS":
       return "El último lote no contenía reseñas nuevas.";
 
     case "MAX_DEPTH_REACHED":
-      return "Se alcanzó el límite máximo de depth configurado.";
+      return "Se alcanzó el límite máximo de profundidad configurado.";
   }
 }
-
-const inputClass =
-  "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-100";

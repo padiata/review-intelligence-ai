@@ -13,19 +13,24 @@
 }
 
 .app-shell-header {
-  min-height: 76px;
+  min-height: 82px;
   display: flex;
   align-items: center;
-  padding: 18px 32px;
+  padding: 14px 32px;
   border-bottom: 1px solid #e5e7eb;
   background: #ffffff;
 }
 
-.app-shell-header h1 {
+.app-shell-tagline {
   margin: 0;
-  color: #111827;
-  font-size: 26px;
-  line-height: 1.2;
+  max-width: 980px;
+
+  color: #0f172a;
+
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .app-shell-body {
@@ -41,7 +46,11 @@
   }
 
   .app-shell-header {
-    padding: 18px 20px;
+    padding: 14px 20px;
+  }
+
+  .app-shell-tagline {
+    font-size: 19px;
   }
 
   .app-shell-body {

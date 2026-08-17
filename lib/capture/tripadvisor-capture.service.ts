@@ -18,7 +18,8 @@ import type {
 } from "./capture.types";
 
 type CaptureTripadvisorBatchInput = {
-  entity: TripadvisorEntityConfiguration;
+  entity:
+    TripadvisorEntityConfiguration;
 
   depth: number;
 
@@ -29,28 +30,40 @@ type CaptureTripadvisorBatchInput = {
     | "detailed_reviews";
 };
 
-function createSafeSlug(value: string) {
+function createSafeSlug(
+  value: string
+) {
   return value
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      ""
+    );
 }
 
 function getDownloadedItems(
   downloadResult: unknown
 ): unknown[] {
-  const typedResult = downloadResult as {
-    taskGet?: {
-      tasks?: Array<{
-        result?: Array<{
-          items?: unknown[];
+  const typedResult =
+    downloadResult as {
+      taskGet?: {
+        tasks?: Array<{
+          result?: Array<{
+            items?: unknown[];
+          }>;
         }>;
-      }>;
+      };
     };
-  };
 
   return (
     typedResult.taskGet
@@ -66,13 +79,29 @@ export async function captureTripadvisorBatch({
   languageName = "English",
   sortBy = "most_recent",
 }: CaptureTripadvisorBatchInput): Promise<CaptureBatchResult> {
-  if (!Number.isInteger(depth) || depth <= 0) {
+  if (
+    !Number.isInteger(depth) ||
+    depth <= 0
+  ) {
     throw new Error(
       "El depth debe ser un número entero mayor que cero."
     );
   }
 
-  if (!entity.tripadvisorUrlPath.trim()) {
+  if (
+    !Number.isInteger(
+      entity.id
+    ) ||
+    entity.id <= 0
+  ) {
+    throw new Error(
+      "La captura requiere una entidad válida."
+    );
+  }
+
+  if (
+    !entity.tripadvisorUrlPath.trim()
+  ) {
     throw new Error(
       `La entidad ${entity.name} no tiene configurada la URL de Tripadvisor.`
     );
@@ -81,45 +110,60 @@ export async function captureTripadvisorBatch({
   const downloadResult =
     await downloadTripadvisorReviews({
       urlPath:
-        entity.tripadvisorUrlPath.trim(),
+        entity
+          .tripadvisorUrlPath
+          .trim(),
 
       languageName,
+
       depth,
+
       sortBy,
     });
 
   const downloadedItems =
-    getDownloadedItems(downloadResult);
+    getDownloadedItems(
+      downloadResult
+    );
 
   const downloadedCount =
     downloadedItems.length;
 
-  const outputDirectory = path.join(
-    process.cwd(),
-    "data",
-    "tripadvisor"
-  );
+  const outputDirectory =
+    path.join(
+      process.cwd(),
+      "data",
+      "tripadvisor"
+    );
 
-  fs.mkdirSync(outputDirectory, {
-    recursive: true,
-  });
+  fs.mkdirSync(
+    outputDirectory,
+    {
+      recursive: true,
+    }
+  );
 
   const entitySlug =
-    createSafeSlug(entity.name) ||
+    createSafeSlug(
+      entity.name
+    ) ||
     `entity-${entity.id}`;
 
-  const outputPath = path.join(
-    outputDirectory,
-    `${entitySlug}-depth-${depth}-${downloadResult.taskId}.json`
-  );
+  const outputPath =
+    path.join(
+      outputDirectory,
+      `${entitySlug}-depth-${depth}-${downloadResult.taskId}.json`
+    );
 
   fs.writeFileSync(
     outputPath,
+
     JSON.stringify(
       downloadResult,
       null,
       2
     ),
+
     "utf8"
   );
 
@@ -130,7 +174,8 @@ export async function captureTripadvisorBatch({
 
   const importSummary =
     await insertImportedReviewsWithSummary(
-      normalizedReviews
+      normalizedReviews,
+      entity.id
     );
 
   if (
@@ -166,20 +211,30 @@ export async function captureTripadvisorBatch({
   }
 
   return {
-    taskId: downloadResult.taskId,
+    taskId:
+      downloadResult.taskId,
 
-    entityId: entity.id,
-    entityName: entity.name,
+    entityId:
+      entity.id,
 
-    requestedDepth: depth,
+    entityName:
+      entity.name,
+
+    requestedDepth:
+      depth,
+
     downloadedCount,
+
     normalizedCount:
       importSummary.normalizedCount,
+
     insertedCount:
       importSummary.insertedCount,
+
     duplicateCount:
       importSummary.duplicateCount,
 
-    jsonPath: outputPath,
+    jsonPath:
+      outputPath,
   };
 }

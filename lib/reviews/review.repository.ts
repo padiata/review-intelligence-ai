@@ -1,52 +1,108 @@
 import "server-only";
 
-import { supabaseAdmin as supabase } from "@/lib/supabase/admin";
-import type { NormalizedReview } from "../dataforseo";
+import {
+  supabaseAdmin as supabase,
+} from "@/lib/supabase/admin";
+
+import type {
+  NormalizedReview,
+} from "../dataforseo";
+
+function validateEntityId(
+  entityId: number
+): void {
+  if (
+    !Number.isInteger(entityId) ||
+    entityId <= 0
+  ) {
+    throw new Error(
+      "A valid entityId is required to import reviews."
+    );
+  }
+}
 
 export async function insertImportedReviews(
-  reviews: NormalizedReview[]
+  reviews: NormalizedReview[],
+  entityId: number
 ) {
-  const rows = reviews.map((review) => ({
-    source: review.source,
-    source_review_id: review.sourceReviewId,
+  validateEntityId(entityId);
 
-    property_name: review.propertyName,
-    property_url: review.propertyUrl,
+  const rows =
+    reviews.map((review) => ({
+      entity_id:
+        entityId,
 
-    review_title: review.reviewTitle,
-    review_text: review.reviewText,
-    rating: review.rating,
+      source:
+        review.source,
 
-    review_date: review.reviewDate,
-    visit_date: review.visitDate,
+      source_review_id:
+        review.sourceReviewId,
 
-    language: review.language,
-    original_language: review.originalLanguage,
+      property_name:
+        review.propertyName,
 
-    reviewer_name: review.reviewerName,
-    reviewer_url: review.reviewerUrl,
-    reviewer_reviews_count:
-      review.reviewerReviewsCount,
+      property_url:
+        review.propertyUrl,
 
-    owner_response_text:
-      review.ownerResponseText,
-    owner_response_date:
-      review.ownerResponseDate,
-    owner_response_author:
-      review.ownerResponseAuthor,
+      review_title:
+        review.reviewTitle,
 
-    raw_payload: review.rawPayload,
+      review_text:
+        review.reviewText,
 
-    analysis_status: "pending",
-  }));
+      rating:
+        review.rating,
 
-  const { data, error } =
+      review_date:
+        review.reviewDate,
+
+      visit_date:
+        review.visitDate,
+
+      language:
+        review.language,
+
+      original_language:
+        review.originalLanguage,
+
+      reviewer_name:
+        review.reviewerName,
+
+      reviewer_url:
+        review.reviewerUrl,
+
+      reviewer_reviews_count:
+        review.reviewerReviewsCount,
+
+      owner_response_text:
+        review.ownerResponseText,
+
+      owner_response_date:
+        review.ownerResponseDate,
+
+      owner_response_author:
+        review.ownerResponseAuthor,
+
+      raw_payload:
+        review.rawPayload,
+
+      analysis_status:
+        "pending",
+    }));
+
+  const {
+    data,
+    error,
+  } =
     await supabase
       .from("imported_reviews")
-      .upsert(rows, {
-        onConflict:
-          "source,source_review_id",
-      })
+      .upsert(
+        rows,
+        {
+          onConflict:
+            "source,source_review_id",
+        }
+      )
       .select();
 
   if (error) {
@@ -63,18 +119,28 @@ export type ImportReviewsSummary = {
 };
 
 export async function insertImportedReviewsWithSummary(
-  reviews: NormalizedReview[]
+  reviews: NormalizedReview[],
+  entityId: number
 ): Promise<ImportReviewsSummary> {
+  validateEntityId(entityId);
+
   const insertedRows =
-    await insertImportedReviews(reviews);
+    await insertImportedReviews(
+      reviews,
+      entityId
+    );
 
   const insertedCount =
     insertedRows?.length ?? 0;
 
   return {
-    normalizedCount: reviews.length,
+    normalizedCount:
+      reviews.length,
+
     insertedCount,
+
     duplicateCount:
-      reviews.length - insertedCount,
+      reviews.length -
+      insertedCount,
   };
 }
