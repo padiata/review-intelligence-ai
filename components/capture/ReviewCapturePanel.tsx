@@ -4,6 +4,10 @@ import {
   useState,
 } from "react";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 type CaptureRound = {
   taskId: string;
 
@@ -51,6 +55,13 @@ type CaptureResult = {
 };
 
 export default function ReviewCapturePanel() {
+  const {
+    messages,
+  } = useLanguage();
+
+  const capture =
+    messages.capture;
+
   const [
     running,
     setRunning,
@@ -90,7 +101,7 @@ export default function ReviewCapturePanel() {
       if (!response.ok) {
         throw new Error(
           payload.error ??
-            "No se pudo ejecutar el pipeline."
+            capture.panel.defaultError
         );
       }
 
@@ -101,7 +112,8 @@ export default function ReviewCapturePanel() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Error inesperado ejecutando el pipeline."
+          : capture.panel
+              .unexpectedError
       );
     } finally {
       setRunning(false);
@@ -113,13 +125,16 @@ export default function ReviewCapturePanel() {
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div>
           <h2 className="text-xl font-semibold text-slate-900">
-            Captura de reseñas
+            {
+              capture.panel.title
+            }
           </h2>
 
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-            Descargue, normalice, importe y analice
-            automáticamente las reseñas asociadas
-            a la entidad del usuario autenticado.
+            {
+              capture.panel
+                .description
+            }
           </p>
         </div>
 
@@ -130,8 +145,10 @@ export default function ReviewCapturePanel() {
           className="mt-7 inline-flex min-w-52 items-center justify-center rounded-xl bg-blue-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {running
-            ? "Ejecutando pipeline..."
-            : "Descargar e importar"}
+            ? capture.panel
+                .runningButton
+            : capture.panel
+                .runButton}
         </button>
       </section>
 
@@ -147,13 +164,17 @@ export default function ReviewCapturePanel() {
       {running && (
         <div className="rounded-2xl border border-blue-200 bg-blue-50 px-6 py-8 text-center">
           <p className="font-semibold text-blue-900">
-            Review Capture Pipeline en ejecución
+            {
+              capture.panel
+                .runningTitle
+            }
           </p>
 
           <p className="mt-2 text-sm text-blue-700">
-            Este proceso puede tardar varios minutos
-            porque DataForSEO crea y procesa una tarea
-            por cada incremento de profundidad.
+            {
+              capture.panel
+                .runningDescription
+            }
           </p>
         </div>
       )}
@@ -174,19 +195,36 @@ function CaptureResultPanel({
 }: {
   result: CaptureResult;
 }) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const capture =
+    messages.capture;
+
   return (
     <section className="rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
       <div className="rounded-xl bg-emerald-50 p-5">
         <h2 className="text-lg font-semibold text-emerald-900">
-          ✓ Proceso finalizado
+          ✓{" "}
+          {
+            capture.result
+              .completed
+          }
         </h2>
 
         <p className="mt-2 text-sm text-emerald-800">
-          Se insertaron{" "}
+          {
+            capture.result
+              .insertedPrefix
+          }{" "}
           <strong>
             {result.totalInserted}
           </strong>{" "}
-          reseñas nuevas para{" "}
+          {
+            capture.result
+              .insertedMiddle
+          }{" "}
           <strong>
             {result.entityName}
           </strong>
@@ -196,34 +234,57 @@ function CaptureResultPanel({
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Metric
-          label="Depth inicial"
-          value={result.initialDepth}
+          label={
+            capture.result
+              .initialDepth
+          }
+          value={
+            result.initialDepth
+          }
         />
 
         <Metric
-          label="Depth final"
-          value={result.finalDepth}
+          label={
+            capture.result
+              .finalDepth
+          }
+          value={
+            result.finalDepth
+          }
         />
 
         <Metric
-          label="Rondas"
-          value={result.rounds.length}
+          label={
+            capture.result.rounds
+          }
+          value={
+            result.rounds.length
+          }
         />
 
         <Metric
-          label="Total insertadas"
-          value={result.totalInserted}
+          label={
+            capture.result
+              .totalInserted
+          }
+          value={
+            result.totalInserted
+          }
         />
       </div>
 
       <div className="mt-6 rounded-xl bg-slate-50 p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Motivo de finalización
+          {
+            capture.result
+              .stopReason
+          }
         </p>
 
         <p className="mt-2 text-sm font-medium text-slate-800">
           {getStopReasonLabel(
-            result.stopReason
+            result.stopReason,
+            capture.stopReasons
           )}
         </p>
       </div>
@@ -233,23 +294,41 @@ function CaptureResultPanel({
           <thead className="bg-slate-50">
             <tr className="text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <th className="px-4 py-3">
-                Depth
+                {
+                  capture.result
+                    .table.depth
+                }
               </th>
 
               <th className="px-4 py-3">
-                Descargadas
+                {
+                  capture.result
+                    .table
+                    .downloaded
+                }
               </th>
 
               <th className="px-4 py-3">
-                Insertadas
+                {
+                  capture.result
+                    .table
+                    .inserted
+                }
               </th>
 
               <th className="px-4 py-3">
-                Duplicadas
+                {
+                  capture.result
+                    .table
+                    .duplicates
+                }
               </th>
 
               <th className="px-4 py-3">
-                Task
+                {
+                  capture.result
+                    .table.task
+                }
               </th>
             </tr>
           </thead>
@@ -286,7 +365,9 @@ function CaptureResultPanel({
                   </td>
 
                   <td className="max-w-48 truncate px-4 py-3 font-mono text-xs">
-                    {round.taskId}
+                    {
+                      round.taskId
+                    }
                   </td>
                 </tr>
               )
@@ -298,44 +379,71 @@ function CaptureResultPanel({
       <div className="mt-8 border-t border-slate-200 pt-8">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            Review Understanding
+            {
+              capture
+                .understanding
+                .title
+            }
           </h3>
 
           <p className="mt-1 text-sm leading-6 text-slate-500">
-            Resultado del análisis automático
-            de las reseñas pendientes.
+            {
+              capture
+                .understanding
+                .description
+            }
           </p>
         </div>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Metric
-            label="Pendientes iniciales"
+            label={
+              capture
+                .understanding
+                .pendingAtStart
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .pendingAtStart
             }
           />
 
           <Metric
-            label="Procesadas"
+            label={
+              capture
+                .understanding
+                .processed
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .processedCount
             }
           />
 
           <Metric
-            label="Analizadas"
+            label={
+              capture
+                .understanding
+                .analyzed
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .analyzedCount
             }
           />
 
           <Metric
-            label="Hallazgos"
+            label={
+              capture
+                .understanding
+                .findings
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .findingsCreated
             }
           />
@@ -343,25 +451,40 @@ function CaptureResultPanel({
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Metric
-            label="Fallidas"
+            label={
+              capture
+                .understanding
+                .failed
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .failedCount
             }
           />
 
           <Metric
-            label="Lotes procesados"
+            label={
+              capture
+                .understanding
+                .batches
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .batchesProcessed
             }
           />
 
           <Metric
-            label="Pendientes restantes"
+            label={
+              capture
+                .understanding
+                .pendingAtEnd
+            }
             value={
-              result.understanding
+              result
+                .understanding
                 .pendingAtEnd
             }
           />
@@ -371,51 +494,85 @@ function CaptureResultPanel({
           className={[
             "mt-6 rounded-xl border p-4 text-sm",
 
-            result.understanding
-                .failedCount === 0 &&
-              result.understanding
-                .pendingAtEnd === 0
+            result
+                .understanding
+                .failedCount ===
+                0 &&
+              result
+                .understanding
+                .pendingAtEnd ===
+                0
 
               ? "border-emerald-200 bg-emerald-50 text-emerald-900"
 
               : "border-amber-200 bg-amber-50 text-amber-900",
           ].join(" ")}
         >
-          {result.understanding
-              .failedCount === 0 &&
-          result.understanding
-              .pendingAtEnd === 0 ? (
+          {result
+              .understanding
+              .failedCount ===
+              0 &&
+          result
+              .understanding
+              .pendingAtEnd ===
+              0 ? (
             <p>
-              ✓ Todas las reseñas pendientes
-              fueron analizadas correctamente.
+              ✓{" "}
+              {
+                capture
+                  .understanding
+                  .allAnalyzed
+              }
             </p>
           ) : (
             <div className="space-y-1">
-              {result.understanding
-                  .failedCount > 0 && (
+              {result
+                  .understanding
+                  .failedCount >
+                0 && (
                 <p>
-                  Se produjeron{" "}
+                  {
+                    capture
+                      .understanding
+                      .failuresPrefix
+                  }{" "}
                   <strong>
                     {
-                      result.understanding
+                      result
+                        .understanding
                         .failedCount
                     }
                   </strong>{" "}
-                  fallos durante el análisis.
+                  {
+                    capture
+                      .understanding
+                      .failuresSuffix
+                  }
                 </p>
               )}
 
-              {result.understanding
-                  .pendingAtEnd > 0 && (
+              {result
+                  .understanding
+                  .pendingAtEnd >
+                0 && (
                 <p>
-                  Quedaron{" "}
+                  {
+                    capture
+                      .understanding
+                      .pendingPrefix
+                  }{" "}
                   <strong>
                     {
-                      result.understanding
+                      result
+                        .understanding
                         .pendingAtEnd
                     }
                   </strong>{" "}
-                  reseñas pendientes de análisis.
+                  {
+                    capture
+                      .understanding
+                      .pendingSuffix
+                  }
                 </p>
               )}
             </div>
@@ -451,16 +608,26 @@ function Metric({
 /////////////////////////////////////////////////
 
 function getStopReasonLabel(
-  reason: CaptureResult["stopReason"]
+  reason:
+    CaptureResult["stopReason"],
+
+  labels: {
+    sourceExhausted: string;
+    noNewReviews: string;
+    maxDepthReached: string;
+  }
 ) {
   switch (reason) {
     case "SOURCE_EXHAUSTED":
-      return "DataForSEO devolvió menos reseñas que la profundidad solicitada.";
+      return labels
+        .sourceExhausted;
 
     case "NO_NEW_REVIEWS":
-      return "El último lote no contenía reseñas nuevas.";
+      return labels
+        .noNewReviews;
 
     case "MAX_DEPTH_REACHED":
-      return "Se alcanzó el límite máximo de profundidad configurado.";
+      return labels
+        .maxDepthReached;
   }
 }

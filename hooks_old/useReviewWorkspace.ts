@@ -4,15 +4,10 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
 import { createClient } from "@/lib/supabase/client";
-
-import {
-  useLanguage,
-} from "@/lib/i18n/LanguageProvider";
 
 import type {
   DisplayReview,
@@ -60,20 +55,6 @@ export function useReviewWorkspace({
     []
   );
 
-  const {
-    language,
-    messages,
-  } = useLanguage();
-
-  const workspaceMessages =
-    messages.reviewDetail.workspace;
-
-  const workspaceMessagesRef =
-    useRef(workspaceMessages);
-
-  workspaceMessagesRef.current =
-    workspaceMessages;
-
   const [sources, setSources] =
     useState<ReviewSource[]>([]);
 
@@ -98,55 +79,6 @@ export function useReviewWorkspace({
   const [analysis, setAnalysis] =
     useState<ReviewAnalysis>(
       emptyAnalysis
-    );
-
-  const baseAnalysisRef =
-    useRef<ReviewAnalysis | null>(
-      null
-    );
-
-  const analysisTranslationsRef =
-    useRef<
-      Partial<
-        Record<
-          "es" | "en",
-          ReviewAnalysis
-        >
-      >
-    >({});
-
-  const analysisTranslationRequestRef =
-    useRef(0);
-
-  const [
-    analysisContentVersion,
-    setAnalysisContentVersion,
-  ] = useState(0);
-
-  const setBaseAnalysis =
-    useCallback(
-      (
-        nextAnalysis:
-          ReviewAnalysis
-      ) => {
-        baseAnalysisRef.current =
-          nextAnalysis;
-
-        analysisTranslationsRef.current =
-          {
-            es: nextAnalysis,
-          };
-
-        setAnalysis(
-          nextAnalysis
-        );
-
-        setAnalysisContentVersion(
-          (current) =>
-            current + 1
-        );
-      },
-      []
     );
 
   const [status, setStatus] =
@@ -280,7 +212,7 @@ export function useReviewWorkspace({
             targetReview
           )
         ) {
-          setBaseAnalysis(
+          setAnalysis(
             mapStoredAnalysis(
               targetReview
             )
@@ -304,7 +236,7 @@ export function useReviewWorkspace({
           );
 
           setAnalysisError(
-            workspaceMessagesRef.current.noTextToAnalyze
+            "La review no contiene texto para analizar."
           );
 
           return;
@@ -336,7 +268,7 @@ export function useReviewWorkspace({
 
                       guest:
                         targetReview.reviewer_name ??
-                        workspaceMessagesRef.current.guest,
+                        "Huésped",
 
                       score:
                         normalizeRating(
@@ -357,7 +289,7 @@ export function useReviewWorkspace({
 
                       property:
                         targetReview.property_name ??
-                        workspaceMessagesRef.current.unspecifiedProperty,
+                        "Propiedad no especificada",
 
                       source:
                         targetReview.source,
@@ -378,11 +310,11 @@ export function useReviewWorkspace({
           ) {
             throw new Error(
               data.error ||
-                workspaceMessagesRef.current.analysisFailed
+                "No se pudo analizar la review."
             );
           }
 
-          setBaseAnalysis(
+          setAnalysis(
             data.analysis
           );
 
@@ -452,7 +384,7 @@ export function useReviewWorkspace({
           setAnalysisError(
             error instanceof Error
               ? error.message
-              : workspaceMessagesRef.current.analysisFailed
+              : "No se pudo analizar la review."
           );
         } finally {
           setIsAnalyzing(
@@ -460,201 +392,11 @@ export function useReviewWorkspace({
           );
         }
       },
-      [
-        setBaseAnalysis,
-        supabase,
-      ]
+      [supabase]
     );
-
-  const translateAnalysisText =
-    useCallback(
-      async (
-        text: string,
-        targetLanguage:
-          "es" | "en"
-      ) => {
-        const cleanText =
-          text.trim();
-
-        if (!cleanText) {
-          return "";
-        }
-
-        const apiResponse =
-          await fetch(
-            "/api/translate",
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json",
-              },
-
-              body:
-                JSON.stringify({
-                  text: cleanText,
-                  language:
-                    targetLanguage,
-                }),
-            }
-          );
-
-        const data =
-          (await apiResponse.json()) as {
-            translatedText?: string;
-            translation?: string;
-            error?: string;
-          };
-
-        const translatedText =
-          data.translatedText ??
-          data.translation;
-
-        if (
-          !apiResponse.ok ||
-          !translatedText?.trim()
-        ) {
-          throw new Error(
-            data.error ||
-              workspaceMessagesRef.current
-                .translationFailed
-          );
-        }
-
-        return translatedText.trim();
-      },
-      []
-    );
-
-  useEffect(() => {
-    const baseAnalysis =
-      baseAnalysisRef.current;
-
-    if (!baseAnalysis) {
-      return;
-    }
-
-    const requestId =
-      ++analysisTranslationRequestRef.current;
-
-    const cachedAnalysis =
-      analysisTranslationsRef.current[
-        language
-      ];
-
-    if (cachedAnalysis) {
-      setAnalysis(
-        cachedAnalysis
-      );
-
-      return;
-    }
-
-    if (language === "es") {
-      setAnalysis(
-        baseAnalysis
-      );
-
-      return;
-    }
-
-    async function translateAnalysisContent() {
-      try {
-        const [
-          translatedSummary,
-          translatedPositiveAspects,
-          translatedNegativeAspects,
-        ] =
-          await Promise.all([
-            translateAnalysisText(
-              baseAnalysis.summary,
-              language
-            ),
-
-            Promise.all(
-              baseAnalysis.positive_aspects.map(
-                (aspect) =>
-                  translateAnalysisText(
-                    aspect,
-                    language
-                  )
-              )
-            ),
-
-            Promise.all(
-              baseAnalysis.negative_aspects.map(
-                (aspect) =>
-                  translateAnalysisText(
-                    aspect,
-                    language
-                  )
-              )
-            ),
-          ]);
-
-        if (
-          analysisTranslationRequestRef.current !==
-          requestId
-        ) {
-          return;
-        }
-
-        const translatedAnalysis:
-          ReviewAnalysis = {
-            ...baseAnalysis,
-
-            summary:
-              translatedSummary,
-
-            positive_aspects:
-              translatedPositiveAspects,
-
-            negative_aspects:
-              translatedNegativeAspects,
-          };
-
-        analysisTranslationsRef.current[
-          language
-        ] =
-          translatedAnalysis;
-
-        setAnalysis(
-          translatedAnalysis
-        );
-      } catch (error) {
-        console.error(
-          "Error traduciendo el contenido del análisis:",
-          error
-        );
-
-        if (
-          analysisTranslationRequestRef.current ===
-          requestId
-        ) {
-          setAnalysis(
-            baseAnalysis
-          );
-        }
-      }
-    }
-
-    void translateAnalysisContent();
-  }, [
-    analysisContentVersion,
-    language,
-    translateAnalysisText,
-  ]);
 
   useEffect(() => {
     async function loadWorkspace() {
-      analysisTranslationRequestRef.current += 1;
-      baseAnalysisRef.current = null;
-      analysisTranslationsRef.current = {};
-      setAnalysis(
-        emptyAnalysis
-      );
-
       console.log("paso 0");
       if (
         !Number.isInteger(
@@ -663,7 +405,7 @@ export function useReviewWorkspace({
         reviewId <= 0
       ) {
         setReviewError(
-          workspaceMessagesRef.current.invalidReviewId
+          "El identificador de la review no es válido."
         );
 
         setLoadingReview(false);
@@ -781,7 +523,7 @@ export function useReviewWorkspace({
         sourcesResult.error
       ) {
         setSourceError(
-          `${workspaceMessagesRef.current.sourcesLoadFailed} ${sourcesResult.error.message}`
+          `No se pudieron cargar las fuentes: ${sourcesResult.error.message}`
         );
 
         setSources([]);
@@ -806,7 +548,7 @@ export function useReviewWorkspace({
         setReviewError(
           reviewResult.error
             ?.message ||
-            workspaceMessagesRef.current.reviewNotFound
+            "No se encontró la review."
         );
 
         setReview(
@@ -977,7 +719,7 @@ export function useReviewWorkspace({
       !review.text.trim()
     ) {
       setGenerationError(
-        workspaceMessagesRef.current.invalidReviewText
+        "La review seleccionada no contiene texto válido."
       );
 
       return;
@@ -1055,7 +797,7 @@ export function useReviewWorkspace({
       ) {
         throw new Error(
           data.error ||
-            workspaceMessagesRef.current.responseGenerationFailed
+            "No se pudo generar la respuesta."
         );
       }
 
@@ -1079,7 +821,7 @@ export function useReviewWorkspace({
       setGenerationError(
         error instanceof Error
           ? error.message
-          : workspaceMessagesRef.current.responseGenerationFailed
+          : "No se pudo generar la respuesta."
       );
     } finally {
       setIsGeneratingResponse(
@@ -1093,7 +835,7 @@ export function useReviewWorkspace({
       !response.trim()
     ) {
       setTranslationError(
-        workspaceMessagesRef.current.emptyResponse
+        "La respuesta no puede estar vacía."
       );
 
       return;
@@ -1163,7 +905,7 @@ export function useReviewWorkspace({
       ) {
         throw new Error(
           data.error ||
-            workspaceMessagesRef.current.translationFailed
+            "No se pudo traducir la respuesta."
         );
       }
 
@@ -1178,7 +920,7 @@ export function useReviewWorkspace({
       setTranslationError(
         error instanceof Error
           ? error.message
-          : workspaceMessagesRef.current.translationFailed
+          : "No se pudo traducir la respuesta."
       );
     } finally {
       setIsTranslating(
@@ -1210,7 +952,7 @@ export function useReviewWorkspace({
       !response.trim()
     ) {
       setGenerationError(
-        workspaceMessagesRef.current.responseRequired
+        "Primero debe generar o escribir una respuesta."
       );
 
       return;
@@ -1220,7 +962,7 @@ export function useReviewWorkspace({
       !review.source_review_url
     ) {
       setGenerationError(
-        workspaceMessagesRef.current.sourceUrlMissing
+        "Esta review no tiene una URL de origen."
       );
 
       return;
@@ -1240,7 +982,7 @@ export function useReviewWorkspace({
       );
     } catch {
       setGenerationError(
-        workspaceMessagesRef.current.copyOpenFailed
+        "No se pudo copiar la respuesta o abrir la review."
       );
     }
   }
@@ -1251,7 +993,7 @@ export function useReviewWorkspace({
       !response.trim()
     ) {
       setGenerationError(
-        workspaceMessagesRef.current.emptyResponse
+        "La respuesta no puede estar vacía."
       );
 
       return;
@@ -1286,7 +1028,7 @@ export function useReviewWorkspace({
 
     if (error) {
       setGenerationError(
-        `${workspaceMessagesRef.current.saveDraftFailed} ${error.message}`
+        `No se pudo guardar el borrador: ${error.message}`
       );
 
       setIsSavingDraft(
@@ -1328,7 +1070,7 @@ async function approveResponse() {
     !response.trim()
   ) {
     setGenerationError(
-      workspaceMessagesRef.current.emptyResponse
+      "La respuesta no puede estar vacía."
     );
 
     return;
@@ -1385,7 +1127,7 @@ async function approveResponse() {
     ) {
       throw new Error(
         data.error ||
-          workspaceMessagesRef.current.approvalFailed
+          "No se pudo aprobar la respuesta."
       );
     }
 
@@ -1431,7 +1173,7 @@ async function approveResponse() {
     setGenerationError(
       error instanceof Error
         ? error.message
-        : workspaceMessagesRef.current.approvalFailed
+        : "No se pudo aprobar la respuesta."
     );
   } finally {
     setIsApproving(false);

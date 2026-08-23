@@ -25,15 +25,68 @@ export type AnalyzeReviewInput = {
   source: string;
 };
 
+export type ReviewSentiment =
+  | "very_positive"
+  | "positive"
+  | "neutral"
+  | "moderately_negative"
+  | "very_negative";
+
+export type ReviewPriority =
+  | "low"
+  | "medium"
+  | "high"
+  | "critical";
+
+export type ReviewRecommendationProbability =
+  | "very_low"
+  | "low"
+  | "medium"
+  | "high"
+  | "very_high";
+
+export type ReviewEmotion =
+  | "satisfaction"
+  | "gratitude"
+  | "enthusiasm"
+  | "neutral"
+  | "disappointment"
+  | "frustration"
+  | "anger"
+  | "concern";
+
+export type ReviewArea =
+  | "cleanliness"
+  | "staff_service"
+  | "room"
+  | "bathroom"
+  | "food_beverage"
+  | "breakfast"
+  | "location"
+  | "facilities"
+  | "maintenance"
+  | "comfort"
+  | "noise"
+  | "wifi"
+  | "pool"
+  | "beach"
+  | "value"
+  | "check_in"
+  | "check_out"
+  | "booking"
+  | "accessibility"
+  | "security"
+  | "other";
+
 export type AnalyzeReviewResult = {
-  sentiment: string;
-  priority: string;
+  sentiment: ReviewSentiment;
+  priority: ReviewPriority;
   summary: string;
-  detected_areas: string[];
+  detected_areas: ReviewArea[];
   positive_aspects: string[];
   negative_aspects: string[];
-  predominant_emotion: string;
-  recommendation_probability: string;
+  predominant_emotion: ReviewEmotion;
+  recommendation_probability: ReviewRecommendationProbability;
 };
 
 export type GenerateResponseInput = {

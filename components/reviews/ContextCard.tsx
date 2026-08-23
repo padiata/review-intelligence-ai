@@ -1,8 +1,17 @@
+"use client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 type Props = {
   context: string;
   voiceActive: boolean;
 
-  onContextChange: (value: string) => void;
+  onContextChange: (
+    value: string
+  ) => void;
+
   onToggleVoice: () => void;
 };
 
@@ -12,30 +21,54 @@ export default function ContextCard({
   onContextChange,
   onToggleVoice,
 }: Props) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const contextMessages =
+    messages.reviewDetail
+      .context;
+
   return (
     <article className="panel context-card">
       <div className="section-heading">
         <div>
           <p className="eyebrow">
-            Contexto interno
+            {
+              contextMessages
+                .eyebrow
+            }
           </p>
 
           <h2>
-            ¿Qué debe saber la IA antes de responder?
+            {
+              contextMessages
+                .title
+            }
           </h2>
         </div>
 
         <span className="optional">
-          Opcional
+          {
+            contextMessages
+              .optional
+          }
         </span>
       </div>
 
       <textarea
         value={context}
-        onChange={(event) =>
-          onContextChange(event.target.value)
+        onChange={(
+          event
+        ) =>
+          onContextChange(
+            event.target.value
+          )
         }
-        placeholder="Ejemplo: El huésped llegó tres horas antes del check-in y el aire acondicionado fue reparado esa misma tarde."
+        placeholder={
+          contextMessages
+            .placeholder
+        }
         rows={5}
       />
 
@@ -47,19 +80,27 @@ export default function ContextCard({
               ? "voice-button recording"
               : "voice-button"
           }
-          onClick={onToggleVoice}
+          onClick={
+            onToggleVoice
+          }
         >
-          <span className="mic">●</span>
+          <span className="mic">
+            ●
+          </span>
 
           {voiceActive
-            ? "Detener grabación"
-            : "Explicar por voz"}
+            ? contextMessages
+                .stopRecording
+            : contextMessages
+                .explainByVoice}
         </button>
 
         <span className="helper-text">
           {voiceActive
-            ? "Grabando demostración…"
-            : "La función de audio se conectará en la siguiente etapa."}
+            ? contextMessages
+                .recording
+            : contextMessages
+                .audioFuture}
         </span>
       </div>
     </article>

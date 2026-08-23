@@ -14,15 +14,22 @@
 
 .app-shell-header {
   min-height: 82px;
+
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
   padding: 14px 32px;
+
   border-bottom: 1px solid #e5e7eb;
+
   background: #ffffff;
 }
 
 .app-shell-tagline {
   margin: 0;
+
   max-width: 980px;
 
   color: #0f172a;
@@ -33,10 +40,56 @@
   letter-spacing: -0.02em;
 }
 
+.app-shell-language {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  color: #cbd5e1;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.app-shell-language button {
+  padding: 5px 7px;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #94a3b8;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.app-shell-language button:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+.app-shell-language button.active {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
 .app-shell-body {
   flex: 1;
   min-width: 0;
+
   padding: 28px 32px;
+
   overflow: auto;
 }
 
@@ -55,5 +108,20 @@
 
   .app-shell-body {
     padding: 22px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell-header {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .app-shell-tagline {
+    font-size: 17px;
+  }
+
+  .app-shell-language {
+    margin-top: 1px;
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+
 import {
   useEffect,
   useMemo,
@@ -10,6 +11,10 @@ import {
 import {
   createClient,
 } from "@/lib/supabase/client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
 
 type ReviewSource = {
   id: number;
@@ -68,10 +73,12 @@ function normalizeRating(
 }
 
 function formatReviewDate(
-  value: string | null
+  value: string | null,
+  language: "es" | "en",
+  noDateLabel: string
 ) {
   if (!value) {
-    return "Sin fecha";
+    return noDateLabel;
   }
 
   const date =
@@ -82,11 +89,13 @@ function formatReviewDate(
       date.getTime()
     )
   ) {
-    return "Sin fecha";
+    return noDateLabel;
   }
 
   return new Intl.DateTimeFormat(
-    "es-CU",
+    language === "es"
+      ? "es-ES"
+      : "en-US",
     {
       day: "2-digit",
       month: "short",
@@ -95,36 +104,20 @@ function formatReviewDate(
   ).format(date);
 }
 
-function statusLabel(
-  status: string
-) {
-  switch (status) {
-    case "new":
-      return "Nueva";
-
-    case "pending":
-      return "Pendiente";
-
-    case "in_review":
-      return "En revisión";
-
-    case "approved":
-      return "Aprobada";
-
-    case "published":
-      return "Publicada";
-
-    default:
-      return status;
-  }
-}
-
 export default function ReviewsInbox() {
   const supabase =
     useMemo(
       () => createClient(),
       []
     );
+
+  const {
+    language,
+    messages,
+  } = useLanguage();
+
+  const inbox =
+    messages.reviewsInbox;
 
   const [
     sources,
@@ -267,7 +260,7 @@ export default function ReviewsInbox() {
         setReviews([]);
 
         setErrorMessage(
-          `No se pudo cargar la bandeja: ${reviewsResult.error.message}`
+          `${inbox.loadErrorPrefix} ${reviewsResult.error.message}`
         );
       } else {
         setReviews(
@@ -283,7 +276,10 @@ export default function ReviewsInbox() {
     }
 
     void loadInbox();
-  }, [supabase]);
+  }, [
+    supabase,
+    inbox.loadErrorPrefix,
+  ]);
 
   const filteredReviews =
     useMemo(() => {
@@ -363,29 +359,51 @@ export default function ReviewsInbox() {
     );
   }
 
+  function getStatusLabel(
+    status: string
+  ) {
+    switch (status) {
+      case "new":
+        return inbox.statuses.new;
+
+      case "pending":
+        return inbox.statuses.pending;
+
+      case "in_review":
+        return inbox.statuses.in_review;
+
+      case "approved":
+        return inbox.statuses.approved;
+
+      case "published":
+        return inbox.statuses.published;
+
+      default:
+        return status;
+    }
+  }
+
   return (
     <div className="reviews-inbox">
       <section className="reviews-inbox-header">
         <div>
           <p className="eyebrow">
-            Reviews recibidas
+            {inbox.eyebrow}
           </p>
 
           <h2>
-            Bandeja de reviews
+            {inbox.title}
           </h2>
 
           <span>
-            Seleccione una review
-            para analizarla y
-            preparar su respuesta.
+            {inbox.description}
           </span>
         </div>
 
         <span className="reviews-count">
           {loading
-            ? "Cargando..."
-            : `${filteredReviews.length} disponibles`}
+            ? inbox.loading
+            : `${filteredReviews.length} ${inbox.availableSuffix}`}
         </span>
       </section>
 
@@ -400,8 +418,12 @@ export default function ReviewsInbox() {
               event.target.value
             )
           }
-          placeholder="Buscar por huésped, título, hotel o contenido..."
-          aria-label="Buscar reviews"
+          placeholder={
+            inbox.searchPlaceholder
+          }
+          aria-label={
+            inbox.searchAria
+          }
         />
 
         <select
@@ -413,10 +435,12 @@ export default function ReviewsInbox() {
               event.target.value
             )
           }
-          aria-label="Filtrar por fuente"
+          aria-label={
+            inbox.sourceFilterAria
+          }
         >
           <option value="all">
-            Todas las fuentes
+            {inbox.allSources}
           </option>
 
           {sources.map(
@@ -446,34 +470,60 @@ export default function ReviewsInbox() {
               event.target.value
             )
           }
-          aria-label="Filtrar por estado"
+          aria-label={
+            inbox.statusFilterAria
+          }
         >
           <option value="open">
-            Pendientes de gestión
+            {
+              inbox.openStatuses
+            }
           </option>
 
           <option value="all">
-            Todos los estados
+            {
+              inbox.allStatuses
+            }
           </option>
 
           <option value="new">
-            Nuevas
+            {
+              inbox
+                .statusesPlural
+                .new
+            }
           </option>
 
           <option value="pending">
-            Pendientes
+            {
+              inbox
+                .statusesPlural
+                .pending
+            }
           </option>
 
           <option value="in_review">
-            En revisión
+            {
+              inbox
+                .statusesPlural
+                .in_review
+            }
           </option>
 
           <option value="approved">
-            Aprobadas
+            {
+              inbox
+                .statusesPlural
+                .approved
+            }
           </option>
 
           <option value="published">
-            Publicadas
+            {
+              inbox
+                .statusesPlural
+                .published
+            }
           </option>
         </select>
       </section>
@@ -492,9 +542,7 @@ export default function ReviewsInbox() {
         filteredReviews.length ===
           0 && (
           <section className="reviews-empty">
-            No hay reviews que
-            coincidan con los
-            filtros.
+            {inbox.empty}
           </section>
         )}
 
@@ -516,7 +564,7 @@ export default function ReviewsInbox() {
                   <div className="review-list-meta">
                     <strong>
                       {review.reviewer_name ??
-                        "Huésped"}
+                        inbox.guest}
                     </strong>
 
                     <span>
@@ -526,7 +574,7 @@ export default function ReviewsInbox() {
                     </span>
 
                     <span>
-                      {statusLabel(
+                      {getStatusLabel(
                         review.review_status
                       )}
                     </span>
@@ -541,7 +589,7 @@ export default function ReviewsInbox() {
 
                     {review.priority && (
                       <span>
-                        Prioridad{" "}
+                        {inbox.priority}{" "}
                         {
                           review.priority
                         }
@@ -552,13 +600,13 @@ export default function ReviewsInbox() {
                   <h3>
                     {review.review_title ??
                       review.property_name ??
-                      "Review sin título"}
+                      inbox.untitled}
                   </h3>
 
                   <p>
                     {(
                       review.review_text ??
-                      "La review no contiene texto."
+                      inbox.noText
                     ).slice(
                       0,
                       220
@@ -575,7 +623,7 @@ export default function ReviewsInbox() {
                 <div className="review-list-rating">
                   <div
                     className="stars"
-                    aria-label={`${score} de 5 estrellas`}
+                    aria-label={`${score} ${inbox.starsSuffix}`}
                   >
                     {"★".repeat(
                       score
@@ -589,7 +637,9 @@ export default function ReviewsInbox() {
                   <span>
                     {formatReviewDate(
                       review.review_date ??
-                        review.created_at
+                        review.created_at,
+                      language,
+                      inbox.noDate
                     )}
                   </span>
                 </div>

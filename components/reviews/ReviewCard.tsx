@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 import type {
   DisplayReview,
   ReviewSource,
@@ -25,16 +31,21 @@ type Props = {
   ) => void;
 };
 
-function getInitials(name: string) {
-  const initials = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) =>
-      part.charAt(0).toUpperCase()
-    )
-    .join("");
+function getInitials(
+  name: string
+) {
+  const initials =
+    name
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) =>
+        part
+          .charAt(0)
+          .toUpperCase()
+      )
+      .join("");
 
   return initials || "H";
 }
@@ -51,9 +62,21 @@ export default function ReviewCard({
   onSourceChange,
   onStatusChange,
 }: Props) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const card =
+    messages.reviewDetail
+      .reviewCard;
+
   const stars =
-    "★".repeat(review.score) +
-    "☆".repeat(5 - review.score);
+    "★".repeat(
+      review.score
+    ) +
+    "☆".repeat(
+      5 - review.score
+    );
 
   return (
     <article className="panel review-card">
@@ -61,49 +84,66 @@ export default function ReviewCard({
         <div>
           <div className="platform-row">
             <select
-              aria-label="Fuente de la review"
-              value={selectedSourceId}
+              aria-label={
+                card.sourceAria
+              }
+              value={
+                selectedSourceId
+              }
               disabled={
                 loadingSources ||
                 loadingReview
               }
-              onChange={(event) => {
+              onChange={(
+                event
+              ) => {
                 const value =
-                  event.target.value;
+                  event.target
+                    .value;
 
                 onSourceChange(
                   value === ""
                     ? ""
-                    : Number(value)
+                    : Number(
+                        value
+                      )
                 );
               }}
             >
               <option value="">
                 {loadingSources
-                  ? "Cargando fuentes..."
-                  : "Seleccione una fuente"}
+                  ? card.loadingSources
+                  : card.selectSource}
               </option>
 
-              {sources.map((source) => (
-                <option
-                  key={source.id}
-                  value={source.id}
-                >
-                  {source.source_name}
-                </option>
-              ))}
+              {sources.map(
+                (source) => (
+                  <option
+                    key={
+                      source.id
+                    }
+                    value={
+                      source.id
+                    }
+                  >
+                    {
+                      source.source_name
+                    }
+                  </option>
+                )
+              )}
             </select>
 
             <span className="date">
               {loadingReview
-                ? "Cargando..."
+                ? card.loading
                 : review.date}
             </span>
           </div>
 
           <div
             className="stars"
-            aria-label={`${review.score} de 5 estrellas`}
+            aria-label={`${review.score} ${card.starsSuffix}`}
           >
             {stars}
           </div>
@@ -128,36 +168,68 @@ export default function ReviewCard({
         </div>
 
         <select
-          aria-label="Estado de la review"
+          aria-label={
+            card.statusAria
+          }
           value={status}
-          onChange={(event) =>
+          onChange={(
+            event
+          ) =>
             onStatusChange(
               event.target
                 .value as ReviewStatus
             )
           }
         >
-          <option>Nueva</option>
-          <option>En revisión</option>
-          <option>Aprobada</option>
-          <option>Publicada</option>
+          <option value="Nueva">
+            {
+              card.statuses
+                .new
+            }
+          </option>
+
+          <option value="En revisión">
+            {
+              card.statuses
+                .inReview
+            }
+          </option>
+
+          <option value="Aprobada">
+            {
+              card.statuses
+                .approved
+            }
+          </option>
+
+          <option value="Publicada">
+            {
+              card.statuses
+                .published
+            }
+          </option>
         </select>
       </div>
 
       <div className="guest-row">
         <div className="avatar">
-          {getInitials(review.guest)}
+          {
+            getInitials(
+              review.guest
+            )
+          }
         </div>
 
         <div>
           <strong>
             {loadingReview
-              ? "Cargando huésped..."
+              ? card.loadingGuest
               : review.guest}
           </strong>
 
           <span>
-            {review.property} ·{" "}
+            {review.property}
+            {" · "}
             {review.language}
           </span>
         </div>
@@ -171,7 +243,7 @@ export default function ReviewCard({
 
       <blockquote>
         {loadingReview
-          ? "Cargando review..."
+          ? card.loadingReview
           : review.text}
       </blockquote>
     </article>

@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 import type {
   ReviewAnalysis,
   ReviewSource,
@@ -18,19 +24,47 @@ export default function AnalysisPanel({
   isAnalyzing,
   analysisError,
 }: Props) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const analysisMessages =
+    messages.reviewDetail.analysis;
+
+  const translateValue = (
+    group:
+      | "sentiment"
+      | "priority"
+      | "emotion"
+      | "recommendationProbability"
+      | "areas",
+    value: string
+  ) => {
+    const dictionary =
+      analysisMessages.values[group] as Record<
+        string,
+        string
+      >;
+
+    return dictionary[value] ?? value;
+  };
+
   return (
     <article className="panel analysis-card">
       <p className="eyebrow">
-        Análisis automático
+        {analysisMessages.eyebrow}
       </p>
 
       <h2>
-        Resumen de la review
+        {analysisMessages.title}
       </h2>
 
       {isAnalyzing && (
         <p className="analysis-loading">
-          Analizando la review...
+          {
+            analysisMessages
+              .analyzingReview
+          }
         </p>
       )}
 
@@ -44,83 +78,131 @@ export default function AnalysisPanel({
       )}
 
       <div className="analysis-item">
-        <span>Fuente</span>
+        <span>
+          {analysisMessages.source}
+        </span>
 
         <strong>
           {loadingSources
-            ? "Cargando..."
-            : selectedSource?.source_name ??
-              "Sin seleccionar"}
-        </strong>
-      </div>
-
-      <div className="analysis-item">
-        <span>Sentimiento</span>
-
-        <strong>
-          {isAnalyzing
-            ? "Analizando..."
-            : analysis.sentiment}
-        </strong>
-      </div>
-
-      <div className="analysis-item">
-        <span>Prioridad</span>
-
-        <strong>
-          {isAnalyzing
-            ? "Analizando..."
-            : analysis.priority}
-        </strong>
-      </div>
-
-      <div className="analysis-item">
-        <span>Emoción</span>
-
-        <strong>
-          {isAnalyzing
-            ? "Analizando..."
-            : analysis.predominant_emotion}
+            ? analysisMessages.loading
+            : selectedSource
+                ?.source_name ??
+              analysisMessages
+                .noSource}
         </strong>
       </div>
 
       <div className="analysis-item">
         <span>
-          Probabilidad de recomendación
+          {analysisMessages.sentiment}
         </span>
 
         <strong>
           {isAnalyzing
-            ? "Analizando..."
-            : analysis.recommendation_probability}
+            ? analysisMessages
+                .analyzing
+            : translateValue(
+                "sentiment",
+                analysis.sentiment
+              )}
+        </strong>
+      </div>
+
+      <div className="analysis-item">
+        <span>
+          {analysisMessages.priority}
+        </span>
+
+        <strong>
+          {isAnalyzing
+            ? analysisMessages
+                .analyzing
+            : translateValue(
+                "priority",
+                analysis.priority
+              )}
+        </strong>
+      </div>
+
+      <div className="analysis-item">
+        <span>
+          {analysisMessages.emotion}
+        </span>
+
+        <strong>
+          {isAnalyzing
+            ? analysisMessages
+                .analyzing
+            : translateValue(
+                "emotion",
+                analysis
+                  .predominant_emotion
+              )}
+        </strong>
+      </div>
+
+      <div className="analysis-item">
+        <span>
+          {
+            analysisMessages
+              .recommendationProbability
+          }
+        </span>
+
+        <strong>
+          {isAnalyzing
+            ? analysisMessages
+                .analyzing
+            : translateValue(
+                "recommendationProbability",
+                analysis
+                  .recommendation_probability
+              )}
         </strong>
       </div>
 
       <div className="analysis-item stacked">
-        <span>Áreas detectadas</span>
+        <span>
+          {
+            analysisMessages
+              .detectedAreas
+          }
+        </span>
 
         <div className="tag-list">
-          {analysis.detected_areas.length > 0 ? (
+          {analysis.detected_areas.length >
+          0 ? (
             analysis.detected_areas.map(
               (area) => (
                 <span key={area}>
-                  {area}
+                  {translateValue(
+                    "areas",
+                    area
+                  )}
                 </span>
               )
             )
           ) : (
             <span>
               {isAnalyzing
-                ? "Analizando..."
-                : "Sin resultados"}
+                ? analysisMessages
+                    .analyzing
+                : analysisMessages
+                    .noResults}
             </span>
           )}
         </div>
       </div>
 
-      {analysis.positive_aspects.length > 0 && (
+      {analysis.positive_aspects.length >
+        0 && (
         <div className="analysis-item stacked">
-          <span>Aspectos positivos</span>
+          <span>
+            {
+              analysisMessages
+                .positiveAspects
+            }
+          </span>
 
           <div className="tag-list">
             {analysis.positive_aspects.map(
@@ -134,9 +216,15 @@ export default function AnalysisPanel({
         </div>
       )}
 
-      {analysis.negative_aspects.length > 0 && (
+      {analysis.negative_aspects.length >
+        0 && (
         <div className="analysis-item stacked">
-          <span>Aspectos negativos</span>
+          <span>
+            {
+              analysisMessages
+                .negativeAspects
+            }
+          </span>
 
           <div className="tag-list">
             {analysis.negative_aspects.map(
@@ -152,7 +240,12 @@ export default function AnalysisPanel({
 
       {analysis.summary && (
         <div className="analysis-item stacked">
-          <span>Resumen ejecutivo</span>
+          <span>
+            {
+              analysisMessages
+                .executiveSummary
+            }
+          </span>
 
           <p className="analysis-summary">
             {analysis.summary}

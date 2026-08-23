@@ -14,10 +14,21 @@ import {
   useReviewWorkspace,
 } from "@/hooks/useReviewWorkspace";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 export default function ReviewDetailPage() {
   const params = useParams<{
     id: string;
   }>();
+
+  const {
+    messages,
+  } = useLanguage();
+
+  const detail =
+    messages.reviewDetail;
 
   const reviewId =
     Number(params.id);
@@ -34,16 +45,19 @@ export default function ReviewDetailPage() {
     return (
       <section className="panel">
         <Link href="/reviews">
-          ← Volver a Reviews
+          ← {detail.page.back}
         </Link>
 
         <h2>
-          Review no disponible
+          {
+            detail.page
+              .unavailable
+          }
         </h2>
 
         <p role="alert">
           {workspace.reviewError ||
-            "No se encontró la review solicitada."}
+            detail.page.notFound}
         </p>
       </section>
     );
@@ -57,45 +71,56 @@ export default function ReviewDetailPage() {
         }}
       >
         <Link href="/reviews">
-          ← Volver a Reviews
+          ← {detail.page.back}
         </Link>
       </div>
 
       <div className="content-grid">
         <section className="main-column">
-
           <ReviewCard
             review={
               workspace.review
             }
+
             sources={
               workspace.selectedSource
                 ? [
-                    workspace.selectedSource,
+                    workspace
+                      .selectedSource,
                   ]
                 : workspace.sources
             }
+
             selectedSourceId={
-              workspace.selectedSourceId
+              workspace
+                .selectedSourceId
             }
+
             status={
               workspace.status
             }
+
             loadingSources={
               workspace.loadingSources
             }
+
             loadingReview={
               workspace.loadingReview
             }
+
             sourceError={
               workspace.sourceError
             }
+
             reviewError={
               workspace.reviewError
             }
+
             onSourceChange={
-              workspace.setSelectedSourceId
+              workspace
+                .setSelectedSourceId
             }
+
             onStatusChange={
               workspace.setStatus
             }
@@ -105,12 +130,15 @@ export default function ReviewDetailPage() {
             context={
               workspace.context
             }
+
             voiceActive={
               workspace.voiceActive
             }
+
             onContextChange={
               workspace.changeContext
             }
+
             onToggleVoice={
               workspace.toggleVoice
             }
@@ -122,7 +150,8 @@ export default function ReviewDetailPage() {
             }
 
             translationLanguage={
-              workspace.translationLanguage
+              workspace
+                .translationLanguage
             }
 
             translationLanguages={
@@ -142,11 +171,13 @@ export default function ReviewDetailPage() {
             }
 
             isGeneratingResponse={
-              workspace.isGeneratingResponse
+              workspace
+                .isGeneratingResponse
             }
 
             isSavingDraft={
-              workspace.isSavingDraft
+              workspace
+                .isSavingDraft
             }
 
             isApproving={
@@ -171,11 +202,13 @@ export default function ReviewDetailPage() {
             }
 
             generationError={
-              workspace.generationError
+              workspace
+                .generationError
             }
 
             translationError={
-              workspace.translationError
+              workspace
+                .translationError
             }
 
             saved={
@@ -192,38 +225,45 @@ export default function ReviewDetailPage() {
             }
 
             onTranslationLanguageChange={
-              workspace.changeTranslationLanguage
+              workspace
+                .changeTranslationLanguage
             }
 
             onResponseChange={
-              workspace.changeResponse
+              workspace
+                .changeResponse
             }
 
             onGenerateResponse={() =>
-              void workspace.generateResponse()
+              void workspace
+                .generateResponse()
             }
 
             onTranslateResponse={() =>
-              void workspace.translateResponse()
+              void workspace
+                .translateResponse()
             }
 
             onRestoreOriginal={
-              workspace.restoreOriginalResponse
+              workspace
+                .restoreOriginalResponse
             }
 
             onCopyAndOpenSource={() =>
-              void workspace.copyAndOpenSourceReview()
+              void workspace
+                .copyAndOpenSourceReview()
             }
 
             onSaveDraft={() =>
-              void workspace.saveDraft()
+              void workspace
+                .saveDraft()
             }
 
             onApprove={() =>
-              void workspace.approveResponse()
+              void workspace
+                .approveResponse()
             }
           />
-
         </section>
 
         <aside className="right-column">
@@ -233,7 +273,8 @@ export default function ReviewDetailPage() {
             }
 
             selectedSource={
-              workspace.selectedSource
+              workspace
+                .selectedSource
             }
 
             loadingSources={
@@ -245,7 +286,8 @@ export default function ReviewDetailPage() {
             }
 
             analysisError={
-              workspace.analysisError
+              workspace
+                .analysisError
             }
           />
 

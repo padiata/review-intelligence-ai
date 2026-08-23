@@ -6,6 +6,10 @@ import { ReactNode } from "react";
 
 import AppSidebar from "@/components/navigation/AppSidebar";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 export type UserRole =
   | "super_admin"
   | "hotel_admin"
@@ -27,6 +31,12 @@ export default function AppShell({
   children,
   user,
 }: Props) {
+  const {
+    language,
+    messages,
+    setLanguage,
+  } = useLanguage();
+
   return (
     <div className="app-shell-layout">
       <AppSidebar
@@ -38,8 +48,45 @@ export default function AppShell({
       <main className="app-shell-content">
         <header className="app-shell-header">
           <h1 className="app-shell-tagline">
-            Plataforma de análisis inteligente de reseñas hoteleras...
+            {messages.shell.tagline}
           </h1>
+
+          <div
+            className="app-shell-language"
+            aria-label="Language"
+          >
+            <button
+              type="button"
+              className={
+                language === "es"
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                setLanguage("es")
+              }
+            >
+              ES
+            </button>
+
+            <span>
+              |
+            </span>
+
+            <button
+              type="button"
+              className={
+                language === "en"
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                setLanguage("en")
+              }
+            >
+              EN
+            </button>
+          </div>
         </header>
 
         <section className="app-shell-body">

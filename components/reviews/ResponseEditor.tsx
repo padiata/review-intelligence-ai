@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 import type {
   Tone,
   TranslationLanguage,
@@ -125,6 +131,14 @@ export default function ResponseEditor({
 
   onApprove,
 }: Props) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const editor =
+    messages.reviewDetail
+      .responseEditor;
+
   const disabled =
     isTranslating ||
     isGeneratingResponse ||
@@ -133,48 +147,70 @@ export default function ResponseEditor({
     loadingReview ||
     !reviewId;
 
+  function getLanguageLabel(
+    code: TranslationLanguage
+  ) {
+    return (
+      editor.languages[
+        code
+      ]
+    );
+  }
+
   return (
     <article className="panel response-card">
-
       <div className="section-heading response-heading">
-
         <div>
           <p className="eyebrow">
-            Borrador generado
+            {editor.eyebrow}
           </p>
 
           <h2>
-            Respuesta propuesta
+            {editor.title}
           </h2>
         </div>
 
         <div className="response-editor-options">
-
           <select
-            aria-label="Tono de la respuesta"
+            aria-label={
+              editor.toneAria
+            }
             value={tone}
             disabled={disabled}
             onChange={(event) =>
               onToneChange(
-                event.target.value as Tone
+                event.target
+                  .value as Tone
               )
             }
           >
-            <option>
-              Profesional
+            <option value="Profesional">
+              {
+                editor.tones
+                  .professional
+              }
             </option>
 
-            <option>
-              Cálida
+            <option value="Cálida">
+              {
+                editor.tones
+                  .warm
+              }
             </option>
 
-            <option>
-              Breve
+            <option value="Breve">
+              {
+                editor.tones
+                  .brief
+              }
             </option>
           </select>
 
           <select
-            aria-label="Idioma de traducción"
+            aria-label={
+              editor
+                .translationLanguageAria
+            }
             value={
               translationLanguage
             }
@@ -184,7 +220,8 @@ export default function ResponseEditor({
             }
             onChange={(event) =>
               onTranslationLanguageChange(
-                event.target.value as TranslationLanguage
+                event.target
+                  .value as TranslationLanguage
               )
             }
           >
@@ -199,20 +236,23 @@ export default function ResponseEditor({
                   }
                 >
                   {
-                    language.name
+                    getLanguageLabel(
+                      language.code
+                    )
                   }
                 </option>
               )
             )}
           </select>
-
         </div>
       </div>
 
       <textarea
         className="response-editor"
         value={response}
-        placeholder="Pulse Generar respuesta para crear un borrador con IA."
+        placeholder={
+          editor.placeholder
+        }
         disabled={
           loadingReview ||
           isApproving
@@ -226,7 +266,6 @@ export default function ResponseEditor({
       />
 
       <div className="response-actions">
-
         <button
           type="button"
           className="secondary-button"
@@ -236,10 +275,10 @@ export default function ResponseEditor({
           disabled={disabled}
         >
           {isGeneratingResponse
-            ? "Generando..."
+            ? editor.generating
             : response.trim()
-              ? "Regenerar respuesta"
-              : "Generar respuesta"}
+              ? editor.regenerate
+              : editor.generate}
         </button>
 
         <button
@@ -254,8 +293,8 @@ export default function ResponseEditor({
           }
         >
           {isTranslating
-            ? "Traduciendo..."
-            : "Traducir"}
+            ? editor.translating
+            : editor.translate}
         </button>
 
         {isTranslated && (
@@ -269,7 +308,10 @@ export default function ResponseEditor({
               disabled
             }
           >
-            Restaurar original
+            {
+              editor
+                .restoreOriginal
+            }
           </button>
         )}
 
@@ -285,7 +327,7 @@ export default function ResponseEditor({
             !sourceReviewUrl
           }
         >
-          Copiar y abrir fuente
+          {editor.copyAndOpen}
         </button>
 
         <button
@@ -300,8 +342,8 @@ export default function ResponseEditor({
           }
         >
           {isSavingDraft
-            ? "Guardando..."
-            : "Guardar borrador"}
+            ? editor.saving
+            : editor.saveDraft}
         </button>
 
         <button
@@ -317,15 +359,15 @@ export default function ResponseEditor({
           }
           title={
             !canApprove
-              ? "Su rol no tiene permisos para aprobar respuestas."
+              ? editor
+                  .noApprovalPermission
               : undefined
           }
         >
           {isApproving
-            ? "Aprobando..."
-            : "Aprobar respuesta"}
+            ? editor.approving
+            : editor.approve}
         </button>
-
       </div>
 
       {generationError && (
@@ -351,12 +393,11 @@ export default function ResponseEditor({
         aria-live="polite"
       >
         {saved
-          ? `Borrador guardado para la fuente ${
+          ? `${editor.savedPrefix} ${
               sourceName ?? ""
             }.`
           : ""}
       </div>
-
     </article>
   );
 }

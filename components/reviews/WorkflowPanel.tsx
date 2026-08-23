@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 type WorkflowStep = {
   number: number;
   label: string;
@@ -8,63 +14,85 @@ type Props = {
   steps?: WorkflowStep[];
 };
 
-const defaultSteps: WorkflowStep[] = [
-  {
-    number: 1,
-    label: "Review capturada",
-    state: "done",
-  },
-  {
-    number: 2,
-    label: "Análisis realizado",
-    state: "done",
-  },
-  {
-    number: 3,
-    label: "Respuesta en revisión",
-    state: "current",
-  },
-  {
-    number: 4,
-    label: "Aprobación",
-    state: "pending",
-  },
-  {
-    number: 5,
-    label: "Publicación manual",
-    state: "pending",
-  },
-];
-
 export default function WorkflowPanel({
-  steps = defaultSteps,
+  steps,
 }: Props) {
+  const {
+    messages,
+  } = useLanguage();
+
+  const workflow =
+    messages.reviewDetail.workflow;
+
+  const defaultSteps: WorkflowStep[] = [
+    {
+      number: 1,
+      label:
+        workflow.steps.captured,
+      state: "done",
+    },
+    {
+      number: 2,
+      label:
+        workflow.steps.analyzed,
+      state: "done",
+    },
+    {
+      number: 3,
+      label:
+        workflow.steps.responseReview,
+      state: "current",
+    },
+    {
+      number: 4,
+      label:
+        workflow.steps.approval,
+      state: "pending",
+    },
+    {
+      number: 5,
+      label:
+        workflow.steps
+          .manualPublication,
+      state: "pending",
+    },
+  ];
+
+  const resolvedSteps =
+    steps ?? defaultSteps;
+
   return (
     <article className="panel workflow-card">
       <p className="eyebrow">
-        Flujo de trabajo
+        {workflow.eyebrow}
       </p>
 
       <h2>
-        Estado de gestión
+        {workflow.title}
       </h2>
 
       <ol>
-        {steps.map((step) => (
-          <li
-            key={step.number}
-            className={
-              step.state === "done"
-                ? "done"
-                : step.state === "current"
-                  ? "current"
-                  : undefined
-            }
-          >
-            <span>{step.number}</span>
-            {step.label}
-          </li>
-        ))}
+        {resolvedSteps.map(
+          (step) => (
+            <li
+              key={step.number}
+              className={
+                step.state === "done"
+                  ? "done"
+                  : step.state ===
+                      "current"
+                    ? "current"
+                    : undefined
+              }
+            >
+              <span>
+                {step.number}
+              </span>
+
+              {step.label}
+            </li>
+          )
+        )}
       </ol>
     </article>
   );

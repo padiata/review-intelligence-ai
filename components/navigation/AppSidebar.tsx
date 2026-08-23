@@ -18,6 +18,10 @@ import {
   createClient,
 } from "@/lib/supabase/client";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 export type UserRole =
   | "super_admin"
   | "hotel_admin"
@@ -37,23 +41,6 @@ type IconName =
   | "reports"
   | "users"
   | "entities";
-
-const roleLabels: Record<
-  UserRole,
-  string
-> = {
-  super_admin:
-    "Super administrador",
-
-  hotel_admin:
-    "Administrador de hotel",
-
-  manager:
-    "Manager",
-
-  operator:
-    "Operador",
-};
 
 function MenuIcon({
   name,
@@ -120,6 +107,7 @@ function MenuIcon({
             cy="8"
             r="3"
           />
+
           <path d="M3 20c0-4 2.5-6 6-6s6 2 6 6" />
           <path d="M16 5.5a3 3 0 0 1 0 5" />
           <path d="M18 14c2 .7 3 2.5 3 5" />
@@ -192,6 +180,10 @@ export default function AppSidebar({
       []
     );
 
+  const {
+    messages,
+  } = useLanguage();
+
   const [
     isLoggingOut,
     setIsLoggingOut,
@@ -251,11 +243,11 @@ export default function AppSidebar({
     <aside className="app-navigation">
       <div className="app-navigation-brand">
         <div className="app-navigation-mark">
-        <img
-           src="/padiata-mark.png"
-             alt="Padiata"
-             />
-          </div>
+          <img
+            src="/padiata-mark.png"
+            alt="Padiata"
+          />
+        </div>
 
         <div>
           <strong>
@@ -274,7 +266,9 @@ export default function AppSidebar({
       >
         <NavigationLink
           href="/"
-          label="Inicio"
+          label={
+            messages.navigation.home
+          }
           icon="home"
           active={
             isActive("/")
@@ -283,7 +277,9 @@ export default function AppSidebar({
 
         <NavigationLink
           href="/capture"
-          label="Captura"
+          label={
+            messages.navigation.capture
+          }
           icon="capture"
           active={
             isActive(
@@ -294,7 +290,9 @@ export default function AppSidebar({
 
         <NavigationLink
           href="/reviews"
-          label="Reviews"
+          label={
+            messages.navigation.reviews
+          }
           icon="reviews"
           active={
             isActive(
@@ -306,7 +304,9 @@ export default function AppSidebar({
         {canSeeReports && (
           <NavigationLink
             href="/reports"
-            label="Informes"
+            label={
+              messages.navigation.reports
+            }
             icon="reports"
             active={
               isActive(
@@ -319,12 +319,17 @@ export default function AppSidebar({
         {canSeeAdmin && (
           <>
             <p className="app-navigation-section">
-              Administración
+              {
+                messages.navigation
+                  .administration
+              }
             </p>
 
             <NavigationLink
               href="/admin/users"
-              label="Usuarios"
+              label={
+                messages.navigation.users
+              }
               icon="users"
               active={
                 isActive(
@@ -335,7 +340,9 @@ export default function AppSidebar({
 
             <NavigationLink
               href="/admin/entities"
-              label="Entidades"
+              label={
+                messages.navigation.entities
+              }
               icon="entities"
               active={
                 isActive(
@@ -353,12 +360,13 @@ export default function AppSidebar({
         </span>
 
         <strong>
-          {roleLabels[role]}
+          {messages.roles[role]}
         </strong>
 
         <small>
           {entityName ??
-            "Acceso global"}
+            messages.common
+              .globalAccess}
         </small>
 
         {logoutError && (
@@ -377,8 +385,10 @@ export default function AppSidebar({
           }
         >
           {isLoggingOut
-            ? "Cerrando..."
-            : "Cerrar sesión"}
+            ? messages.navigation
+                .loggingOut
+            : messages.navigation
+                .logout}
         </button>
       </div>
     </aside>

@@ -217,6 +217,7 @@ export class OpenAIProvider
 
         input:
           prompt.input,
+
       });
 
     const rawOutput =
@@ -228,9 +229,11 @@ export class OpenAIProvider
       );
     }
 
-    let parsed: {
-      analysis?: Partial<AnalyzeReviewResult>;
-    };
+    let parsed:
+      | {
+          analysis?: AnalyzeReviewResult;
+        }
+      | AnalyzeReviewResult;
 
     try {
       const cleaned =
@@ -239,17 +242,37 @@ export class OpenAIProvider
         );
 
       parsed =
-        JSON.parse(cleaned);
+        JSON.parse(cleaned) as
+          | {
+              analysis?: AnalyzeReviewResult;
+            }
+          | AnalyzeReviewResult;
     } catch {
+      console.error(
+        "Salida de análisis no interpretable:",
+        rawOutput
+      );
+
       throw new Error(
         "El análisis no pudo interpretarse como JSON."
       );
     }
 
     const analysis =
-      parsed.analysis;
+      "analysis" in parsed &&
+      parsed.analysis
+        ? parsed.analysis
+        : parsed as AnalyzeReviewResult;
 
-    if (!analysis) {
+    if (
+      !analysis ||
+      typeof analysis !== "object"
+    ) {
+      console.error(
+        "Salida de análisis inesperada:",
+        rawOutput
+      );
+
       throw new Error(
         "OpenAI no devolvió el análisis esperado."
       );
@@ -258,11 +281,11 @@ export class OpenAIProvider
     return {
       sentiment:
         analysis.sentiment ??
-        "Neutral",
+        "neutral",
 
       priority:
         analysis.priority ??
-        "Media",
+        "medium",
 
       summary:
         analysis.summary ??
@@ -291,11 +314,11 @@ export class OpenAIProvider
 
       predominant_emotion:
         analysis.predominant_emotion ??
-        "Neutral",
+        "neutral",
 
       recommendation_probability:
         analysis.recommendation_probability ??
-        "Media",
+        "medium",
     };
   }
 

@@ -1,14 +1,33 @@
+"use client";
+
 import Link from "next/link";
 
 import PageHeader from "@/components/layout/PageHeader";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 export default function DashboardHomePage() {
+  const {
+    messages,
+  } = useLanguage();
+
+  const home =
+    messages.home;
+
   return (
     <>
       <PageHeader
-        eyebrow="Inicio"
-        title="Panel principal"
-        description="Seleccione una de las áreas del sistema para comenzar."
+        eyebrow={
+          home.eyebrow
+        }
+        title={
+          home.title
+        }
+        description={
+          home.description
+        }
       />
 
       <section
@@ -25,7 +44,8 @@ export default function DashboardHomePage() {
           style={{
             display: "block",
             padding: "22px",
-            border: "1px solid #e5e7eb",
+            border:
+              "1px solid #e5e7eb",
             borderRadius: "16px",
             background: "#ffffff",
             color: "#111827",
@@ -34,24 +54,34 @@ export default function DashboardHomePage() {
         >
           <p
             style={{
-              margin: "0 0 8px",
+              margin:
+                "0 0 8px",
               color: "#2563eb",
               fontSize: "12px",
               fontWeight: 800,
-              textTransform: "uppercase",
-              letterSpacing: ".08em",
+              textTransform:
+                "uppercase",
+              letterSpacing:
+                ".08em",
             }}
           >
-            Operación
+            {
+              home.capture
+                .category
+            }
           </p>
 
           <h2
             style={{
-              margin: "0 0 10px",
+              margin:
+                "0 0 10px",
               fontSize: "20px",
             }}
           >
-            Captura
+            {
+              home.capture
+                .title
+            }
           </h2>
 
           <p
@@ -61,8 +91,10 @@ export default function DashboardHomePage() {
               lineHeight: 1.6,
             }}
           >
-            Descargue e importe nuevas reviews desde
-            las fuentes configuradas.
+            {
+              home.capture
+                .description
+            }
           </p>
         </Link>
 
@@ -71,7 +103,8 @@ export default function DashboardHomePage() {
           style={{
             display: "block",
             padding: "22px",
-            border: "1px solid #e5e7eb",
+            border:
+              "1px solid #e5e7eb",
             borderRadius: "16px",
             background: "#ffffff",
             color: "#111827",
@@ -80,24 +113,34 @@ export default function DashboardHomePage() {
         >
           <p
             style={{
-              margin: "0 0 8px",
+              margin:
+                "0 0 8px",
               color: "#2563eb",
               fontSize: "12px",
               fontWeight: 800,
-              textTransform: "uppercase",
-              letterSpacing: ".08em",
+              textTransform:
+                "uppercase",
+              letterSpacing:
+                ".08em",
             }}
           >
-            Gestión
+            {
+              home.reviews
+                .category
+            }
           </p>
 
           <h2
             style={{
-              margin: "0 0 10px",
+              margin:
+                "0 0 10px",
               fontSize: "20px",
             }}
           >
-            Reviews
+            {
+              home.reviews
+                .title
+            }
           </h2>
 
           <p
@@ -107,8 +150,10 @@ export default function DashboardHomePage() {
               lineHeight: 1.6,
             }}
           >
-            Revise las opiniones recibidas, analice su
-            contenido y gestione las respuestas.
+            {
+              home.reviews
+                .description
+            }
           </p>
         </Link>
 
@@ -117,7 +162,8 @@ export default function DashboardHomePage() {
           style={{
             display: "block",
             padding: "22px",
-            border: "1px solid #e5e7eb",
+            border:
+              "1px solid #e5e7eb",
             borderRadius: "16px",
             background: "#ffffff",
             color: "#111827",
@@ -126,24 +172,34 @@ export default function DashboardHomePage() {
         >
           <p
             style={{
-              margin: "0 0 8px",
+              margin:
+                "0 0 8px",
               color: "#2563eb",
               fontSize: "12px",
               fontWeight: 800,
-              textTransform: "uppercase",
-              letterSpacing: ".08em",
+              textTransform:
+                "uppercase",
+              letterSpacing:
+                ".08em",
             }}
           >
-            Inteligencia
+            {
+              home.reports
+                .category
+            }
           </p>
 
           <h2
             style={{
-              margin: "0 0 10px",
+              margin:
+                "0 0 10px",
               fontSize: "20px",
             }}
           >
-            Informes
+            {
+              home.reports
+                .title
+            }
           </h2>
 
           <p
@@ -153,8 +209,10 @@ export default function DashboardHomePage() {
               lineHeight: 1.6,
             }}
           >
-            Genere informes ejecutivos a partir de los
-            hallazgos del período seleccionado.
+            {
+              home.reports
+                .description
+            }
           </p>
         </Link>
 
@@ -163,7 +221,8 @@ export default function DashboardHomePage() {
           style={{
             display: "block",
             padding: "22px",
-            border: "1px solid #e5e7eb",
+            border:
+              "1px solid #e5e7eb",
             borderRadius: "16px",
             background: "#ffffff",
             color: "#111827",
@@ -172,24 +231,34 @@ export default function DashboardHomePage() {
         >
           <p
             style={{
-              margin: "0 0 8px",
+              margin:
+                "0 0 8px",
               color: "#2563eb",
               fontSize: "12px",
               fontWeight: 800,
-              textTransform: "uppercase",
-              letterSpacing: ".08em",
+              textTransform:
+                "uppercase",
+              letterSpacing:
+                ".08em",
             }}
           >
-            Administración
+            {
+              home.users
+                .category
+            }
           </p>
 
           <h2
             style={{
-              margin: "0 0 10px",
+              margin:
+                "0 0 10px",
               fontSize: "20px",
             }}
           >
-            Usuarios
+            {
+              home.users
+                .title
+            }
           </h2>
 
           <p
@@ -199,8 +268,10 @@ export default function DashboardHomePage() {
               lineHeight: 1.6,
             }}
           >
-            Gestione usuarios, roles y accesos del
-            sistema.
+            {
+              home.users
+                .description
+            }
           </p>
         </Link>
       </section>

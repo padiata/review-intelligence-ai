@@ -1,13 +1,32 @@
+"use client";
+
 import PageHeader from "@/components/layout/PageHeader";
 import ReviewCapturePanel from "@/components/capture/ReviewCapturePanel";
 
+import {
+  useLanguage,
+} from "@/lib/i18n/LanguageProvider";
+
 export default function CapturePage() {
+  const {
+    messages,
+  } = useLanguage();
+
+  const capture =
+    messages.capture;
+
   return (
     <>
       <PageHeader
-        eyebrow="Sincronización"
-        title="Captura de reviews"
-        description="Descarga e importa nuevas reseñas desde las fuentes configuradas."
+        eyebrow={
+          capture.page.eyebrow
+        }
+        title={
+          capture.page.title
+        }
+        description={
+          capture.page.description
+        }
       />
 
       <ReviewCapturePanel />
