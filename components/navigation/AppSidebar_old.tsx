@@ -40,8 +40,7 @@ type IconName =
   | "reviews"
   | "reports"
   | "users"
-  | "entities"
-  | "settings";
+  | "entities";
 
 function MenuIcon({
   name,
@@ -128,14 +127,6 @@ function MenuIcon({
           <path d="M2 21h20" />
         </svg>
       );
-
-    case "settings":
-      return (
-        <svg {...commonProps}>
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.12 2.12-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20.3h-3v-.08a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-2.12-2.12.06-.06A1.7 1.7 0 0 0 7 15a1.7 1.7 0 0 0-1.56-1.03H5.3v-3h.14A1.7 1.7 0 0 0 7 9.94a1.7 1.7 0 0 0-.34-1.88L6.6 8l2.12-2.12.06.06A1.7 1.7 0 0 0 10.66 6a1.7 1.7 0 0 0 1.03-1.56V4.3h3v.14A1.7 1.7 0 0 0 15.72 6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.12 2.12-.06.06a1.7 1.7 0 0 0-.34 1.88 1.7 1.7 0 0 0 1.56 1.03h.14v3h-.14A1.7 1.7 0 0 0 19.4 15Z" />
-        </svg>
-      );
   }
 }
 
@@ -211,9 +202,6 @@ export default function AppSidebar({
   const canSeeAdmin =
     role === "super_admin" ||
     role === "hotel_admin";
-
-  const canSeeSettings =
-    role === "super_admin";
 
   function isActive(
     path: string
@@ -362,21 +350,6 @@ export default function AppSidebar({
                 )
               }
             />
-
-            {canSeeSettings && (
-              <NavigationLink
-                href="/admin/settings"
-                label={
-                  messages.navigation.settings
-                }
-                icon="settings"
-                active={
-                  isActive(
-                    "/admin/settings"
-                  )
-                }
-              />
-            )}
           </>
         )}
       </nav>

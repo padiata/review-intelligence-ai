@@ -211,7 +211,7 @@ export const messages = {
           "Descripción",
 
         languageHelp:
-          "El nombre y la descripción se guardarán en el idioma activo. Padiata generará automáticamente las traducciones ES, EN, FR, DE, IT y PT.",
+          "El nombre y la descripción se guardarán en el idioma activo del selector de Padiata. Los demás idiomas podrán añadirse después.",
 
         canonicalCode:
           "Código canónico",
@@ -235,10 +235,7 @@ export const messages = {
           "No se pudo crear el área.",
 
         success:
-          "Área creada y traducida automáticamente a todos los idiomas configurados.",
-
-        partialSuccess:
-          "Área creada. Se generaron {generated} de {total} traducciones. Pendientes: {failed}.",
+          "Área creada correctamente.",
 
         cancel:
           "Cancelar",
@@ -1214,7 +1211,7 @@ export const messages = {
           "Description",
 
         languageHelp:
-          "The name and description will be saved in the active language. Padiata will automatically generate ES, EN, FR, DE, IT and PT translations.",
+          "The name and description will be saved in the active Padiata interface language. Other languages can be added later.",
 
         canonicalCode:
           "Canonical code",
@@ -1238,10 +1235,7 @@ export const messages = {
           "The area could not be created.",
 
         success:
-          "Area created and automatically translated into all configured languages.",
-
-        partialSuccess:
-          "Area created. {generated} of {total} translations were generated. Pending: {failed}.",
+          "Area created successfully.",
 
         cancel:
           "Cancel",

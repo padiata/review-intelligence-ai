@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-
-import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { useMemo, useState } from "react";
 
 import type {
   ExecutiveReport,
@@ -46,12 +44,10 @@ function getDefaultPeriod() {
 }
 
 function formatDisplayDate(
-  value: string | null,
-  locale: string,
-  unavailableLabel: string
+  value: string | null
 ) {
   if (!value) {
-    return unavailableLabel;
+    return "No disponible";
   }
 
   const date = new Date(value);
@@ -65,7 +61,7 @@ function formatDisplayDate(
   }
 
   return new Intl.DateTimeFormat(
-    locale,
+    "es",
     {
       day: "2-digit",
       month: "long",
@@ -75,12 +71,10 @@ function formatDisplayDate(
 }
 
 function formatDateTime(
-  value: string | null,
-  locale: string,
-  unavailableLabel: string
+  value: string | null
 ) {
   if (!value) {
-    return unavailableLabel;
+    return "No disponible";
   }
 
   const date = new Date(value);
@@ -94,7 +88,7 @@ function formatDateTime(
   }
 
   return new Intl.DateTimeFormat(
-    locale,
+    "es",
     {
       day: "2-digit",
       month: "long",
@@ -103,6 +97,31 @@ function formatDateTime(
       minute: "2-digit",
     }
   ).format(date);
+}
+
+function priorityLabel(
+  priority: string
+) {
+  switch (
+    priority
+      .trim()
+      .toLowerCase()
+  ) {
+    case "critical":
+      return "Crítica";
+
+    case "high":
+      return "Alta";
+
+    case "medium":
+      return "Media";
+
+    case "low":
+      return "Baja";
+
+    default:
+      return priority;
+  }
 }
 
 function priorityClass(
@@ -129,20 +148,8 @@ function priorityClass(
 
 function ReportPriorityCard({
   priority,
-  reportMessages,
 }: {
   priority: OperationalPriority;
-  reportMessages: {
-    relevance: string;
-    detectedObservation: string;
-    representativeEvidence: string;
-    priorities: {
-      critical: string;
-      high: string;
-      medium: string;
-      low: string;
-    };
-  };
 }) {
   return (
     <article className="report-priority-card">
@@ -153,13 +160,10 @@ function ReportPriorityCard({
               priority.priority
             )}`}
           >
-            {reportMessages.relevance}{" "}
-            {reportMessages.priorities[
+            Relevancia{" "}
+            {priorityLabel(
               priority.priority
-                .trim()
-                .toLowerCase() as
-                keyof typeof reportMessages.priorities
-            ] ?? priority.priority}
+            )}
           </span>
 
           <h3>
@@ -171,7 +175,7 @@ function ReportPriorityCard({
       {priority.summary && (
         <div className="report-block">
           <strong>
-            {reportMessages.detectedObservation}
+            Observación detectada
           </strong>
 
           <p>
@@ -184,7 +188,7 @@ function ReportPriorityCard({
         0 && (
         <div className="report-block">
           <strong>
-            {reportMessages.representativeEvidence}
+            Evidencias representativas
           </strong>
 
           <div className="report-evidence-list">
@@ -244,19 +248,6 @@ function PositiveHighlightCard({
 }
 
 export default function ReportsPage() {
-  const {
-    language,
-    messages,
-  } = useLanguage();
-
-  const reportMessages =
-    messages.reportsPage;
-
-  const locale =
-    language === "en"
-      ? "en-US"
-      : "es-ES";
-
   const defaultPeriod =
     useMemo(
       () => getDefaultPeriod(),
@@ -285,29 +276,6 @@ export default function ReportsPage() {
       null
     );
 
-  const baseReportRef =
-    useRef<ExecutiveReport | null>(
-      null
-    );
-
-  const reportTranslationsRef =
-    useRef<
-      Partial<
-        Record<
-          "es" | "en",
-          ExecutiveReport
-        >
-      >
-    >({});
-
-  const reportTranslationRequestRef =
-    useRef(0);
-
-  const [
-    reportContentVersion,
-    setReportContentVersion,
-  ] = useState(0);
-
   const [
     reportHistoryId,
     setReportHistoryId,
@@ -325,221 +293,6 @@ export default function ReportsPage() {
     errorMessage,
     setErrorMessage,
   ] = useState("");
-
-  async function translateReportText(
-    value: string,
-    targetLanguage:
-      "es" | "en"
-  ) {
-    const cleanValue =
-      value.trim();
-
-    if (!cleanValue) {
-      return "";
-    }
-
-    const response =
-      await fetch(
-        "/api/translate",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body:
-            JSON.stringify({
-              text: cleanValue,
-              language:
-                targetLanguage,
-            }),
-        }
-      );
-
-    const data =
-      (await response.json()) as {
-        translatedText?: string;
-        translation?: string;
-        error?: string;
-      };
-
-    const translatedText =
-      data.translatedText ??
-      data.translation;
-
-    if (
-      !response.ok ||
-      !translatedText?.trim()
-    ) {
-      throw new Error(
-        data.error ||
-          reportMessages.generationFailed
-      );
-    }
-
-    return translatedText.trim();
-  }
-
-  useEffect(() => {
-    const baseReport =
-      baseReportRef.current;
-
-    if (!baseReport) {
-      return;
-    }
-
-    const requestId =
-      ++reportTranslationRequestRef.current;
-
-    const cachedReport =
-      reportTranslationsRef.current[
-        language
-      ];
-
-    if (cachedReport) {
-      setReport(
-        cachedReport
-      );
-
-      return;
-    }
-
-    if (language === "es") {
-      setReport(
-        baseReport
-      );
-
-      return;
-    }
-
-    async function translateReportContent() {
-      try {
-        const [
-          executiveSummary,
-          methodologicalNote,
-          operationalPriorities,
-          positiveHighlights,
-        ] =
-          await Promise.all([
-            translateReportText(
-              baseReport.executiveSummary,
-              language
-            ),
-
-            translateReportText(
-              baseReport.methodologicalNote,
-              language
-            ),
-
-            Promise.all(
-              baseReport.operationalPriorities.map(
-                async (priority) => {
-                  const [
-                    title,
-                    summary,
-                  ] =
-                    await Promise.all([
-                      translateReportText(
-                        priority.title,
-                        language
-                      ),
-
-                      translateReportText(
-                        priority.summary,
-                        language
-                      ),
-                    ]);
-
-                  return {
-                    ...priority,
-                    title,
-                    summary,
-                  };
-                }
-              )
-            ),
-
-            Promise.all(
-              baseReport.positiveHighlights.map(
-                async (highlight) => {
-                  const [
-                    title,
-                    summary,
-                  ] =
-                    await Promise.all([
-                      translateReportText(
-                        highlight.title,
-                        language
-                      ),
-
-                      translateReportText(
-                        highlight.summary,
-                        language
-                      ),
-                    ]);
-
-                  return {
-                    ...highlight,
-                    title,
-                    summary,
-                  };
-                }
-              )
-            ),
-          ]);
-
-        if (
-          reportTranslationRequestRef.current !==
-          requestId
-        ) {
-          return;
-        }
-
-        const translatedReport:
-          ExecutiveReport = {
-            ...baseReport,
-
-            executiveSummary,
-
-            methodologicalNote,
-
-            operationalPriorities,
-
-            positiveHighlights,
-          };
-
-        reportTranslationsRef.current[
-          language
-        ] =
-          translatedReport;
-
-        setReport(
-          translatedReport
-        );
-      } catch (error) {
-        console.error(
-          "Error traduciendo el contenido del informe:",
-          error
-        );
-
-        if (
-          reportTranslationRequestRef.current ===
-          requestId
-        ) {
-          setReport(
-            baseReport
-          );
-        }
-      }
-    }
-
-    void translateReportContent();
-  }, [
-    language,
-    reportContentVersion,
-  ]);
 
   function selectLastSevenDays() {
     const end = new Date();
@@ -601,16 +354,12 @@ export default function ReportsPage() {
     setReport(null);
     setReportHistoryId(null);
 
-    reportTranslationRequestRef.current += 1;
-    baseReportRef.current = null;
-    reportTranslationsRef.current = {};
-
     if (
       !startDate ||
       !endDate
     ) {
       setErrorMessage(
-        reportMessages.missingDates
+        "Debe seleccionar la fecha inicial y la fecha final."
       );
 
       return;
@@ -621,7 +370,7 @@ export default function ReportsPage() {
       new Date(endDate)
     ) {
       setErrorMessage(
-        reportMessages.invalidPeriod
+        "La fecha inicial no puede ser posterior a la fecha final."
       );
 
       return;
@@ -661,25 +410,12 @@ export default function ReportsPage() {
       ) {
         throw new Error(
           data.error ||
-            reportMessages.generationFailed
+            "No se pudo generar el informe."
         );
       }
 
-      baseReportRef.current =
-        data.report;
-
-      reportTranslationsRef.current =
-        {
-          es: data.report,
-        };
-
       setReport(
         data.report
-      );
-
-      setReportContentVersion(
-        (current) =>
-          current + 1
       );
 
       setReportHistoryId(
@@ -690,7 +426,7 @@ export default function ReportsPage() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : reportMessages.generationFailed
+          : "No se pudo generar el informe."
       );
     } finally {
       setIsGenerating(false);
@@ -701,15 +437,19 @@ export default function ReportsPage() {
       <header className="reports-header">
         <div>
           <p className="report-eyebrow">
-            {reportMessages.eyebrow}
+            Inteligencia operativa
           </p>
 
           <h1>
-            {reportMessages.title}
+            Informe ejecutivo
           </h1>
 
           <p>
-            {reportMessages.description}
+            Seleccione el período de las
+            opiniones que desea analizar.
+            El informe se generará bajo
+            demanda a partir de los
+            hallazgos disponibles.
           </p>
         </div>
       </header>
@@ -718,11 +458,13 @@ export default function ReportsPage() {
         <div className="report-period-heading">
           <div>
             <h2>
-              {reportMessages.periodTitle}
+              Período del informe
             </h2>
 
             <p>
-              {reportMessages.periodDescription}
+              El período se calcula mediante
+              la fecha real de publicación de
+              cada review.
             </p>
           </div>
         </div>
@@ -733,7 +475,7 @@ export default function ReportsPage() {
             onClick={selectLastSevenDays}
             disabled={isGenerating}
           >
-            {reportMessages.last7Days}
+            Últimos 7 días
           </button>
 
           <button
@@ -741,7 +483,7 @@ export default function ReportsPage() {
             onClick={selectLastThirtyDays}
             disabled={isGenerating}
           >
-            {reportMessages.last30Days}
+            Últimos 30 días
           </button>
 
           <button
@@ -749,13 +491,13 @@ export default function ReportsPage() {
             onClick={selectPreviousMonth}
             disabled={isGenerating}
           >
-            {reportMessages.previousMonth}
+            Mes anterior
           </button>
         </div>
 
         <div className="report-period-form">
           <label>
-            <span>{reportMessages.from}</span>
+            <span>Desde</span>
 
             <input
               type="date"
@@ -770,7 +512,7 @@ export default function ReportsPage() {
           </label>
 
           <label>
-            <span>{reportMessages.to}</span>
+            <span>Hasta</span>
 
             <input
               type="date"
@@ -793,8 +535,8 @@ export default function ReportsPage() {
             disabled={isGenerating}
           >
             {isGenerating
-              ? reportMessages.generating
-              : reportMessages.generate}
+              ? "Generando informe..."
+              : "Generar informe"}
           </button>
         </div>
 
@@ -807,11 +549,15 @@ export default function ReportsPage() {
 
             <div>
               <strong>
-                {reportMessages.preparingTitle}
+                Preparando informe
               </strong>
 
               <p>
-                {reportMessages.preparingDescription}
+                Estamos organizando los
+                hallazgos y redactando el
+                informe ejecutivo. Este
+                proceso puede tardar algunos
+                segundos.
               </p>
             </div>
           </div>
@@ -832,7 +578,8 @@ export default function ReportsPage() {
           <header className="executive-report-header">
             <div>
               <p className="report-eyebrow">
-                {reportMessages.reportEyebrow}
+                Informe de inteligencia
+                operativa
               </p>
 
               <h2>
@@ -840,20 +587,16 @@ export default function ReportsPage() {
               </h2>
 
               <p>
-                {reportMessages.publishedBetween}{" "}
+                Opiniones publicadas entre el{" "}
                 <strong>
                   {formatDisplayDate(
-                    report.period.startDate,
-                    locale,
-                    reportMessages.unavailable
+                    report.period.startDate
                   )}
                 </strong>{" "}
-                {reportMessages.and}{" "}
+                y el{" "}
                 <strong>
                   {formatDisplayDate(
-                    report.period.endDate,
-                    locale,
-                    reportMessages.unavailable
+                    report.period.endDate
                   )}
                 </strong>
                 .
@@ -863,26 +606,22 @@ export default function ReportsPage() {
        <div className="report-document-meta">
 
   <span>
-    {reportMessages.generated}{" "}
+    Generado:{" "}
     {formatDateTime(
-      report.generatedAt,
-      locale,
-      reportMessages.unavailable
+      report.generatedAt
     )}
   </span>
 
   <span>
-    {reportMessages.synchronizedUntil}{" "}
+    Sincronizado hasta:{" "}
     {formatDateTime(
-      report.synchronizedUntil,
-      locale,
-      reportMessages.unavailable
+      report.synchronizedUntil
     )}
   </span>
 
   {reportHistoryId && (
     <span>
-      {reportMessages.reportNumber} #{reportHistoryId}
+      Informe #{reportHistoryId}
     </span>
   )}
 
@@ -891,7 +630,7 @@ export default function ReportsPage() {
     className="report-print-button"
     onClick={() => window.print()}
   >
-    {reportMessages.print}
+    🖨 Imprimir informe
   </button>
 
 </div>
@@ -900,7 +639,7 @@ export default function ReportsPage() {
           <div className="report-source-summary">
             <div>
               <span>
-                {reportMessages.reviewsUsed}
+                Opiniones utilizadas
               </span>
 
               <strong>
@@ -910,7 +649,7 @@ export default function ReportsPage() {
 
             <div>
               <span>
-                {reportMessages.findingsUsed}
+                Hallazgos utilizados
               </span>
 
               <strong>
@@ -923,11 +662,11 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  {reportMessages.overview}
+                  Visión general
                 </p>
 
                 <h2>
-                  {reportMessages.executiveSummary}
+                  Resumen ejecutivo
                 </h2>
               </div>
             </div>
@@ -953,11 +692,11 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  {reportMessages.findingsEyebrow}
+                  Hallazgos identificados
                 </p>
 
                 <h2>
-                  {reportMessages.relevantFindings}
+                  Hallazgos relevantes
                 </h2>
               </div>
 
@@ -967,7 +706,7 @@ export default function ReportsPage() {
                     .operationalPriorities
                     .length
                 }{" "}
-                {reportMessages.findingsSuffix}
+                hallazgos
               </span>
             </div>
 
@@ -982,16 +721,14 @@ export default function ReportsPage() {
                     <ReportPriorityCard
                       key={`${priority.title}-${index}`}
                       priority={priority}
-                      reportMessages={
-                        reportMessages
-                      }
                     />
                   )
                 )}
               </div>
             ) : (
               <p className="report-empty">
-                {reportMessages.noFindings}
+                No se identificaron hallazgos
+                relevantes para este período.
               </p>
             )}
           </section>
@@ -1000,11 +737,11 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  {reportMessages.strengths}
+                  Fortalezas
                 </p>
 
                 <h2>
-                  {reportMessages.positiveAspects}
+                  Aspectos positivos
                 </h2>
               </div>
             </div>
@@ -1026,7 +763,9 @@ export default function ReportsPage() {
               </div>
             ) : (
               <p className="report-empty">
-                {reportMessages.noPositiveAspects}
+                No se identificaron aspectos
+                positivos específicos para
+                este período.
               </p>
             )}
           </section>
@@ -1035,11 +774,11 @@ export default function ReportsPage() {
             <div className="report-section-heading">
               <div>
                 <p className="report-eyebrow">
-                  {reportMessages.methodologyEyebrow}
+                  Nota metodológica
                 </p>
 
                 <h2>
-                  {reportMessages.reportScope}
+                  Alcance del informe
                 </h2>
               </div>
             </div>

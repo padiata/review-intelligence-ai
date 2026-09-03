@@ -1,19 +1,3 @@
-import type {
-  ExecutiveReport,
-} from "@/lib/reports/report.types";
-
-import type {
-  PreparedReportData,
-} from "@/lib/reports/report-builder.service";
-
-import type {
-  PendingImportedReview,
-} from "@/lib/reviews/review-processor.repository";
-
-import type {
-  ReviewUnderstandingAnalysis,
-} from "@/lib/reviews/types/review-understanding.types";
-
 export type AnalyzeReviewInput = {
   id: number;
   guest: string;
@@ -25,68 +9,15 @@ export type AnalyzeReviewInput = {
   source: string;
 };
 
-export type ReviewSentiment =
-  | "very_positive"
-  | "positive"
-  | "neutral"
-  | "moderately_negative"
-  | "very_negative";
-
-export type ReviewPriority =
-  | "low"
-  | "medium"
-  | "high"
-  | "critical";
-
-export type ReviewRecommendationProbability =
-  | "very_low"
-  | "low"
-  | "medium"
-  | "high"
-  | "very_high";
-
-export type ReviewEmotion =
-  | "satisfaction"
-  | "gratitude"
-  | "enthusiasm"
-  | "neutral"
-  | "disappointment"
-  | "frustration"
-  | "anger"
-  | "concern";
-
-export type ReviewArea =
-  | "cleanliness"
-  | "staff_service"
-  | "room"
-  | "bathroom"
-  | "food_beverage"
-  | "breakfast"
-  | "location"
-  | "facilities"
-  | "maintenance"
-  | "comfort"
-  | "noise"
-  | "wifi"
-  | "pool"
-  | "beach"
-  | "value"
-  | "check_in"
-  | "check_out"
-  | "booking"
-  | "accessibility"
-  | "security"
-  | "other";
-
 export type AnalyzeReviewResult = {
-  sentiment: ReviewSentiment;
-  priority: ReviewPriority;
+  sentiment: string;
+  priority: string;
   summary: string;
-  detected_areas: ReviewArea[];
+  detected_areas: string[];
   positive_aspects: string[];
   negative_aspects: string[];
-  predominant_emotion: ReviewEmotion;
-  recommendation_probability: ReviewRecommendationProbability;
+  predominant_emotion: string;
+  recommendation_probability: string;
 };
 
 export type GenerateResponseInput = {
@@ -109,21 +40,20 @@ export type TranslateTextResult = {
   targetLanguage: string;
 };
 
-export type GenerateExecutiveReportInput =
-  PreparedReportData;
-
-export type GenerateExecutiveReportResult =
-  ExecutiveReport;
-
-export type AnalyzeReviewUnderstandingInput = {
-  review: PendingImportedReview;
-  taxonomyContext: string;
+export type TranslateTaxonomyNodeInput = {
+  name: string;
+  description?: string | null;
+  sourceLanguage: string;
+  targetLanguage: string;
+  nodeType: "area" | "cause" | "subcause";
+  domainName?: string | null;
 };
 
-export type AnalyzeReviewUnderstandingResult = {
-  analysis: ReviewUnderstandingAnalysis;
-  rawOutput: unknown;
-  model: string;
+export type TranslateTaxonomyNodeResult = {
+  name: string;
+  description: string | null;
+  sourceLanguage: string;
+  targetLanguage: string;
 };
 
 export interface AIProvider {
@@ -139,11 +69,7 @@ export interface AIProvider {
     input: TranslateTextInput
   ): Promise<TranslateTextResult>;
 
-  generateExecutiveReport(
-    input: GenerateExecutiveReportInput
-  ): Promise<GenerateExecutiveReportResult>;
-
-  analyzeReviewUnderstanding(
-    input: AnalyzeReviewUnderstandingInput
-  ): Promise<AnalyzeReviewUnderstandingResult>;
+  translateTaxonomyNode(
+    input: TranslateTaxonomyNodeInput
+  ): Promise<TranslateTaxonomyNodeResult>;
 }

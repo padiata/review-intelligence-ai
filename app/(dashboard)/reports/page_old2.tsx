@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
@@ -285,29 +285,6 @@ export default function ReportsPage() {
       null
     );
 
-  const baseReportRef =
-    useRef<ExecutiveReport | null>(
-      null
-    );
-
-  const reportTranslationsRef =
-    useRef<
-      Partial<
-        Record<
-          "es" | "en",
-          ExecutiveReport
-        >
-      >
-    >({});
-
-  const reportTranslationRequestRef =
-    useRef(0);
-
-  const [
-    reportContentVersion,
-    setReportContentVersion,
-  ] = useState(0);
-
   const [
     reportHistoryId,
     setReportHistoryId,
@@ -325,221 +302,6 @@ export default function ReportsPage() {
     errorMessage,
     setErrorMessage,
   ] = useState("");
-
-  async function translateReportText(
-    value: string,
-    targetLanguage:
-      "es" | "en"
-  ) {
-    const cleanValue =
-      value.trim();
-
-    if (!cleanValue) {
-      return "";
-    }
-
-    const response =
-      await fetch(
-        "/api/translate",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body:
-            JSON.stringify({
-              text: cleanValue,
-              language:
-                targetLanguage,
-            }),
-        }
-      );
-
-    const data =
-      (await response.json()) as {
-        translatedText?: string;
-        translation?: string;
-        error?: string;
-      };
-
-    const translatedText =
-      data.translatedText ??
-      data.translation;
-
-    if (
-      !response.ok ||
-      !translatedText?.trim()
-    ) {
-      throw new Error(
-        data.error ||
-          reportMessages.generationFailed
-      );
-    }
-
-    return translatedText.trim();
-  }
-
-  useEffect(() => {
-    const baseReport =
-      baseReportRef.current;
-
-    if (!baseReport) {
-      return;
-    }
-
-    const requestId =
-      ++reportTranslationRequestRef.current;
-
-    const cachedReport =
-      reportTranslationsRef.current[
-        language
-      ];
-
-    if (cachedReport) {
-      setReport(
-        cachedReport
-      );
-
-      return;
-    }
-
-    if (language === "es") {
-      setReport(
-        baseReport
-      );
-
-      return;
-    }
-
-    async function translateReportContent() {
-      try {
-        const [
-          executiveSummary,
-          methodologicalNote,
-          operationalPriorities,
-          positiveHighlights,
-        ] =
-          await Promise.all([
-            translateReportText(
-              baseReport.executiveSummary,
-              language
-            ),
-
-            translateReportText(
-              baseReport.methodologicalNote,
-              language
-            ),
-
-            Promise.all(
-              baseReport.operationalPriorities.map(
-                async (priority) => {
-                  const [
-                    title,
-                    summary,
-                  ] =
-                    await Promise.all([
-                      translateReportText(
-                        priority.title,
-                        language
-                      ),
-
-                      translateReportText(
-                        priority.summary,
-                        language
-                      ),
-                    ]);
-
-                  return {
-                    ...priority,
-                    title,
-                    summary,
-                  };
-                }
-              )
-            ),
-
-            Promise.all(
-              baseReport.positiveHighlights.map(
-                async (highlight) => {
-                  const [
-                    title,
-                    summary,
-                  ] =
-                    await Promise.all([
-                      translateReportText(
-                        highlight.title,
-                        language
-                      ),
-
-                      translateReportText(
-                        highlight.summary,
-                        language
-                      ),
-                    ]);
-
-                  return {
-                    ...highlight,
-                    title,
-                    summary,
-                  };
-                }
-              )
-            ),
-          ]);
-
-        if (
-          reportTranslationRequestRef.current !==
-          requestId
-        ) {
-          return;
-        }
-
-        const translatedReport:
-          ExecutiveReport = {
-            ...baseReport,
-
-            executiveSummary,
-
-            methodologicalNote,
-
-            operationalPriorities,
-
-            positiveHighlights,
-          };
-
-        reportTranslationsRef.current[
-          language
-        ] =
-          translatedReport;
-
-        setReport(
-          translatedReport
-        );
-      } catch (error) {
-        console.error(
-          "Error traduciendo el contenido del informe:",
-          error
-        );
-
-        if (
-          reportTranslationRequestRef.current ===
-          requestId
-        ) {
-          setReport(
-            baseReport
-          );
-        }
-      }
-    }
-
-    void translateReportContent();
-  }, [
-    language,
-    reportContentVersion,
-  ]);
 
   function selectLastSevenDays() {
     const end = new Date();
@@ -601,10 +363,6 @@ export default function ReportsPage() {
     setReport(null);
     setReportHistoryId(null);
 
-    reportTranslationRequestRef.current += 1;
-    baseReportRef.current = null;
-    reportTranslationsRef.current = {};
-
     if (
       !startDate ||
       !endDate
@@ -665,21 +423,8 @@ export default function ReportsPage() {
         );
       }
 
-      baseReportRef.current =
-        data.report;
-
-      reportTranslationsRef.current =
-        {
-          es: data.report,
-        };
-
       setReport(
         data.report
-      );
-
-      setReportContentVersion(
-        (current) =>
-          current + 1
       );
 
       setReportHistoryId(
