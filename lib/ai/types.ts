@@ -1,3 +1,11 @@
+import type {
+  PendingImportedReview,
+} from "@/lib/reviews/review-processor.repository";
+
+import type {
+  ReviewUnderstandingAnalysis,
+} from "@/lib/reviews/types/review-understanding.types";
+
 export type AnalyzeReviewInput = {
   id: number;
   guest: string;
@@ -18,6 +26,17 @@ export type AnalyzeReviewResult = {
   negative_aspects: string[];
   predominant_emotion: string;
   recommendation_probability: string;
+};
+
+export type AnalyzeReviewUnderstandingInput = {
+  review: PendingImportedReview;
+  taxonomyContext: string;
+};
+
+export type AnalyzeReviewUnderstandingResult = {
+  analysis: ReviewUnderstandingAnalysis;
+  rawOutput: unknown;
+  model: string;
 };
 
 export type GenerateResponseInput = {
@@ -60,6 +79,10 @@ export interface AIProvider {
   analyzeReview(
     input: AnalyzeReviewInput
   ): Promise<AnalyzeReviewResult>;
+
+  analyzeReviewUnderstanding(
+    input: AnalyzeReviewUnderstandingInput
+  ): Promise<AnalyzeReviewUnderstandingResult>;
 
   generateResponse(
     input: GenerateResponseInput

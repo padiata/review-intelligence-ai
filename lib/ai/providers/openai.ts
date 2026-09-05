@@ -4,6 +4,8 @@ import type {
   AIProvider,
   AnalyzeReviewInput,
   AnalyzeReviewResult,
+  AnalyzeReviewUnderstandingInput,
+  AnalyzeReviewUnderstandingResult,
   GenerateResponseInput,
   GenerateResponseResult,
   TranslateTextInput,
@@ -12,22 +14,42 @@ import type {
   TranslateTaxonomyNodeResult,
 } from "../types";
 
+import {
+  REVIEW_UNDERSTANDING_MODEL,
+} from "@/lib/reviews/constants/review-understanding.constants";
+
+import {
+  validateReviewUnderstandingAnalysis,
+} from "@/lib/reviews/validators/review-understanding.validator";
+
+import {
+  buildReviewUnderstandingPrompt,
+} from "@/lib/reviews/ai/prompts/review-understanding.prompt";
+
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
 
 const analysisModel =
   process.env.AI_MODEL_ANALYSIS ??
   "gpt-4";
 
+
 const responseModel =
   process.env.AI_MODEL_RESPONSE ??
   "gpt-4";
+
 
 const translationModel =
   process.env.AI_MODEL_TRANSLATION ??
   "gpt-4.1-mini";
 
+
+const understandingModel =
+  process.env.AI_MODEL_UNDERSTANDING ??
+  REVIEW_UNDERSTANDING_MODEL;
 
 
 type Tone =
@@ -35,12 +57,14 @@ type Tone =
   | "Cálida"
   | "Breve";
 
+
 const allowedTones =
   new Set<Tone>([
     "Profesional",
     "Cálida",
     "Breve",
   ]);
+
 
 function normalizeGuestName(
   guest?: string
@@ -65,33 +89,38 @@ function normalizeGuestName(
   return value;
 }
 
+
 export class OpenAIProvider
   implements AIProvider
 {
-  ///////////////////////////////////////////////////////////////// analizaeRevie
- async analyzeReview(
-  input: AnalyzeReviewInput
-): Promise<AnalyzeReviewResult> {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error(
-      "La variable OPENAI_API_KEY no está configurada."
-    );
-  }
 
-  const reviewText =
-    input.text?.trim();
+  /////////////////////////////////////////////////////////////////
+  // analyzeReview
+  /////////////////////////////////////////////////////////////////
 
-  if (!reviewText) {
-    throw new Error(
-      "La review no contiene texto para analizar."
-    );
-  }
+  async analyzeReview(
+    input: AnalyzeReviewInput
+  ): Promise<AnalyzeReviewResult> {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error(
+        "La variable OPENAI_API_KEY no está configurada."
+      );
+    }
 
-  const result =
-    await openai.responses.create({
-      model:  analysisModel,
+    const reviewText =
+      input.text?.trim();
 
-      instructions: `
+    if (!reviewText) {
+      throw new Error(
+        "La review no contiene texto para analizar."
+      );
+    }
+
+    const result =
+      await openai.responses.create({
+        model: analysisModel,
+
+        instructions: `
 Eres un analista de reputación hotelera.
 
 Analiza la review y devuelve únicamente JSON válido.
@@ -122,9 +151,9 @@ Devuelve esta estructura exacta:
     "recommendation_probability": "Alta"
   }
 }
-      `.trim(),
+        `.trim(),
 
-      input: `
+        input: `
 DATOS DE LA REVIEW
 
 Huésped: ${input.guest || "Huésped"}
@@ -136,101 +165,182 @@ Título: ${input.title || "Sin título"}
 
 Texto:
 ${reviewText}
-      `.trim(),
-    });
+        `.trim(),
+      });
 
-  const rawOutput =
-    result.output_text?.trim();
+    const rawOutput =
+      result.output_text?.trim();
 
-  if (!rawOutput) {
-    throw new Error(
-      "OpenAI no devolvió contenido."
-    );
+    if (!rawOutput) {
+      throw new Error(
+        "OpenAI no devolvió contenido."
+      );
+    }
+
+    let parsed: {
+      analysis?: Partial<AnalyzeReviewResult>;
+    };
+
+    try {
+      const cleaned =
+        rawOutput
+          .replace(
+            /^```json\s*/i,
+            ""
+          )
+          .replace(
+            /^```\s*/i,
+            ""
+          )
+          .replace(
+            /```$/i,
+            ""
+          )
+          .trim();
+
+      parsed =
+        JSON.parse(cleaned);
+    } catch {
+      throw new Error(
+        "El análisis no pudo interpretarse como JSON."
+      );
+    }
+
+    const analysis =
+      parsed.analysis;
+
+    if (!analysis) {
+      throw new Error(
+        "OpenAI no devolvió el análisis esperado."
+      );
+    }
+
+    return {
+      sentiment:
+        analysis.sentiment ??
+        "Neutral",
+
+      priority:
+        analysis.priority ??
+        "Media",
+
+      summary:
+        analysis.summary ??
+        "",
+
+      positive_aspects:
+        Array.isArray(
+          analysis.positive_aspects
+        )
+          ? analysis.positive_aspects
+          : [],
+
+      negative_aspects:
+        Array.isArray(
+          analysis.negative_aspects
+        )
+          ? analysis.negative_aspects
+          : [],
+
+      detected_areas:
+        Array.isArray(
+          analysis.detected_areas
+        )
+          ? analysis.detected_areas
+          : [],
+
+      predominant_emotion:
+        analysis.predominant_emotion ??
+        "Neutral",
+
+      recommendation_probability:
+        analysis.recommendation_probability ??
+        "Media",
+    };
   }
 
-  let parsed: {
-    analysis?: Partial<AnalyzeReviewResult>;
-  };
 
-  try {
-    const cleaned =
-      rawOutput
-        .replace(
-          /^```json\s*/i,
-          ""
-        )
-        .replace(
-          /^```\s*/i,
-          ""
-        )
-        .replace(
-          /```$/i,
-          ""
-        )
-        .trim();
+  /////////////////////////////////////////////////////////////////
+  // analyzeReviewUnderstanding
+  /////////////////////////////////////////////////////////////////
 
-    parsed =
-      JSON.parse(cleaned);
-  } catch {
-    throw new Error(
-      "El análisis no pudo interpretarse como JSON."
-    );
+  async analyzeReviewUnderstanding(
+    input: AnalyzeReviewUnderstandingInput
+  ): Promise<AnalyzeReviewUnderstandingResult> {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error(
+        "La variable OPENAI_API_KEY no está configurada."
+      );
+    }
+
+    const completion =
+      await openai.chat.completions.create({
+        model:
+          understandingModel,
+
+        temperature:
+          0,
+
+        response_format: {
+          type:
+            "json_object",
+        },
+
+        messages: [
+          {
+            role:
+              "user",
+
+            content:
+              buildReviewUnderstandingPrompt(
+                input.review,
+                input.taxonomyContext
+              ),
+          },
+        ],
+      });
+
+    const content =
+      completion
+        .choices[0]
+        ?.message
+        ?.content;
+
+    if (!content) {
+      throw new Error(
+        "OpenAI returned empty content."
+      );
+    }
+
+    let rawOutput:
+      unknown;
+
+    try {
+      rawOutput =
+        JSON.parse(content);
+    } catch {
+      throw new Error(
+        "OpenAI returned invalid JSON."
+      );
+    }
+
+    return {
+      analysis:
+        validateReviewUnderstandingAnalysis(
+          rawOutput
+        ),
+
+      rawOutput,
+
+      model:
+        completion.model,
+    };
   }
 
-  const analysis =
-    parsed.analysis;
 
-  if (!analysis) {
-    throw new Error(
-      "OpenAI no devolvió el análisis esperado."
-    );
-  }
-
-  return {
-    sentiment:
-      analysis.sentiment ??
-      "Neutral",
-
-    priority:
-      analysis.priority ??
-      "Media",
-
-    summary:
-      analysis.summary ??
-      "",
-
-    positive_aspects:
-      Array.isArray(
-        analysis.positive_aspects
-      )
-        ? analysis.positive_aspects
-        : [],
-
-    negative_aspects:
-      Array.isArray(
-        analysis.negative_aspects
-      )
-        ? analysis.negative_aspects
-        : [],
-
-    detected_areas:
-      Array.isArray(
-        analysis.detected_areas
-      )
-        ? analysis.detected_areas
-        : [],
-
-    predominant_emotion:
-      analysis.predominant_emotion ??
-      "Neutral",
-
-    recommendation_probability:
-      analysis.recommendation_probability ??
-      "Media",
-  };
-}
-
-  //////////////////////////////////////////////////////////////fin  analizaed
+  /////////////////////////////////////////////////////////////////
+  // generateResponse
+  /////////////////////////////////////////////////////////////////
 
   async generateResponse(
     input: GenerateResponseInput
@@ -275,7 +385,8 @@ ${reviewText}
 
     const result =
       await openai.responses.create({
-       model: responseModel,
+        model:
+          responseModel,
 
         instructions: `
 Eres un especialista en reputación hotelera y atención al huésped.
@@ -359,61 +470,72 @@ ${context}
     }
 
     return {
-      response: responseText,
+      response:
+        responseText,
     };
   }
-///////////////////////////////////////////////////// Comienzo trnslate
-async translateText(
-  input: TranslateTextInput
-): Promise<TranslateTextResult> {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error(
-      "La variable OPENAI_API_KEY no está configurada."
-    );
-  }
 
-  const allowedLanguages:
-    Record<string, string> = {
-      es: "español",
-      en: "inglés",
-      fr: "francés",
-      de: "alemán",
-      it: "italiano",
-      pt: "portugués",
-      ru: "ruso",
-      zh: "chino simplificado",
-      vi: "vietnamita",
-    };
 
-  const text =
-    input.text?.trim();
+  /////////////////////////////////////////////////////////////////
+  // translateText
+  /////////////////////////////////////////////////////////////////
 
-  const targetLanguage =
-    input.language;
+  async translateText(
+    input: TranslateTextInput
+  ): Promise<TranslateTextResult> {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error(
+        "La variable OPENAI_API_KEY no está configurada."
+      );
+    }
 
-  if (!text) {
-    throw new Error(
-      "El texto que desea traducir está vacío."
-    );
-  }
+    const allowedLanguages:
+      Record<string, string> = {
+        es: "español",
+        en: "inglés",
+        fr: "francés",
+        de: "alemán",
+        it: "italiano",
+        pt: "portugués",
+        ru: "ruso",
+        zh: "chino simplificado",
+        vi: "vietnamita",
+      };
 
-  if (
-    !targetLanguage ||
-    !allowedLanguages[targetLanguage]
-  ) {
-    throw new Error(
-      "El idioma seleccionado no es válido."
-    );
-  }
+    const text =
+      input.text?.trim();
 
-  const languageName =
-    allowedLanguages[targetLanguage];
+    const targetLanguage =
+      input.language;
 
-  const result =
-    await openai.responses.create({
-      model: translationModel,
+    if (!text) {
+      throw new Error(
+        "El texto que desea traducir está vacío."
+      );
+    }
 
-      instructions: `
+    if (
+      !targetLanguage ||
+      !allowedLanguages[
+        targetLanguage
+      ]
+    ) {
+      throw new Error(
+        "El idioma seleccionado no es válido."
+      );
+    }
+
+    const languageName =
+      allowedLanguages[
+        targetLanguage
+      ];
+
+    const result =
+      await openai.responses.create({
+        model:
+          translationModel,
+
+        instructions: `
 Eres un traductor profesional especializado en respuestas
 institucionales para huéspedes de hoteles.
 
@@ -426,27 +548,31 @@ Reglas:
 - No agregues explicaciones.
 - No escribas etiquetas como "Traducción".
 - Devuelve únicamente el texto traducido.
-      `.trim(),
+        `.trim(),
 
-      input: text,
-    });
+        input:
+          text,
+      });
 
-  const translatedText =
-    result.output_text?.trim();
+    const translatedText =
+      result.output_text?.trim();
 
-  if (!translatedText) {
-    throw new Error(
-      "El servicio no devolvió una traducción."
-    );
+    if (!translatedText) {
+      throw new Error(
+        "El servicio no devolvió una traducción."
+      );
+    }
+
+    return {
+      translatedText,
+      targetLanguage,
+    };
   }
 
-  return {
-    translatedText,
-    targetLanguage,
-  };
-}
 
-  //////////////////////////////////////////////////////fin translate
+  /////////////////////////////////////////////////////////////////
+  // translateTaxonomyNode
+  /////////////////////////////////////////////////////////////////
 
   async translateTaxonomyNode(
     input: TranslateTaxonomyNodeInput
@@ -457,20 +583,44 @@ Reglas:
       );
     }
 
-    const localeLabels: Record<string, string> = {
-      es: "Spanish",
-      en: "English",
-      fr: "French",
-      de: "German",
-      it: "Italian",
-      pt: "Portuguese",
-      "es-ES": "Spanish (Spain)",
-      "es-MX": "Spanish (Mexico)",
-      "en-US": "English (United States)",
-      "en-GB": "English (United Kingdom)",
-      "pt-BR": "Portuguese (Brazil)",
-      "pt-PT": "Portuguese (Portugal)",
-    };
+    const localeLabels:
+      Record<string, string> = {
+        es:
+          "Spanish",
+
+        en:
+          "English",
+
+        fr:
+          "French",
+
+        de:
+          "German",
+
+        it:
+          "Italian",
+
+        pt:
+          "Portuguese",
+
+        "es-ES":
+          "Spanish (Spain)",
+
+        "es-MX":
+          "Spanish (Mexico)",
+
+        "en-US":
+          "English (United States)",
+
+        "en-GB":
+          "English (United Kingdom)",
+
+        "pt-BR":
+          "Portuguese (Brazil)",
+
+        "pt-PT":
+          "Portuguese (Portugal)",
+      };
 
     const sourceName =
       localeLabels[
@@ -494,11 +644,13 @@ Reglas:
     }
 
     const description =
-      input.description?.trim() || null;
+      input.description?.trim() ||
+      null;
 
     const result =
       await openai.responses.create({
-        model: translationModel,
+        model:
+          translationModel,
 
         instructions: `
 You are a professional localization specialist for a hotel
@@ -527,10 +679,11 @@ Rules:
   }
         `.trim(),
 
-        input: JSON.stringify({
-          name,
-          description,
-        }),
+        input:
+          JSON.stringify({
+            name,
+            description,
+          }),
       });
 
     const raw =
@@ -550,13 +703,24 @@ Rules:
     try {
       const cleaned =
         raw
-          .replace(/^```json\s*/i, "")
-          .replace(/^```\s*/i, "")
-          .replace(/```$/i, "")
+          .replace(
+            /^```json\s*/i,
+            ""
+          )
+          .replace(
+            /^```\s*/i,
+            ""
+          )
+          .replace(
+            /```$/i,
+            ""
+          )
           .trim();
 
       parsed =
-        JSON.parse(cleaned);
+        JSON.parse(
+          cleaned
+        );
     } catch {
       throw new Error(
         "La traducción de taxonomía no pudo interpretarse como JSON."
@@ -564,15 +728,19 @@ Rules:
     }
 
     const translatedName =
-      typeof parsed.name === "string"
+      typeof parsed.name ===
+      "string"
         ? parsed.name.trim()
         : "";
 
     const translatedDescription =
-      parsed.description === null
+      parsed.description ===
+      null
         ? null
-        : typeof parsed.description === "string"
-          ? parsed.description.trim() || null
+        : typeof parsed.description ===
+            "string"
+          ? parsed.description.trim() ||
+            null
           : null;
 
     if (!translatedName) {
@@ -582,10 +750,17 @@ Rules:
     }
 
     return {
-      name: translatedName,
-      description: translatedDescription,
-      sourceLanguage: input.sourceLanguage,
-      targetLanguage: input.targetLanguage,
+      name:
+        translatedName,
+
+      description:
+        translatedDescription,
+
+      sourceLanguage:
+        input.sourceLanguage,
+
+      targetLanguage:
+        input.targetLanguage,
     };
   }
 }

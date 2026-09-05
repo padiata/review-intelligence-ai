@@ -19,33 +19,51 @@ import {
   addFindingsToInternalFeedbackCase,
 } from "../repositories/internal-feedback-case-findings.repository";
 
+import {
+  sendInternalFeedbackNotification,
+} from "./internal-feedback-notification.service";
+
+
 type CreateInternalFeedbackCasesInput = {
   hotelId: number;
   reviewId: number;
 };
+
 
 export type InternalFeedbackCaseCreationResult = {
   reviewId: number;
   areasProcessed: number;
   casesCreated: number;
   existingCases: number;
+  notificationsSent: number;
+  notificationFailures: number;
   areasWithoutContact: string[];
 };
+
 
 function validatePositiveInteger(
   value: number,
   field: string
 ): void {
-  if (!Number.isInteger(value) || value <= 0) {
-    throw new Error(`${field} must be a positive integer.`);
+  if (
+    !Number.isInteger(value) ||
+    value <= 0
+  ) {
+    throw new Error(
+      `${field} must be a positive integer.`
+    );
   }
 }
+
 
 function groupFindingsByArea(
   findings: InternalFeedbackFinding[]
 ): Map<string, InternalFeedbackFinding[]> {
   const groups =
-    new Map<string, InternalFeedbackFinding[]>();
+    new Map<
+      string,
+      InternalFeedbackFinding[]
+    >();
 
   for (const finding of findings) {
     const areaCode =
@@ -56,9 +74,12 @@ function groupFindingsByArea(
     }
 
     const current =
-      groups.get(areaCode) ?? [];
+      groups.get(areaCode) ??
+      [];
 
-    current.push(finding);
+    current.push(
+      finding
+    );
 
     groups.set(
       areaCode,
@@ -69,22 +90,7 @@ function groupFindingsByArea(
   return groups;
 }
 
-/**
- * Creates internal feedback cases for the negative
- * findings already produced by Review Understanding.
- *
- * Rules for Iteration 1:
- *
- * - only negative findings are considered
- * - findings are grouped by area_code
- * - one case is created per review + area
- * - all findings from that area are attached to the case
- * - existing cases are not duplicated
- * - areas without an assigned contact are reported but do not
- *   stop processing other areas
- *
- * This service does not send notifications yet.
- */
+
 export async function createInternalFeedbackCasesForReview({
   hotelId,
   reviewId,
@@ -104,28 +110,52 @@ export async function createInternalFeedbackCasesForReview({
       reviewId
     );
 
-  if (findings.length === 0) {
+  if (
+    findings.length === 0
+  ) {
     return {
       reviewId,
-      areasProcessed: 0,
-      casesCreated: 0,
-      existingCases: 0,
-      areasWithoutContact: [],
+      areasProcessed:
+        0,
+      casesCreated:
+        0,
+      existingCases:
+        0,
+      notificationsSent:
+        0,
+      notificationFailures:
+        0,
+      areasWithoutContact:
+        [],
     };
   }
 
   const findingsByArea =
-    groupFindingsByArea(findings);
+    groupFindingsByArea(
+      findings
+    );
 
-  let casesCreated = 0;
-  let existingCases = 0;
+  let casesCreated =
+    0;
 
-  const areasWithoutContact: string[] = [];
+  let existingCases =
+    0;
 
-  for (const [
-    areaCode,
-    areaFindings,
-  ] of findingsByArea.entries()) {
+  let notificationsSent =
+    0;
+
+  let notificationFailures =
+    0;
+
+  const areasWithoutContact:
+    string[] = [];
+
+  for (
+    const [
+      areaCode,
+      areaFindings,
+    ] of findingsByArea.entries()
+  ) {
     const existingCase =
       await findExistingInternalFeedbackCase(
         hotelId,
@@ -134,7 +164,9 @@ export async function createInternalFeedbackCasesForReview({
       );
 
     if (existingCase) {
-      existingCases += 1;
+      existingCases +=
+        1;
+
       continue;
     }
 
@@ -144,7 +176,9 @@ export async function createInternalFeedbackCasesForReview({
         areaCode
       );
 
-    if (contacts.length === 0) {
+    if (
+      contacts.length === 0
+    ) {
       areasWithoutContact.push(
         areaCode
       );
@@ -152,15 +186,9 @@ export async function createInternalFeedbackCasesForReview({
       continue;
     }
 
-    /*
-     * Iteration 1:
-     * use the first active contact assigned to the area.
-     *
-     * Later we can introduce primary contact,
-     * escalation, multiple recipients, etc.
-     */
-    const contact: InternalFeedbackContact =
-      contacts[0];
+    const contact:
+      InternalFeedbackContact =
+        contacts[0];
 
     const feedbackCase =
       await createInternalFeedbackCase({
@@ -173,7 +201,8 @@ export async function createInternalFeedbackCasesForReview({
 
     const findingIds =
       areaFindings.map(
-        (finding) => finding.id
+        (finding) =>
+          finding.id
       );
 
     await addFindingsToInternalFeedbackCase(
@@ -181,7 +210,31 @@ export async function createInternalFeedbackCasesForReview({
       findingIds
     );
 
-    casesCreated += 1;
+    casesCreated +=
+      1;
+
+    try {
+      await sendInternalFeedbackNotification(
+        feedbackCase.id
+      );
+
+      notificationsSent +=
+        1;
+
+      console.log(
+        `[InternalFeedback] Notification sent for case ${feedbackCase.id}`
+      );
+    } catch (
+      notificationError
+    ) {
+      notificationFailures +=
+        1;
+
+      console.error(
+        `[InternalFeedback] Could not send notification for case ${feedbackCase.id}:`,
+        notificationError
+      );
+    }
   }
 
   return {
@@ -190,6 +243,8 @@ export async function createInternalFeedbackCasesForReview({
       findingsByArea.size,
     casesCreated,
     existingCases,
+    notificationsSent,
+    notificationFailures,
     areasWithoutContact,
   };
 }
