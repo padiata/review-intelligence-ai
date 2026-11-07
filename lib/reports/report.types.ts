@@ -93,11 +93,6 @@ export type GenerateReportRequest = {
 
 export type GenerateReportResponse = {
   report?: ExecutiveReport;
-  error?: string;
-};
-
-export type GenerateReportResponse = {
-  report?: ExecutiveReport;
   reportHistoryId?: number;
   error?: string;
 };

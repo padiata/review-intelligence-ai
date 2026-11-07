@@ -1,4 +1,7 @@
 import OpenAI from "openai";
+import type { PreparedReportData } from "@/lib/reports/report-builder.service";
+import type { ExecutiveReport, OperationalPriority, PositiveHighlight } from "@/lib/reports/report.types";
+import { buildExecutiveReportPrompt } from "@/lib/ai/prompts/executive-report";
 
 import type {
   AIProvider,
@@ -259,6 +262,88 @@ ${reviewText}
     };
   }
 
+
+  async generateExecutiveReport(prepared: PreparedReportData): Promise<ExecutiveReport> {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("La variable OPENAI_API_KEY no está configurada.");
+    }
+    const prompt = buildExecutiveReportPrompt(prepared);
+    const result = await openai.responses.create({
+      model: process.env.AI_MODEL_REPORT ?? process.env.AI_MODEL_ANALYSIS ?? "gpt-4.1-mini",
+      instructions: `${prompt.instructions}\n\nDevuelve exclusivamente un objeto JSON válido. No incluyas Markdown ni texto fuera del JSON.`,
+      input: `Genera el informe ejecutivo en formato JSON válido.
+
+${prompt.input}`,
+      text: { format: { type: "json_object" } },
+    });
+    const raw = result.output_text?.trim();
+    if (!raw) throw new Error("OpenAI no devolvió contenido para el informe.");
+    let parsed: Record<string, unknown>;
+    try {
+      parsed = JSON.parse(raw) as Record<string, unknown>;
+    } catch {
+      throw new Error("OpenAI devolvió un informe que no es JSON válido.");
+    }
+    const requiredText = (value: unknown, field: string): string => {
+      if (typeof value !== "string" || !value.trim()) {
+        throw new Error(`El informe no contiene un campo válido: ${field}.`);
+      }
+      return value.trim();
+    };
+    const evidenceFromSource = new Set([
+      ...prepared.groupedOperationalPriorities.flatMap(p => p.evidence),
+      ...prepared.positiveHighlights.flatMap(p => p.evidence),
+    ]);
+    const evidenceList = (value: unknown): string[] => {
+      if (!Array.isArray(value) || !value.every(v => typeof v === "string")) {
+        throw new Error("El informe contiene evidencias con formato inválido.");
+      }
+      // Never display fabricated or altered quotations as source evidence.
+      return [...new Set(value.filter(v => evidenceFromSource.has(v)))];
+    };
+    if (!Array.isArray(parsed.operationalPriorities) || !Array.isArray(parsed.positiveHighlights)) {
+      throw new Error("OpenAI devolvió una estructura de informe incompleta.");
+    }
+    const priorities: OperationalPriority[] = parsed.operationalPriorities.map((item: unknown) => {
+      if (!item || typeof item !== "object") throw new Error("Hallazgo inválido en el informe.");
+      const v = item as Record<string, unknown>;
+      const source = prepared.groupedOperationalPriorities.find(p =>
+        p.areaCode === (v.areaCode ?? null) && p.causeCode === (v.causeCode ?? null) && p.priority === v.priority
+      );
+      if (!source) throw new Error("El informe contiene un hallazgo no respaldado por los datos.");
+      return {
+        title: requiredText(v.title, "title"),
+        areaCode: source.areaCode,
+        causeCode: source.causeCode,
+        priority: source.priority,
+        summary: requiredText(v.summary, "summary"),
+        evidence: evidenceList(v.evidence).filter(e => source.evidence.includes(e)),
+      };
+    });
+    const highlights: PositiveHighlight[] = parsed.positiveHighlights.map((item: unknown) => {
+      if (!item || typeof item !== "object") throw new Error("Aspecto positivo inválido en el informe.");
+      const v = item as Record<string, unknown>;
+      return {
+        title: requiredText(v.title, "positiveHighlights.title"),
+        summary: requiredText(v.summary, "positiveHighlights.summary"),
+        evidence: evidenceList(v.evidence).filter(e => prepared.positiveHighlights.some(p => p.evidence.includes(e))),
+      };
+    });
+    return {
+      entityId: prepared.entity.id,
+      entityName: prepared.entity.name,
+      period: prepared.period,
+      generatedAt: new Date().toISOString(),
+      synchronizedUntil: prepared.synchronizedUntil,
+      reviewCount: prepared.reviewCount,
+      findingCount: prepared.findingCount,
+      executiveSummary: requiredText(parsed.executiveSummary, "executiveSummary"),
+      operationalPriorities: priorities,
+      positiveHighlights: highlights,
+      methodologicalNote: requiredText(parsed.methodologicalNote, "methodologicalNote"),
+      findings: prepared.findings,
+    };
+  }
 
   /////////////////////////////////////////////////////////////////
   // analyzeReviewUnderstanding

@@ -1,3 +1,5 @@
+import type { PreparedReportData } from "@/lib/reports/report-builder.service";
+import type { ExecutiveReport } from "@/lib/reports/report.types";
 import type {
   PendingImportedReview,
 } from "@/lib/reviews/review-processor.repository";
@@ -76,6 +78,8 @@ export type TranslateTaxonomyNodeResult = {
 };
 
 export interface AIProvider {
+  generateExecutiveReport(prepared: PreparedReportData): Promise<ExecutiveReport>;
+
   analyzeReview(
     input: AnalyzeReviewInput
   ): Promise<AnalyzeReviewResult>;

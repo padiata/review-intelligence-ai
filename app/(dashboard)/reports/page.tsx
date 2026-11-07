@@ -414,7 +414,7 @@ export default function ReportsPage() {
       return;
     }
 
-    async function translateReportContent() {
+    async function translateReportContent(baseReport: ExecutiveReport) {
       try {
         const [
           executiveSummary,
@@ -535,7 +535,7 @@ export default function ReportsPage() {
       }
     }
 
-    void translateReportContent();
+    void translateReportContent(baseReport);
   }, [
     language,
     reportContentVersion,

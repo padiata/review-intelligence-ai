@@ -911,3 +911,43 @@
         page-break-inside: avoid;
     }
 }
+
+/* Actualización 05: permitir impresión multipágina sin recortes del dashboard. */
+@media print {
+  html, body, #__next {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .app-shell-layout,
+  .app-shell-content,
+  .app-shell-body,
+  .reports-page,
+  .executive-report {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    contain: none !important;
+  }
+  .app-shell-layout { width: 100% !important; }
+  .app-shell-body { padding: 0 !important; margin: 0 !important; }
+  .app-shell-header, .app-shell-sidebar { display: none !important; }
+  .report-priority-card,
+  .report-highlight-card,
+  .report-evidence-list blockquote {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+  .report-priority-heading,
+  .report-section-heading,
+  .report-highlight-card h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+}

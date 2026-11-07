@@ -1,0 +1,1638 @@
+{
+  "taskId": "11071343-2034-0353-0000-b7e2368d4c92",
+  "taskPost": {
+    "version": "0.1.20261103",
+    "status_code": 20000,
+    "status_message": "Ok.",
+    "time": "0.0503 sec.",
+    "cost": 0.003,
+    "tasks_count": 1,
+    "tasks_error": 0,
+    "tasks": [
+      {
+        "id": "11071343-2034-0353-0000-b7e2368d4c92",
+        "status_code": 20100,
+        "status_message": "Task Created.",
+        "time": "0.0044 sec.",
+        "cost": 0.003,
+        "result_count": 0,
+        "path": [
+          "v3",
+          "business_data",
+          "tripadvisor",
+          "reviews",
+          "task_post"
+        ],
+        "data": {
+          "api": "business_data",
+          "function": "reviews",
+          "se": "tripadvisor",
+          "url_path": "/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+          "language_name": "English",
+          "depth": 30,
+          "sort_by": "most_recent",
+          "device": "desktop",
+          "os": "windows"
+        },
+        "result": null
+      }
+    ]
+  },
+  "taskGet": {
+    "version": "0.1.20261103",
+    "status_code": 20000,
+    "status_message": "Ok.",
+    "time": "0.0361 sec.",
+    "cost": 0,
+    "tasks_count": 1,
+    "tasks_error": 0,
+    "tasks": [
+      {
+        "id": "11071343-2034-0353-0000-b7e2368d4c92",
+        "status_code": 20000,
+        "status_message": "Ok.",
+        "time": "0.0137 sec.",
+        "cost": 0,
+        "result_count": 1,
+        "path": [
+          "v3",
+          "business_data",
+          "tripadvisor",
+          "reviews",
+          "task_get",
+          "11071343-2034-0353-0000-b7e2368d4c92"
+        ],
+        "data": {
+          "api": "business_data",
+          "function": "reviews",
+          "se": "tripadvisor",
+          "url_path": "/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+          "language_name": "English",
+          "depth": 30,
+          "sort_by": "most_recent",
+          "device": "desktop",
+          "os": "windows"
+        },
+        "result": [
+          {
+            "url_path": "Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+            "type": "tripadvisor_reviews",
+            "se_domain": "tripadvisor.com",
+            "check_url": "https://www.tripadvisor.com/Hotel_Review-g147271-d263883-Reviews-Melia_Habana-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+            "datetime": "2026-11-07 13:43:52 +00:00",
+            "title": "Miramar Habana Hotel",
+            "location": null,
+            "reviews_count": 4986,
+            "rating": {
+              "rating_type": "Max5",
+              "value": 4.3,
+              "votes_count": 4986,
+              "rating_max": 5
+            },
+            "rating_distribution": {
+              "1": 135,
+              "2": 146,
+              "3": 485,
+              "4": 1558,
+              "5": 2662
+            },
+            "items_count": 30,
+            "items": [
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 1,
+                "rank_absolute": 1,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1084036161-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-11-01 18:56:45 +00:00",
+                "review_id": "1084036161",
+                "title": "Family celebration",
+                "review_text": "We celebrated my daughter's 15th birthday and we had a unique experience thanks to all the hotel staff for making this day unforgettable for the whole family.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Sarah R",
+                  "url": "https://www.tripadvisor.com/Profile/E5689WIsarahr",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/eb/e3/default-avatar-2020-59.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Sarah:\n\nMuchas gracias por elegir el Hotel Miramar Habana para celebrar los quince años de su hija. Nos alegra que toda la familia disfrutara de un día inolvidable y que la atención de nuestro personal contribuyera a un recuerdo tan especial. Reciban nuestros mejores deseos para ella; será un placer volver a acompañarles en futuras celebraciones.\n\nSaludos afectuosos.",
+                    "language": "es",
+                    "response_id": "1084257099",
+                    "timestamp": "2026-11-03 16:33:06 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 2,
+                "rank_absolute": 2,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083920224-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 4,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-31 18:26:02 +00:00",
+                "review_id": "1083920224",
+                "title": "Magnificent hotel in a very beautiful setting.",
+                "review_text": "I arrived at the hotel thinking I would find precariousness due to the situation of the\ncountry, but I found excellent facilities and quality of service. \nI will return without a doubt.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Leonor H",
+                  "url": "https://www.tripadvisor.com/Profile/leonorh397",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e9/60/default-avatar-2020-64.jpg",
+                  "location": "Balmaseda, Spain",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Leonor:\n\nNos satisface saber que encontró unas instalaciones y una atención que superaron sus expectativas. Muchas gracias por compartir su valoración y por destacar también el entorno del hotel. Su deseo de regresar es una gran alegría para nosotros; estaremos encantados de darle nuevamente la bienvenida al Hotel Miramar Habana.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084257132",
+                    "timestamp": "2026-11-03 16:33:28 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 3,
+                "rank_absolute": 3,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083851876-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-31 07:24:56 +00:00",
+                "review_id": "1083851876",
+                "title": "Wonderful stay",
+                "review_text": "The staff has been very friendly. The rooms are very bright. Unbeatable location",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Patricia C",
+                  "url": "https://www.tripadvisor.com/Profile/K7739QYpatriciac",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/79/default-avatar-2020-21.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Patricia:\n\nGracias por compartir el recuerdo de una estancia tan agradable. Nos complace que disfrutara de la luminosidad de las habitaciones y de nuestra ubicación, y agradecemos especialmente sus palabras sobre la amabilidad del personal. Esperamos que su próxima visita a La Habana nos permita recibirla nuevamente.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084257161",
+                    "timestamp": "2026-11-03 16:33:46 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 4,
+                "rank_absolute": 4,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083851760-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-31 07:23:21 +00:00",
+                "review_id": "1083851760",
+                "title": "Incredible service at Miramar Habana Hotel",
+                "review_text": "We arrived with the intention of disconnecting for a few days and getting to know the island. The experience has been wonderful; both the service at the hotel and the directions and advice from their staff have been of great help in making the visit something exceptional. We have been in a privileged location and we have felt at home. Without a doubt, next year we will return.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Zetamh",
+                  "url": "https://www.tripadvisor.com/Profile/gonzalomB1279CK",
+                  "image_url": null,
+                  "location": null,
+                  "reviews_count": 7
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Gonzalo:\n\nNos alegra saber que encontraron tanto el descanso que buscaban como una buena oportunidad para conocer la isla. Muchas gracias por destacar el trato y los consejos de nuestro equipo, y por compartir que se sintieron como en casa. Será un placer darles nuevamente la bienvenida el próximo año y seguir formando parte de sus recuerdos de Cuba.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084257180",
+                    "timestamp": "2026-11-03 16:33:57 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 5,
+                "rank_absolute": 5,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083822551-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 22:48:28 +00:00",
+                "review_id": "1083822551",
+                "title": "My home away from home",
+                "review_text": "This may not be the most luxurious hotel in town, but it is by far my favorite. What makes this place special is the incredible staff, who are genuinely friendly, welcoming, and always go the extra mile to make guests feel at home.\nI have stayed here again and again for the past 7 years, and the reason is simple: every visit feels like coming back to family. Thank you for your hospitality and for making each stay enjoyable. I look forward to coming back many more times.",
+                "language": "en",
+                "original_language": "en",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Klaus H",
+                  "url": "https://www.tripadvisor.com/Profile/klaushY8373LR",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/df/2b/default-avatar-2020-39.jpg",
+                  "location": "Copenhagen, Denmark",
+                  "reviews_count": 1
+                },
+                "responses": null,
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 6,
+                "rank_absolute": 6,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083807978-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 19:49:11 +00:00",
+                "review_id": "1083807978",
+                "title": "⭐⭐⭐⭐⭐",
+                "review_text": "An excellent experience at Miramar Habana! ⭐⭐⭐⭐⭐\n\nStaying at Miramar Habana is a fantastic experience that, without a doubt, deserves 5 stars. A pleasant atmosphere, professional service and warm hospitality that make you feel at home.\n\nI appreciated the atmosphere, the customer service and the staff's willingness to satisfy every guest. A place that combines comfort, elegance and Cuban hospitality.\n\nI recommend this pleasure to anyone who visits Havana and is looking for a quality experience.\n\nThanks for the hospitality! It would be a pleasure to return!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": [
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/14/b1/b1/caption.jpg"
+                  },
+                  {
+                    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/14/b1/b2/caption.jpg"
+                  }
+                ],
+                "user_profile": {
+                  "name": "Vladimir Prenga",
+                  "url": "https://www.tripadvisor.com/Profile/vladimirprenga",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/f4/9c/17/caption.jpg",
+                  "location": "Tirana, Albania",
+                  "reviews_count": 14
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Vladimir:\n\nMuchas gracias por su generosa recomendación. Nos complace que la comodidad, el ambiente y la atención de nuestro equipo le hayan permitido sentirse como en casa. Agradecemos especialmente sus palabras sobre la hospitalidad cubana, que deseamos reflejar en cada bienvenida. El placer será nuestro cuando vuelva al Hotel Miramar Habana.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084257214",
+                    "timestamp": "2026-11-03 16:34:11 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 7,
+                "rank_absolute": 7,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083805726-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 19:26:14 +00:00",
+                "review_id": "1083805726",
+                "title": "The best",
+                "review_text": "My best family experience",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "J R",
+                  "url": "https://www.tripadvisor.com/Profile/jrS6416AI",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f3/e4/default-avatar-2020-30.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Muchas gracias, jrS6416AI, por compartir una valoración tan especial. Saber que su visita fue su mejor experiencia en familia nos llena de satisfacción. Agradecemos la confianza de todos ustedes y esperamos recibirles de nuevo para seguir compartiendo momentos felices en el Hotel Miramar Habana.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084257235",
+                    "timestamp": "2026-11-03 16:34:23 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 8,
+                "rank_absolute": 8,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083799937-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 18:25:46 +00:00",
+                "review_id": "1083799937",
+                "title": "An evening with the family",
+                "review_text": "An excellent family experience at the Italian restaurant, all the dishes were very delicious and very good service, especially Osmary and Denisel and the team in general",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Beatriz Surama R",
+                  "url": "https://www.tripadvisor.com/Profile/beatrizsuramar",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/06/default-avatar-2020-18.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Beatriz:\n\nMuchas gracias por compartir esa velada en familia. Nos complace saber que disfrutaron de los platos de nuestro restaurante italiano y del buen servicio. Agradecemos especialmente sus palabras para Osmary, Denisel y todo el equipo. Será un placer volver a recibirles para compartir otra ocasión especial.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255087",
+                    "timestamp": "2026-11-03 16:12:21 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 9,
+                "rank_absolute": 9,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083798963-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-06-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 18:16:27 +00:00",
+                "review_id": "1083798963",
+                "title": "Excellent hotel",
+                "review_text": "Excellent service at the Miramar Habana hotel, the food is delicious, you can see the sea from the pool area, the room is comfortable",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Fatima G",
+                  "url": "https://www.tripadvisor.com/Profile/L8515JAfatimag",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/df/2b/default-avatar-2020-39.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Fátima:\n\nQué satisfacción saber que se llevó tan buen recuerdo de su estancia. Agradecemos que destaque la atención recibida, la comida y la comodidad de su habitación, además de esas vistas al mar desde la piscina. Gracias por elegir el Hotel Miramar Habana; esperamos darle nuevamente la bienvenida.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255349",
+                    "timestamp": "2026-11-03 16:15:09 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 10,
+                "rank_absolute": 10,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083795364-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:38:11 +00:00",
+                "review_id": "1083795364",
+                "title": "Excellent",
+                "review_text": "Excellent in all aspects 10/10",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Julián U",
+                  "url": "https://www.tripadvisor.com/Profile/93juli_nu",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e8/24/default-avatar-2020-60.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Muchas gracias, 93juli_nu, por su excelente valoración. Saber que su experiencia mereció un 10 sobre 10 es una gran satisfacción para nosotros. Agradecemos que haya dedicado un momento a compartirlo y esperamos que vuelva a elegirnos en su próxima visita a La Habana.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255425",
+                    "timestamp": "2026-11-03 16:15:54 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 11,
+                "rank_absolute": 11,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083795294-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:37:26 +00:00",
+                "review_id": "1083795294",
+                "title": "Good experience",
+                "review_text": "It has been a great experience, the service, the food, the rest... Highly recommended, the best place to get to know Havana. We will repeat!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Carlos M",
+                  "url": "https://www.tripadvisor.com/Profile/carlosmV8669VS",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e9/bb/default-avatar-2020-65.jpg",
+                  "location": null,
+                  "reviews_count": 9
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Carlos:\n\nLe agradecemos su recomendación y nos alegra que disfrutara del trato, de la comida y del descanso durante su visita. Es una satisfacción que el Hotel Miramar Habana haya sido un buen punto de partida para conocer la ciudad. Será un placer volver a recibirles cuando decidan repetir la experiencia.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084273843",
+                    "timestamp": "2026-11-03 19:36:11 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 12,
+                "rank_absolute": 12,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083795069-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:35:02 +00:00",
+                "review_id": "1083795069",
+                "title": "EXCELLENCE",
+                "review_text": "excellent, highly recommended, excellent service and very friendly",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "SOFIA G",
+                  "url": "https://www.tripadvisor.com/Profile/sofiagG265XR",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e3/1f/default-avatar-2020-46.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Sofía:\n\nLe agradecemos su recomendación y sus palabras sobre la atención y la amabilidad de nuestro equipo. Nos alegra que ese trato cercano haya marcado su experiencia en el Hotel Miramar Habana. Esperamos recibirla de nuevo y hacer que su próxima visita sea igualmente agradable.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255507",
+                    "timestamp": "2026-11-03 16:16:46 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 13,
+                "rank_absolute": 13,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083794816-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-09-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:32:30 +00:00",
+                "review_id": "1083794816",
+                "title": "HIGHLY RECOMMENDED",
+                "review_text": "The hotel offers a spectacular view and food. It was definitely the best vacation of my life.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "YULIETH R",
+                  "url": "https://www.tripadvisor.com/Profile/835yuliethr",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f4/d0/default-avatar-2020-33.jpg",
+                  "location": "Cucuta, Colombia",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Yulieth:\n\nEs un verdadero placer saber que su estancia formó parte de unas vacaciones tan especiales. Nos alegra que las vistas y nuestra propuesta gastronómica contribuyeran a ese recuerdo. Muchas gracias por recomendarnos con tanto entusiasmo; nos encantará volver a recibirla en el Hotel Miramar Habana.\n\nSaludos afectuosos.",
+                    "language": "es",
+                    "response_id": "1084255523",
+                    "timestamp": "2026-11-03 16:16:55 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 14,
+                "rank_absolute": 14,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083793309-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:16:35 +00:00",
+                "review_id": "1083793309",
+                "title": "EXCELLENT EXPERIENCE",
+                "review_text": "excellent hotel very good experience thanks for all the services",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Diego L",
+                  "url": "https://www.tripadvisor.com/Profile/diegolE150LI",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f2/7a/default-avatar-2020-25.jpg",
+                  "location": "Bogota, Colombia",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Diego:\n\nGracias a usted por elegirnos y por compartir su satisfacción con los servicios del hotel. Nos complace haber contribuido a una experiencia tan positiva durante su visita. Será un gusto contar nuevamente con su presencia en el Hotel Miramar Habana.\n\nReciba un cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255539",
+                    "timestamp": "2026-11-03 16:17:06 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 15,
+                "rank_absolute": 15,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083793250-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-07-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:15:53 +00:00",
+                "review_id": "1083793250",
+                "title": "SERVICE 10/10",
+                "review_text": "Excellent Hotel, I loved everything",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "manuel a",
+                  "url": "https://www.tripadvisor.com/Profile/manuelaX9359QK",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/2e/default-avatar-2020-67.jpg",
+                  "location": "Cucuta, Colombia",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Manuela:\n\nNos alegra mucho leer que todo fue de su agrado y que valora nuestro servicio con un 10 sobre 10. Gracias por compartir su entusiasmo y por confiar en el Hotel Miramar Habana para su estancia. Esperamos que conserve un bonito recuerdo y que tengamos la oportunidad de recibirla nuevamente.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255564",
+                    "timestamp": "2026-11-03 16:17:16 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 16,
+                "rank_absolute": 16,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083793023-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-05-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:13:44 +00:00",
+                "review_id": "1083793023",
+                "title": "I loved all the facilities",
+                "review_text": "A very nice hotel, the services are super good",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Juliana H",
+                  "url": "https://www.tripadvisor.com/Profile/A266MAjulianah",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/7c/01/default-avatar-2020-5.jpg",
+                  "location": "Bogota, Colombia",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Juliana:\n\nMuchas gracias por destacar la belleza de nuestras instalaciones y la calidad de los servicios. Nos complace que haya disfrutado de los espacios del hotel y se lleve una impresión tan agradable de su visita. Estaremos encantados de darle nuevamente la bienvenida.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255632",
+                    "timestamp": "2026-11-03 16:17:50 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 17,
+                "rank_absolute": 17,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792674-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:09:34 +00:00",
+                "review_id": "1083792674",
+                "title": "Wonderful Cuba",
+                "review_text": "A fantastic experience at the Hotel Miramar Habana. An establishment with a privileged location, pleasant facilities and, above all, a human team that makes the difference.\nHighlighting especially the kindness, professionalism and attention of all the staff, always willing to make the stay as pleasant as possible.\nMy special thanks to Giorgi, the hotel manager, for his approachability, hospitality and excellent attention.\nWithout a doubt, a very positive experience and a hotel to which we hope to return. Many thanks to the whole team!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "CarlitiniBCN",
+                  "url": "https://www.tripadvisor.com/Profile/CarlitiniBCN",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/eb/a3/default-avatar-2020-38.jpg",
+                  "location": "Palma de Mallorca, Spain",
+                  "reviews_count": 18
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Muchas gracias, CarlitiniBCN, por una valoración tan cercana. Nos satisface que, junto a la ubicación y las instalaciones, destaque especialmente la hospitalidad y la profesionalidad de nuestro equipo. Agradecemos también su mención a la atención de la Dirección. Será un placer recibirle de nuevo y seguir siendo parte de sus buenos recuerdos de Cuba.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255651",
+                    "timestamp": "2026-11-03 16:18:02 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 18,
+                "rank_absolute": 18,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792642-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-09-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:09:11 +00:00",
+                "review_id": "1083792642",
+                "title": "Highly recommended",
+                "review_text": "I had the opportunity to stay at the Hotel Miramar and honestly 10/10, super nice rooms, everything very organized but the best of all is the service at this hotel. Highly recommended! We love Cuba",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Diana Z",
+                  "url": "https://www.tripadvisor.com/Profile/dianazO5821TI",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f2/11/default-avatar-2020-23.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Diana:\n\nSu entusiasmo por Cuba y su recomendación nos alegran mucho. Gracias por resaltar las habitaciones, la organización y, de manera especial, la atención de nuestro equipo. Nos complace que ese trato haya sido lo mejor de su experiencia. Esperamos volver a recibirla en el Hotel Miramar Habana.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255674",
+                    "timestamp": "2026-11-03 16:18:16 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 19,
+                "rank_absolute": 19,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792560-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:08:11 +00:00",
+                "review_id": "1083792560",
+                "title": "Wonderful",
+                "review_text": "Excellent service, it was my grandmother's birthday and they gave her a beautiful gift, we were very happy.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "jazmin x",
+                  "url": "https://www.tripadvisor.com/Profile/72jazminx",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e5/2b/default-avatar-2020-52.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Jazmín:\n\nGracias por compartir con nosotros el cumpleaños de su abuela. Nos hace especial ilusión saber que la atención y el detalle recibido contribuyeron a la alegría de toda la familia. Reciban nuestros mejores deseos para ella; será un placer volver a acompañarles en otra celebración.\n\nSaludos afectuosos.",
+                    "language": "es",
+                    "response_id": "1084255689",
+                    "timestamp": "2026-11-03 16:18:26 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 20,
+                "rank_absolute": 20,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792469-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:07:18 +00:00",
+                "review_id": "1083792469",
+                "title": "Excellent service",
+                "review_text": "Excellent hotel highly recommended 10 out of 10",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Paola P",
+                  "url": "https://www.tripadvisor.com/Profile/X1995AEpaolap",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/b8/default-avatar-2020-22.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Paola:\n\nAgradecemos mucho su recomendación y ese 10 sobre 10. Su valoración del servicio es un estímulo para quienes trabajamos por ofrecer una estancia acogedora. Gracias por elegir el Hotel Miramar Habana; nos encantará contar con una nueva visita suya.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255698",
+                    "timestamp": "2026-11-03 16:18:36 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 21,
+                "rank_absolute": 21,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792405-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-09-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:06:32 +00:00",
+                "review_id": "1083792405",
+                "title": "EXCELLENT AND RECOMMENDED💎",
+                "review_text": "Truly an excellent experience and service. The best beaches and human quality. Thank you very much.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Jesus G",
+                  "url": "https://www.tripadvisor.com/Profile/U3299BBjesusg",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ea/2e/default-avatar-2020-67.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Jesús:\n\nMuchas gracias por compartir su experiencia y por destacar la calidad humana de nuestro equipo. Nos alegra que el servicio del hotel haya contribuido a disfrutar de su viaje a Cuba y que se lleve recuerdos tan agradables de sus playas. Esperamos darle nuevamente la bienvenida en La Habana.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255717",
+                    "timestamp": "2026-11-03 16:18:48 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 22,
+                "rank_absolute": 22,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083792035-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-09-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 17:02:41 +00:00",
+                "review_id": "1083792035",
+                "title": "The best in Havana",
+                "review_text": "The best hotel in Havana for business trips but also for families. Spectacular, pool and good restaurants. The Italian restaurant is recommended, one of the best in Havana.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Manuel Molina",
+                  "url": "https://www.tripadvisor.com/Profile/Manuel_molinag",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e7/7b/default-avatar-2020-56.jpg",
+                  "location": "Valencia, Spain",
+                  "reviews_count": 6
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Manuel:\n\nLe agradecemos que nos recomiende tanto para viajes de negocios como para disfrutar en familia. Nos complace que la piscina y nuestros restaurantes, especialmente el italiano, hayan merecido su reconocimiento. Gracias por compartirlo; será un placer acompañarle también en su próxima estancia en La Habana.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255737",
+                    "timestamp": "2026-11-03 16:19:01 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 23,
+                "rank_absolute": 23,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083789794-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 16:41:21 +00:00",
+                "review_id": "1083789794",
+                "title": "Perfect hotel for a stay in Havana",
+                "review_text": "I stayed for a few days to settle some business in Havana, and yet what seemed like a simple business trip turned into a fantastic experience with its gastronomic areas, I loved the Italian restaurant and especially the Asian one, a plus point + GYM IN VERY GOOD CONDITION, recommended for stays in Havana without a doubt",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Juan T",
+                  "url": "https://www.tripadvisor.com/Profile/juantZ5008NM",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ed/00/default-avatar-2020-4.jpg",
+                  "location": null,
+                  "reviews_count": 12
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Juan:\n\nNos alegra saber que su viaje de negocios se convirtió también en una ocasión para disfrutar. Muchas gracias por destacar los restaurantes italiano y asiático, así como el buen estado del gimnasio. Agradecemos su recomendación y esperamos que su próxima visita a La Habana vuelva a traerle a nuestro hotel.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255768",
+                    "timestamp": "2026-11-03 16:19:20 +00:00"
+                  }
+                ],
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 24,
+                "rank_absolute": 24,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083784237-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 15:47:41 +00:00",
+                "review_id": "1083784237",
+                "title": "Excellent 👌",
+                "review_text": "My experience at the Miramar hotel was excellent both for the gastronomic and human quality, I congratulate you 👏 👍 👌 🙌",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Leidys A",
+                  "url": "https://www.tripadvisor.com/Profile/208leidysa",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f2/eb/default-avatar-2020-27.jpg",
+                  "location": "Havana, Cuba",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Leidys:\n\nRecibimos con mucho agrado sus felicitaciones. Que valore tanto la gastronomía como la calidad humana de nuestro equipo nos resulta especialmente significativo: ambas forman parte de la hospitalidad que deseamos ofrecer. Gracias por compartir su experiencia; esperamos recibirla nuevamente muy pronto.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255794",
+                    "timestamp": "2026-11-03 16:19:37 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 25,
+                "rank_absolute": 25,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083783403-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 15:39:23 +00:00",
+                "review_id": "1083783403",
+                "title": "The hotel is a 10",
+                "review_text": "The best 15 in history, excellent service",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Ramon S",
+                  "url": "https://www.tripadvisor.com/Profile/ramonsH2517TG",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e6/ea/default-avatar-2020-54.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Ramón:\n\nMuchas gracias por confiar en nosotros para una celebración de quince años tan especial. Nos alegra que el servicio estuviera a la altura de la ocasión y que conserven un recuerdo tan feliz. Será un gusto volver a recibirles para compartir nuevos momentos en familia.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255814",
+                    "timestamp": "2026-11-03 16:19:48 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 26,
+                "rank_absolute": 26,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083782848-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 15:33:56 +00:00",
+                "review_id": "1083782848",
+                "title": "Celebrating a 15th birthday",
+                "review_text": "Everything excellent, magnificent treatment, we came to celebrate my granddaughter's 15th birthday and everything was wonderful, the hall, the buffet, the spectacular service. The rooms very clean and comfortable. I would like to thank all the staff from the doormen to the waitresses, very kind and with great professionalism.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Edita Josefina P",
+                  "url": "https://www.tripadvisor.com/Profile/editajosefinap",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/eb/e3/default-avatar-2020-59.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Edita Josefina:\n\nGracias por elegir el Hotel Miramar Habana para celebrar los quince años de su nieta. Nos complace que disfrutaran del salón, del buffet y de la comodidad y limpieza de las habitaciones. Agradecemos su reconocimiento a todo el personal, desde los porteros hasta las camareras. Les deseamos que conserven siempre un hermoso recuerdo de ese día y esperamos volver a recibirles.\n\nSaludos afectuosos.",
+                    "language": "es",
+                    "response_id": "1084255839",
+                    "timestamp": "2026-11-03 16:20:02 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "4"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 27,
+                "rank_absolute": 27,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083782702-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 15:32:47 +00:00",
+                "review_id": "1083782702",
+                "title": "My fifteenth birthday, an unparalleled day",
+                "review_text": "I decided to spend one of the most important days of my life at this hotel, my 15th birthday, and I do not regret it, everything was phenomenal, the flag held high, very grateful for the experience",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Sarai S",
+                  "url": "https://www.tripadvisor.com/Profile/421sarais",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/ee/10/default-avatar-2020-8.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimada Sara:\n\nGracias por permitirnos formar parte de un día tan importante como sus quince años. Nos alegra mucho que la celebración haya sido una experiencia tan feliz y que se lleve ese bonito recuerdo del hotel. Reciba nuestros mejores deseos para esta nueva etapa; será un placer volver a darle la bienvenida junto a su familia.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255871",
+                    "timestamp": "2026-11-03 16:20:25 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 28,
+                "rank_absolute": 28,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083714730-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 4,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 01:40:24 +00:00",
+                "review_id": "1083714730",
+                "title": "Italian food at Miramar hotel",
+                "review_text": "Was at the Italian restaurant and the service was really friendly and good. Had their Spaghetti Aglio e Olio (supposed to be a spicy version) and some Foccasia bread. It was good however more Spanish style than Italian. The food was ok and unlike many other places in Cuba then this place can acrually make a good pizza with a crunchy crust. Overall the food today was likely in the range of 3-4 stars whereas the service was big 4 stars.",
+                "language": "en",
+                "original_language": "en",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Claus E",
+                  "url": "https://www.tripadvisor.com/Profile/396clause",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/f1/79/default-avatar-2020-21.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": null,
+                "review_highlights": null
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 29,
+                "rank_absolute": 29,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083712039-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-30 00:43:39 +00:00",
+                "review_id": "1083712039",
+                "title": "An oasis in the desert.",
+                "review_text": "Excellent treatment, personalized attention. Incredible given the shortages the sector is currently suffering. Despite the brand change, it maintains a standard of excellence. I am a frequent guest and I recommend it to everyone for their stay in Havana.",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Jose V",
+                  "url": "https://www.tripadvisor.com/Profile/josevO2425UP",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/e5/2b/default-avatar-2020-52.jpg",
+                  "location": "Madrid, Spain",
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado José:\n\nSu confianza como cliente habitual tiene un valor especial para nosotros. Nos satisface que siga encontrando una atención personalizada y una experiencia a la altura de sus expectativas en esta etapa del Hotel Miramar Habana. Muchas gracias por acompañarnos y recomendarnos. Será un placer recibirle, como siempre, en su próxima visita.\n\nSaludos cordiales.",
+                    "language": "es",
+                    "response_id": "1084255931",
+                    "timestamp": "2026-11-03 16:20:57 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "5"
+                  }
+                ]
+              },
+              {
+                "type": "tripadvisor_review_search",
+                "rank_group": 30,
+                "rank_absolute": 30,
+                "position": "left",
+                "url": "https://www.tripadvisor.com/ShowUserReviews-g147271-d263883-r1083581406-Miramar_Habana_Hotel-Havana_Ciudad_de_la_Habana_Province_Cuba.html",
+                "rating": {
+                  "rating_type": "Max5",
+                  "value": 5,
+                  "votes_count": null,
+                  "rating_max": 5
+                },
+                "date_of_visit": "2026-10-01 00:00:00 +00:00",
+                "timestamp": "2026-10-28 21:35:23 +00:00",
+                "review_id": "1083581406",
+                "title": "That such beautiful little piece of land.",
+                "review_text": "Speechless... the effort that the staff makes to keep the hotel in impeccable condition is fantastic!!! \nVery pleased with the service, with the human quality... with this beautiful Cuban culture... which I carry in my heart.  \nFrom my beautiful and beloved Mexico, I highly recommend this place. \nThe view, the area, the incredible history of the place. \nEspecially to the general management team... professionals who live service with passion... the culture of detail. \nI hope to return soon to that very special little piece of land.... \nWhile that happens, I hope these lines serve to encourage you to enjoy a wonderful vacation in Cuba!",
+                "language": "en",
+                "original_language": "es",
+                "review_images": null,
+                "user_profile": {
+                  "name": "Everett Medina",
+                  "url": "https://www.tripadvisor.com/Profile/796everettm",
+                  "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/eb/e3/default-avatar-2020-59.jpg",
+                  "location": null,
+                  "reviews_count": 1
+                },
+                "responses": [
+                  {
+                    "title": "Jorge Clemente",
+                    "text": "Estimado Everett:\n\nMuchas gracias por compartir desde México un recuerdo tan afectuoso de Cuba y de nuestro hotel. Nos emociona que valore el cuidado de las instalaciones y, sobre todo, la calidad humana y la atención al detalle de nuestro equipo. Agradecemos especialmente su reconocimiento a la Dirección. Esperamos recibirle nuevamente en ese pedacito de tierra que lleva en el corazón.\n\nUn cordial saludo.",
+                    "language": "es",
+                    "response_id": "1084255953",
+                    "timestamp": "2026-11-03 16:21:11 +00:00"
+                  }
+                ],
+                "review_highlights": [
+                  {
+                    "feature": "Value",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Rooms",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Location",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Cleanliness",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Service",
+                    "assessment": "5"
+                  },
+                  {
+                    "feature": "Sleep Quality",
+                    "assessment": "4"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
